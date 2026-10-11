@@ -16,6 +16,11 @@
     </div>
     {/if}
 
+    {* The content finder box of the kernel (contentfinder/box.tpl): only for a user with contentfinder/search. *}
+    {if ne( $ui_context, 'browse' )}
+    {include uri='design:contentfinder/box.tpl'}
+    {/if}
+
     {* DESIGN: Content END *}
 </div>
 
