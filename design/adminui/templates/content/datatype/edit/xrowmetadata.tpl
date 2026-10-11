@@ -88,6 +88,13 @@
 </div>
 {undef $og_allowed $og_own_id $og_own_info $og_shown_info}
 
+{* The license, as in xrowmetadata 1.4.9: the object's own choice, else the class default, else the installation
+   default. The block is xrowmetadata's own (xrowmetadata/license_edit.tpl, with Bootstrap classes); with an older
+   xrowmetadata, which has no license (no license_allowed), nothing is shown. *}
+{if is_set( $attribute.content.license_allowed )}
+{include uri='design:xrowmetadata/license_edit.tpl' attribute=$attribute attribute_base=$attribute_base bootstrap=true()}
+{/if}
+
 <div class="block">
 
     <div class="element checkbox">
