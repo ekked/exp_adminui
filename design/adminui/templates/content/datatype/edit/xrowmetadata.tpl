@@ -40,6 +40,54 @@
 </div>
 {/if}
 
+{* Open Graph image, as in xrowmetadata 1.4.8: the object's own choice (an object relation), else the class default.
+   When the class sets the image (og_image_allowed false) the class default is shown read-only. Without
+   og_image_allowed (xrowmetadata 1.4.7) an own image is allowed. The size printed is the image alias's. *}
+{def $og_allowed = cond( is_set( $attribute.content.og_image_allowed ), $attribute.content.og_image_allowed, true() )
+     $og_own_id = $attribute.content.og_image_own|int()
+     $og_own_info = false()
+     $og_shown_info = $attribute.content.og_image_info}
+{if and( $og_allowed, $og_own_id|gt(0) )}{set $og_own_info = cond( and( $og_shown_info, eq( $attribute.content.og_image_source, 'object' ) ), $og_shown_info, false() )}{/if}
+<div class="block xrowmetadata-og-image{if $og_allowed|not} xrowmetadata-og-image-by-class{/if}" id="xrowmetadata_og_image_{$attribute.id}">
+    <label>{'Open Graph image'|i18n( 'design/standard/class/datatype' )}:</label>
+    {if $og_allowed|not}
+        {if $og_shown_info}
+        <div class="xrowmetadata-og-image-chosen xrowmetadata-og-image-class media">
+            {if $og_shown_info.thumbnail_url|ne('')}<img class="img-thumbnail" src="{$og_shown_info.thumbnail_url|wash()}" alt="{$og_shown_info.alt|wash()}" style="max-width:200px; max-height:120px; display:block; margin-bottom:0.5em;" />{/if}
+            <strong class="xrowmetadata-og-image-name">{$og_shown_info.name|wash()}</strong>
+            {if and( $og_shown_info.width|ne(''), $og_shown_info.height|ne('') )}<span class="xrowmetadata-og-image-size text-muted">({$og_shown_info.width|wash()} x {$og_shown_info.height|wash()} px)</span>{/if}
+        </div>
+        {else}
+        <p class="xrowmetadata-og-image-none">{'The class sets no default image.'|i18n( 'design/standard/class/datatype' )}</p>
+        {/if}
+        <p class="xrowmetadata-og-image-note help-block"><span class="label label-default">{'Set by the class'|i18n( 'design/standard/class/datatype' )}</span></p>
+        {if $og_own_id|gt(0)}
+        <p class="xrowmetadata-og-image-unused help-block">{'An image chosen earlier for this object is kept, but not shared while the class sets the image.'|i18n( 'design/standard/class/datatype' )}</p>
+        {/if}
+    {else}
+        {if $og_own_info}
+        <div class="xrowmetadata-og-image-chosen media">
+            {if $og_own_info.thumbnail_url|ne('')}<img class="img-thumbnail" src="{$og_own_info.thumbnail_url|wash()}" alt="{$og_own_info.alt|wash()}" style="max-width:200px; max-height:120px; display:block; margin-bottom:0.5em;" />{/if}
+            <strong class="xrowmetadata-og-image-name">{$og_own_info.name|wash()}</strong>
+            {if and( $og_own_info.width|ne(''), $og_own_info.height|ne('') )}<span class="xrowmetadata-og-image-size text-muted">({$og_own_info.width|wash()} x {$og_own_info.height|wash()} px)</span>{/if}
+        </div>
+        <p class="xrowmetadata-og-image-note help-block">{'This image is shared as the page image (og:image, twitter:image) instead of the default of the class.'|i18n( 'design/standard/class/datatype' )}</p>
+        {elseif $og_own_id|gt(0)}
+        <p class="xrowmetadata-og-image-missing help-block">{'The chosen image is no longer available (deleted, in the trash or unpublished). The default of the class is shared instead.'|i18n( 'design/standard/class/datatype' )}</p>
+        {else}
+        <p class="xrowmetadata-og-image-none help-block">{'No image chosen for this object.'|i18n( 'design/standard/class/datatype' )}
+        {if and( $og_shown_info, eq( $attribute.content.og_image_source, 'class' ) )}{'The default of the class is shared: %name.'|i18n( 'design/standard/class/datatype', '', hash( '%name', $og_shown_info.name|wash() ) )}{/if}</p>
+        {/if}
+        <div class="block inline-block">
+            <button type="submit" class="btn btn-default xrowmetadata-og-image-choose" name="CustomActionButton[{$attribute.id}_browse_object]" title="{'Choose an image object as the Open Graph image of this object'|i18n( 'design/standard/class/datatype' )}"><i class="fa fa-picture-o"></i> {'Choose image'|i18n( 'design/standard/class/datatype' )}</button>
+            {if $og_own_id|gt(0)}
+            <input class="btn btn-default xrowmetadata-og-image-remove" type="submit" name="CustomActionButton[{$attribute.id}_remove_object]" value="{'Remove image'|i18n( 'design/standard/class/datatype' )}" />
+            {/if}
+        </div>
+    {/if}
+</div>
+{undef $og_allowed $og_own_id $og_own_info $og_shown_info}
+
 <div class="block">
 
     <div class="element checkbox">
@@ -97,75 +145,10 @@
             <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_keywords" class="form-control ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="url" name="{$attribute_base}_xrowmetadata_data_array_{$attribute.id}[canonical_url]" size="100" maxsize="1055" value="{$attribute.content.canonical_url|wash()}" />
         </div>
 
-        {def $mt_og_object = false()}
-        {if and($attribute.data_int, $attribute.data_int|gt(0))}
-            {set $mt_og_object = fetch('content','object',hash('id',$attribute.data_int))}
-        {/if}
-        {def $mt_image_attr = false()}
-        {def $mt_image_path = ''}
-        {if $mt_og_object}
-            {if $mt_og_object.data_map.site_opengraph_image}{set $mt_image_attr = $mt_og_object.data_map.site_opengraph_image}{/if}
-            {if and(not($mt_image_attr), $mt_og_object.data_map.image)}{set $mt_image_attr = $mt_og_object.data_map.image}{/if}
-            {if and(not($mt_image_attr), $mt_og_object.data_map.site_logo)}{set $mt_image_attr = $mt_og_object.data_map.site_logo}{/if}
-            {if and(not($mt_image_attr), $mt_og_object.data_map.file)}{set $mt_image_attr = $mt_og_object.data_map.file}{/if}
-            {if $mt_image_attr}
-                {if eq($mt_image_attr.data_type_string, 'ezimage')}
-                    {set $mt_image_path = $mt_image_attr.content.original.full_path}
-                {elseif eq($mt_image_attr.data_type_string, 'ezbinaryfile')}
-                    {set $mt_image_path = $mt_image_attr.content.filepath}
-                {/if}
-            {/if}
-        {/if}
-        <div class="element" id="ezobjectrelation_browse_{$attribute.id}">
-            <label>{'Open Graph image'|i18n( 'design/standard/class/datatype' )}:</label>
-            <table class="list" cellspacing="0">
-            <thead>
-            <tr>
-                <th>{'Name'|i18n( 'design/standard/content/datatype' )}</th>
-                <th>{'Type'|i18n( 'design/standard/content/datatype' )}</th>
-                <th>{'Section'|i18n( 'design/standard/content/datatype' )}</th>
-                <th>{'Published'|i18n( 'design/standard/content/datatype' )}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="bglight">
-            {if $mt_og_object}
-                <td>
-                    {$mt_og_object.name|wash()}
-                    {if $mt_image_path|ne('')}
-                        <br /><img src="{concat('/', $mt_image_path)}" alt="{$mt_og_object.name|wash()}" style="max-width:200px; max-height:100px;" />
-                    {/if}
-                </td>
-                <td>{if $mt_image_attr}{$mt_image_attr.data_type_string|wash()}{else}{$mt_og_object.class_name|wash()}{/if}</td>
-                <td>{fetch(section, object, hash(section_id, $mt_og_object.section_id)).name|wash}</td>
-                <td>{if $mt_og_object.status|ne(1)}{'No'|i18n( 'design/standard/content/datatype' )}{else}{'Yes'|i18n( 'design/standard/content/datatype' )}{/if}</td>
-            {else}
-                <td>--name--</td>
-                <td>--class-name--</td>
-                <td>--section-name--</td>
-                <td>--published--</td>
-            {/if}
-            </tr>
-            </tbody>
-            </table>
-            {if not($mt_og_object)}
-                <p class="ezobject-relation-no-relation">{'There are no related object.'|i18n( 'design/standard/content/datatype' )}</p>
-            {/if}
-            <input type="hidden" name="{$attribute_base}_data_object_relation_id_{$attribute.id}" value="{$attribute.data_int|wash()}" />
-            {if $mt_og_object}
-                <input class="btn btn-default ezobject-relation-remove-button" type="submit" name="CustomActionButton[{$attribute.id}_remove_object]" value="{'Remove object'|i18n( 'design/standard/content/datatype' )}" />
-            {else}
-                <input class="btn btn-default ezobject-relation-add-button" type="submit" name="CustomActionButton[{$attribute.id}_browse_object]" value="{'Add an existing object'|i18n( 'design/standard/content/datatype' )}" title="{'Browse to add an existing object in this relation'|i18n( 'design/standard/content/datatype' )}" />
-            {/if}
-        </div>
-        <div class="element">
-            <label>{'Open Graph image width'|i18n( 'design/standard/class/datatype' )}:</label>
-            <input class="form-control" type="number" min="0" name="{$attribute_base}_xrowmetadata_data_array_{$attribute.id}[og_image_width]" size="10" value="{$attribute.content.og_image_width|wash()}" />
-        </div>
-        <div class="element">
-            <label>{'Open Graph image height'|i18n( 'design/standard/class/datatype' )}:</label>
-            <input class="form-control" type="number" min="0" name="{$attribute_base}_xrowmetadata_data_array_{$attribute.id}[og_image_height]" size="10" value="{$attribute.content.og_image_height|wash()}" />
-        </div>
+        {* No width and height inputs: og:image:width and og:image:height are the size of the image alias. The stored
+           values are sent back unchanged, so xrowmetadata 1.4.7 (which blanks a field the form does not send) keeps them. *}
+        <input type="hidden" name="{$attribute_base}_xrowmetadata_data_array_{$attribute.id}[og_image_width]" value="{$attribute.content.og_image_width|wash()}" />
+        <input type="hidden" name="{$attribute_base}_xrowmetadata_data_array_{$attribute.id}[og_image_height]" value="{$attribute.content.og_image_height|wash()}" />
         <div class="element">
             <label>{'Open Graph image alt'|i18n( 'design/standard/class/datatype' )}:</label>
             <input class="form-control" type="text" name="{$attribute_base}_xrowmetadata_data_array_{$attribute.id}[og_image_alt]" size="100" value="{$attribute.content.og_image_alt|wash()}" />
