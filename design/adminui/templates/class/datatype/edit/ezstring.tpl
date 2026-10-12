@@ -13,3 +13,9 @@
         <input type="text" class="form-control" name="ContentClass_ezstring_max_string_length_{$class_attribute.id}" value="{$class_attribute.data_int1}" size="5" maxlength="5" /><label>&nbsp;{'characters'|i18n( 'design/standard/class/datatype' )}</label>
     </div>
 </div>
+
+{* Trim the stored value. *}
+<div class="block checkbox">
+    <input type="hidden" name="ContentClass_ezstring_trim_{$class_attribute.id}_posted" value="1" />
+    <label for="ContentClass_ezstring_trim_{$class_attribute.id}"><input type="checkbox" id="ContentClass_ezstring_trim_{$class_attribute.id}" name="ContentClass_ezstring_trim_{$class_attribute.id}" value="1"{if $class_attribute.data_int2|eq( 1 )} checked="checked"{/if} title="{'Spaces, tabs and line breaks at the start and the end of the text are removed when it is stored.'|i18n( 'design/standard/class/datatype' )|wash}" />&nbsp;{'Trim the stored value'|i18n( 'design/standard/class/datatype' )}</label>
+</div>
