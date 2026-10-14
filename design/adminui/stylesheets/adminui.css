@@ -128,3 +128,45 @@ table th a:hover { color: #fff; text-decoration: underline; }
     --sc-accent: #1a5fd8; --sc-accent-hover: #1450b8; --wf-accent: #1a5fd8; --wf-accent-hover: #1450b8;
     --cj-accent: #1a5fd8; --cj-accent-hover: #1450b8; --st-accent: #1a5fd8; --st-accent-hover: #1450b8;
 }
+
+/* ---- the details panel of the content view (preview.tpl, style.css ".node-info-list") --------------------------
+   style.css gives the panel 200px, and as a shrinkable flex item next to wide content it often got only half of that.
+   Here it keeps its width (320px by default), which the user can change with the handle on its left edge (mouse,
+   touch, or the arrow keys on the focused handle); javascript/exp_adminui_details_resizer.js saves it in the user
+   preference exp_adminui_details_width and pagelayout.tpl sets it back as --exp-adminui-details-width. The content
+   next to it keeps at least 360px. Below 982px style.css stacks the panel under the content: no handle there. */
+.exp-adminui-details-resizer { display: none; }
+@media screen and (min-width: 982px) {
+    .content-preview > .node-preview-content { flex: 1 1 auto; min-width: 0; }
+    .content-preview > .node-info-list {
+        position: relative;
+        flex: 0 0 auto;
+        width: var(--exp-adminui-details-width, 320px);
+        min-width: 200px;
+        max-width: min(640px, calc(100% - 360px));
+        box-sizing: border-box;
+    }
+    .content-preview > .exp-adminui-details-resizer {
+        display: block;
+        position: relative;
+        z-index: 2;
+        flex: 0 0 12px;
+        width: 12px;
+        margin: 0 -9px 0 -3px;  /* takes no room: the panel's 3px left border is the visible edge */
+        cursor: col-resize;
+        touch-action: none;
+        outline: none;
+    }
+    .content-preview > .exp-adminui-details-resizer::before {
+        content: "";
+        position: absolute;
+        top: 0; bottom: 0; left: 3px;
+        width: 3px;
+        background: transparent;
+        transition: background-color .15s;
+    }
+    .content-preview > .exp-adminui-details-resizer:hover::before,
+    .content-preview > .exp-adminui-details-resizer.is-resizing::before { background: #2970ef; }
+    .content-preview > .exp-adminui-details-resizer:focus-visible::before { background: #2970ef; box-shadow: 0 0 0 3px rgba(41, 112, 239, 0.35); }
+    body.exp-adminui-details-resizing, body.exp-adminui-details-resizing * { cursor: col-resize !important; user-select: none; }
+}

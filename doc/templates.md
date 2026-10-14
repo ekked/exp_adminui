@@ -5,8 +5,8 @@ the place of (the first one the chain admin4l, admin4, admin3, admin2, admin has
 only adminui has it). Generated from the files; see merging.md for how "merged" templates were made.
 
 - **new**: written for Exponential Admin UI (14)
-- **copy**: the Netgen Admin UI template, unchanged (111)
-- **merged**: the Netgen Admin UI template with Exponential's later changes merged in, or ported by hand (107)
+- **copy**: the Netgen Admin UI template, unchanged (110)
+- **merged**: the Netgen Admin UI template with Exponential's later changes merged in, or ported by hand (108)
 
 | Template | Origin | Overrides |
 |---|---|---|
@@ -183,7 +183,7 @@ only adminui has it). Generated from the files; see merging.md for how "merged" 
 | `parts/visual/menu.tpl` | merged | `design/admin4` |
 | `pdf/edit.tpl` | merged | `design/admin4` |
 | `pdf/list.tpl` | merged | `design/admin4` |
-| `preview.tpl` | copy | `design/admin4` |
+| `preview.tpl` | merged | `design/admin4` |
 | `relations.tpl` | copy | `design/admin4` |
 | `role/assign_limited_section.tpl` | copy | `design/admin4` |
 | `role/createpolicystep1.tpl` | merged | `design/admin4` |

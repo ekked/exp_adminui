@@ -62,3 +62,15 @@ its `settings/override/`), the siteaccess, every globally active extension, `set
 extension also sets beats this extension and the siteaccess. Example: cjw_newsletter maps its classes to crystal
 icon paths (`filesystems/folder.png` ...). The adminui design therefore carries copies of fitting kp icons under
 those paths (`images/icons/kp/<size>/filesystems/...`, listed in ASSETS.md) instead of remapping the classes.
+
+## User preferences
+
+| Preference | Set by | Values |
+|---|---|---|
+| `exp_adminui_details_width` | the handle on the left edge of the content view's details panel (`preview.tpl`, `javascript/exp_adminui_details_resizer.js`): drag it with the mouse or a finger, or focus it and use the arrow keys (Shift for bigger steps, Home and End for the limits, a double click for the default) | the width in pixels, 200 to 640; empty or out of range means the default 320 |
+
+The width is saved once at the end of a drag, or 0.6 s after the last key press, through `user/preferences`
+(`set_and_exit`, as `$.ez.setPreference` of ezjscore does), so it follows the user to every browser.
+`pagelayout.tpl` reads it back and sets `--exp-adminui-details-width` on `<html>`, so the page opens at that width.
+The content next to the panel keeps at least 360 px. Below 982 px the panel is stacked under the content and the
+handle is hidden.

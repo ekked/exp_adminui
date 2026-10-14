@@ -2,8 +2,15 @@
    (pagelayout.html.twig, pagelayout_variables.html.twig and pagelayout_legacy.html.twig of se7enxweb/admin-ui-bundle,
    GPL-2.0-or-later) to Exponential template code. The markup is the reference's, element for element, so its
    stylesheet (stylesheets/style.css, copied unchanged) draws it the same way. See doc/twig-to-tpl.md. *}
+{* the width of the content view's details panel, as the user left it (preference exp_adminui_details_width, saved
+   by javascript/exp_adminui_details_resizer.js): set here, so the page opens at that width. Only whole numbers in
+   the handle's range are used; anything else leaves the stylesheet's default. *}
+{def $adminui_details_width = ezpreference( 'exp_adminui_details_width' )|int}
+{if or( $adminui_details_width|lt( 200 ), $adminui_details_width|gt( 640 ) )}
+    {set $adminui_details_width = 0}
+{/if}
 <!DOCTYPE html>
-<html lang="{$site.http_equiv.Content-language|wash}">
+<html lang="{$site.http_equiv.Content-language|wash}"{if $adminui_details_width} style="--exp-adminui-details-width: {$adminui_details_width}px"{/if}>
 <head>
 {def $ui_context_edit   = eq( $ui_context, 'edit' )
      $content_edit      = and( $ui_context_edit, eq( $ui_component, 'content' ) )

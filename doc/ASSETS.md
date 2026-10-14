@@ -5492,7 +5492,7 @@ tags/dashboard.tpl are ported by hand without YUI, the others are served by admi
 | `templates/parts/visual/menu.tpl` | legacy design | changed | 598 | `2631d4515bec20c0817ab3f825918be8c7874b51bb9798e854035990bd995fc8` |
 | `templates/pdf/edit.tpl` | legacy design | changed | 6652 | `38c3e5b58d1eb2c417831f3249a4c3a3b24bb717dff82566b641956ac5cec239` |
 | `templates/pdf/list.tpl` | legacy design | changed | 3910 | `746b97fc7bbe425c561539bf48b926e6ed1223b76d8b3ff0038b835f25b96121` |
-| `templates/preview.tpl` | legacy design | copy | 6554 | `ce0313971d27b3e80a88afd7c5f61bb5c6ddae42c27fb01d2d47ad37c27f5906` |
+| `templates/preview.tpl` | legacy design | changed | 6554 | `ce0313971d27b3e80a88afd7c5f61bb5c6ddae42c27fb01d2d47ad37c27f5906` |
 | `templates/relations.tpl` | legacy design | copy | 7726 | `39d2fea1156b39589848ce34c000d638736f98a4c90eb85ee1013f1e8e1af76b` |
 | `templates/role/assign_limited_section.tpl` | legacy design | copy | 1783 | `d787e41f97ab316c0e77e32b716d382bc49788036c48d84c3b6a70f4b8dc5da9` |
 | `templates/role/createpolicystep1.tpl` | legacy design | changed | 6265 | `535b239b756aef0512559d7b64df38b54fcd1606cf2d50dee1245f30861fb690` |

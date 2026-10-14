@@ -20,7 +20,10 @@
             <div class="break"></div>
         </form>
     {/if}
-    <ul class="node-info-list">
+    {* the handle that resizes the details panel (javascript/exp_adminui_details_resizer.js, stylesheets/adminui.css);
+       aria-valuenow is set by the script, from the width pagelayout.tpl gave the panel *}
+    <div class="exp-adminui-details-resizer" role="separator" tabindex="0" aria-orientation="vertical" aria-controls="exp-adminui-details" aria-valuemin="200" aria-valuemax="640" aria-label="{'Resize the details panel'|i18n( 'design/adminui/preview' )}" title="{'Drag, or use the arrow keys, to change the width of the details panel'|i18n( 'design/adminui/preview' )}" data-preference-url={'/user/preferences'|ezurl}></div>
+    <ul class="node-info-list" id="exp-adminui-details">
         <li>
             <label>{'Created'|i18n( 'design/admin/node/view/full' )}:</label>
             <p>{$node.object.published|l10n( shortdatetime )}<br />
