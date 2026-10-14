@@ -193,7 +193,7 @@ table th a:hover { color: #fff; text-decoration: underline; }
 /* a block straight in the main area that is not one of the reference's boxes and holds none of them: an admin4 or
    extension page (.nf, .mp, .ezx ...), a standard design form or table */
 #page .main-content > :where(:not(#path, script, style, link, .context-block, .panel, .box-header, .box-content, .box-bc,
-        .title-wrapper, .tab-block, .content-view-full, .ng-layouts-app, .content-search, .content-edit,
+        .path-edit-container, .title-wrapper, .tab-block, .content-view-full, .ng-layouts-app, .content-search, .content-edit,
         [class^="message-"], [class*=" message-"], .alert, #exp-adminui-details, .break, .footer, #footer):not(
         :has(.context-block, .panel, .box-header, .box-content, .box-bc, .content-navigation, .ng-layouts-app, .content-view-full))) {
     padding-left: var(--exp-adminui-inset);
