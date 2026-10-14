@@ -15,14 +15,14 @@
    own widget factory; loaded over a page's newer jQuery UI (eztags' tree picker) it broke that page's widgets. A
    jQuery UI without resizable gets a no-op, so the column simply keeps its width. *}
 <script type="text/javascript">
-if ( !( window.jQuery && jQuery.ui ) ) document.write( '<script type="text/javascript" src="' + {'javascript/ngadminui/resizable.js'|ezdesign( 'single' )} + '"><\/script>' );
+if ( !( window.jQuery && jQuery.ui ) ) document.write( '<script type="text/javascript" src="' + {'javascript/ngadminui/resizable.js'|exp_adminui_asset( 'single' )} + '"><\/script>' );
 else if ( !jQuery.fn.resizable ) jQuery.fn.resizable = function () {ldelim} return this; {rdelim};
 </script>
-<script type="text/javascript" src={'javascript/ngadminui/bootstrap.js'|ezdesign}></script>
-<script type="text/javascript" src={'javascript/ngadminui/ace/ace.js'|ezdesign}></script>
-<script type="text/javascript" src={'javascript/ngadminui/ace/ext-language_tools.js'|ezdesign}></script>
-<script type="text/javascript" src={'javascript/ngadminui/app.js'|ezdesign}></script>
+<script type="text/javascript" src={'javascript/ngadminui/bootstrap.js'|exp_adminui_asset}></script>
+<script type="text/javascript" src={'javascript/ngadminui/ace/ace.js'|exp_adminui_asset}></script>
+<script type="text/javascript" src={'javascript/ngadminui/ace/ext-language_tools.js'|exp_adminui_asset}></script>
+<script type="text/javascript" src={'javascript/ngadminui/app.js'|exp_adminui_asset}></script>
 {* the resizable details panel of the content view (preview.tpl) *}
-<script type="text/javascript" src={'javascript/exp_adminui_details_resizer.js'|ezdesign}></script>
+<script type="text/javascript" src={'javascript/exp_adminui_details_resizer.js'|exp_adminui_asset}></script>
 {* app.js points Ace at the bundle's public path; point it at this design's copy *}
 <script type="text/javascript">if ( window.ace ) ace.config.set( 'basePath', {'extension/exp_adminui/design/adminui/javascript/ngadminui/ace'|ezroot( 'single' )} );</script>

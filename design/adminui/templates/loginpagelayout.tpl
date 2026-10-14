@@ -8,11 +8,11 @@
     <title>{ezini( 'AdminUISettings', 'Title', 'exp_adminui.ini' )|wash}</title>
     <meta name="generator" content="{ezini( 'AdminUISettings', 'Title', 'exp_adminui.ini' )|wash}" />
     <link rel="shortcut icon" href={'exponential/favicon.ico'|ezimage} />
-    <link rel="stylesheet" type="text/css" href={'stylesheets/font-awesome.css'|ezdesign} />
-    <link rel="stylesheet" type="text/css" href={'stylesheets/icomoon.css'|ezdesign} />
-    <link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|ezdesign} />
-    <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rem.css'|ezdesign} />
-    <link rel="stylesheet" type="text/css" href={'stylesheets/adminui.css'|ezdesign} />
+    <link rel="stylesheet" type="text/css" href={'stylesheets/font-awesome.css'|exp_adminui_asset} />
+    <link rel="stylesheet" type="text/css" href={'stylesheets/icomoon.css'|exp_adminui_asset} />
+    <link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|exp_adminui_asset} />
+    <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rem.css'|exp_adminui_asset} />
+    <link rel="stylesheet" type="text/css" href={'stylesheets/adminui.css'|exp_adminui_asset} />
 </head>
 <body class="loginpage">
     {$module_result.content}
