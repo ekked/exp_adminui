@@ -6,7 +6,7 @@
    by javascript/exp_adminui_details_resizer.js): set here, so the page opens at that width. Only whole numbers in
    the handle's range are used; anything else leaves the stylesheet's default. *}
 {def $adminui_details_width = ezpreference( 'exp_adminui_details_width' )|int}
-{if or( $adminui_details_width|lt( 200 ), $adminui_details_width|gt( 640 ) )}
+{if or( $adminui_details_width|lt( 160 ), $adminui_details_width|gt( 640 ) )}
     {set $adminui_details_width = 0}
 {/if}
 <!DOCTYPE html>

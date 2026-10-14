@@ -67,10 +67,14 @@ those paths (`images/icons/kp/<size>/filesystems/...`, listed in ASSETS.md) inst
 
 | Preference | Set by | Values |
 |---|---|---|
-| `exp_adminui_details_width` | the handle on the left edge of the content view's details panel (`preview.tpl`, `javascript/exp_adminui_details_resizer.js`): drag it with the mouse or a finger, or focus it and use the arrow keys (Shift for bigger steps, Home and End for the limits, a double click for the default) | the width in pixels, 200 to 640; empty or out of range means the default 320 |
+| `exp_adminui_details_width` | the handle on the left edge of the content view's details panel (`preview.tpl`, `javascript/exp_adminui_details_resizer.js`): drag it with the mouse or a finger, or focus it and use the arrow keys (Shift for bigger steps, Home and End for the limits, a double click for the default) | the width in pixels, 160 to 640 (200 to 640 where there is room); empty or out of range means the default 320 |
 
 The width is saved once at the end of a drag, or 0.6 s after the last key press, through `user/preferences`
 (`set_and_exit`, as `$.ez.setPreference` of ezjscore does), so it follows the user to every browser.
 `pagelayout.tpl` reads it back and sets `--exp-adminui-details-width` on `<html>`, so the page opens at that width.
-The content next to the panel keeps at least 360 px. Below 982 px the panel is stacked under the content and the
-handle is hidden.
+The content next to the panel keeps at least 360 px: on a narrower window a width saved on a wider one is held in
+that room (the saved value is not changed), and where 200 px do not fit the minimum gives way, down to 160 px.
+The panel stays beside the content, with the handle, down to a 720 px wide window, so also at 200 % zoom (a window
+of about 960 px): the navigation column and the tree take 50 px below about 800 px, 260 px up to
+about 900 px and 340 px above, so the preview is at least about 540 px there. Below 720 px the panel is stacked
+under the content and the handle is hidden.

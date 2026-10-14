@@ -14,7 +14,8 @@
 
     var PREFERENCE = 'exp_adminui_details_width',
         MIN = 200, MAX = 640, DEFAULT = 320,
-        MAIN_MIN = 360,          // the content next to the panel keeps at least this much
+        FLOOR = 160,             // where the room is short, the minimum gives way down to this
+        MAIN_MIN = 360,          // the content next to the panel keeps at least this much (as in adminui.css)
         STEP = 16, BIG_STEP = 64,
         KEY_SAVE_DELAY = 600;
 
@@ -37,15 +38,23 @@
             return handle.offsetWidth > 0;
         }
 
+        // the range follows the room beside the content, as the stylesheet's min-width and max-width do: on a narrow
+        // window a width saved on a wide one is held in that room, and the minimum gives way where 200px do not fit
+        function minWidth()
+        {
+            var room = preview.clientWidth - MAIN_MIN;
+            return Math.max( FLOOR, Math.min( MIN, room ) );
+        }
+
         function maxWidth()
         {
             var room = preview.clientWidth - MAIN_MIN;
-            return Math.max( MIN, Math.min( MAX, room ) );
+            return Math.max( minWidth(), Math.min( MAX, room ) );
         }
 
         function clamp( width )
         {
-            return Math.max( MIN, Math.min( maxWidth(), Math.round( width ) ) );
+            return Math.max( minWidth(), Math.min( maxWidth(), Math.round( width ) ) );
         }
 
         function currentWidth()
@@ -57,6 +66,7 @@
         function describe( width )
         {
             handle.setAttribute( 'aria-valuenow', String( width ) );
+            handle.setAttribute( 'aria-valuemin', String( minWidth() ) );
             handle.setAttribute( 'aria-valuemax', String( maxWidth() ) );
             handle.setAttribute( 'aria-valuetext', width + ' pixels' );
         }
@@ -146,7 +156,7 @@
                 // the handle is on the left edge: left widens the panel, right narrows it
                 case 'ArrowLeft': case 'ArrowUp': next = width + step; break;
                 case 'ArrowRight': case 'ArrowDown': next = width - step; break;
-                case 'Home': next = MIN; break;
+                case 'Home': next = minWidth(); break;
                 case 'End': next = maxWidth(); break;
                 default: return;
             }

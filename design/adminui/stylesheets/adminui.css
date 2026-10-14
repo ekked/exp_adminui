@@ -134,16 +134,28 @@ table th a:hover { color: #fff; text-decoration: underline; }
    Here it keeps its width (320px by default), which the user can change with the handle on its left edge (mouse,
    touch, or the arrow keys on the focused handle); javascript/exp_adminui_details_resizer.js saves it in the user
    preference exp_adminui_details_width and pagelayout.tpl sets it back as --exp-adminui-details-width. The content
-   next to it keeps at least 360px. Below 982px style.css stacks the panel under the content: no handle there. */
+   next to it keeps at least 360px: the width is held in that room whatever was saved on a wider screen, and where
+   the room is less than 200px the panel's minimum gives way, down to 160px.
+   style.css stacks the panel under the content below 982px. At 200% zoom (about 960 CSS px) that hid the panel's
+   width and its handle, so here it stays beside the content down to 720px. The room it needs is the navigation
+   column and the tree beside the preview plus 360px + 200px: the preview is 50px narrower than the window below
+   about 800px (no tree), 260px narrower from there (a 160px tree) and 340px narrower from about 900px (a 240px
+   tree), so its narrowest point at or above 720px is about 540px, which still leaves 180px for the panel. Only
+   below 720px (phones, tablets held upright) is it stacked, without the handle. */
 .exp-adminui-details-resizer { display: none; }
-@media screen and (min-width: 982px) {
+@media screen and (min-width: 720px) {
+    /* undo style.css's stacked layout of 720px-981px */
+    .content-preview { display: flex; padding: 0; }
     .content-preview > .node-preview-content { flex: 1 1 auto; min-width: 0; }
     .content-preview > .node-info-list {
         position: relative;
         flex: 0 0 auto;
         width: var(--exp-adminui-details-width, 320px);
-        min-width: 200px;
-        max-width: min(640px, calc(100% - 360px));
+        min-width: clamp(160px, calc(100% - 360px), 200px);
+        max-width: max(clamp(160px, calc(100% - 360px), 200px), min(640px, calc(100% - 360px)));
+        margin: 0;
+        border-left: 3px solid #f5f5f5;
+        background: transparent;
         box-sizing: border-box;
     }
     .content-preview > .exp-adminui-details-resizer {
