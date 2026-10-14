@@ -182,3 +182,47 @@ table th a:hover { color: #fff; text-decoration: underline; }
     .content-preview > .exp-adminui-details-resizer:focus-visible::before { background: #2970ef; box-shadow: 0 0 0 3px rgba(41, 112, 239, 0.35); }
     body.exp-adminui-details-resizing, body.exp-adminui-details-resizing * { cursor: col-resize !important; user-select: none; }
 }
+
+/* ---- every view lines up with the breadcrumbs ----------------------------------------------------------
+   The main area (.main-content) has no padding of its own: in the reference each view brings it, the breadcrumbs
+   (#path), the title band (.box-header) and the body (.box-content) each 20px. Views drawn by the other designs in
+   the chain (admin4, admin, standard) and by extensions use markup without those boxes, and so stood at the main
+   area's left edge, 20px out of line with the breadcrumbs. The rules below give that markup the same inset, once,
+   and leave the reference's boxes as they are, so nothing is padded twice. */
+#page .main-content { --exp-adminui-inset: 20px; }
+/* a block straight in the main area that is not one of the reference's boxes and holds none of them: an admin4 or
+   extension page (.nf, .mp, .ezx ...), a standard design form or table */
+#page .main-content > :where(:not(#path, script, style, link, .context-block, .panel, .box-header, .box-content, .box-bc,
+        .title-wrapper, .tab-block, .content-view-full, .ng-layouts-app, .content-search, .content-edit,
+        [class^="message-"], [class*=" message-"], .alert, #exp-adminui-details, .break, .footer, #footer):not(
+        :has(.context-block, .panel, .box-header, .box-content, .box-bc, .content-navigation, .ng-layouts-app, .content-view-full))) {
+    padding-left: var(--exp-adminui-inset);
+    padding-right: var(--exp-adminui-inset);
+}
+/* the legacy admin's boxes inside a context block: the control bar under a list, and a body (.box-ml) that holds
+   its content directly rather than in a .box-content */
+#page .main-content .context-block > .controlbar,
+#page .main-content form > .controlbar,
+#page .main-content > .controlbar,
+#page .main-content .context-block > .box-ml:not(:has(.box-content, .panel)) {
+    padding-left: var(--exp-adminui-inset);
+    padding-right: var(--exp-adminui-inset);
+}
+#page .main-content :is(.box-content, .panel, .box-header) .controlbar { padding-left: 0; padding-right: 0; }
+/* the API access page (design/standard apikey/parts): it centres itself with an auto margin, which in the main
+   area's column flex box gives it no width at all (it is an inline-size container) */
+#page .main-content > .ak.ak-public { margin: 0 0 2.5em; align-self: stretch; box-sizing: content-box; }
+/* the update pages (ezupdate .ezx): a long path in a code element did not break and ran 6px past the main area at
+   200% zoom once the page had its inset */
+#page .main-content .ezx-head > * { min-width: 0; }
+#page .main-content .ezx code { overflow-wrap: anywhere; }
+/* the content view's preview: a long link or a wide image in a text field ran the preview out of the main area at
+   200% zoom; they wrap and scale down instead */
+#page .main-content .node-preview-content .attribute-preview { overflow-wrap: anywhere; }
+#page .main-content .node-preview-content .attribute-preview img { max-width: 100%; height: auto; }
+/* the content view's preview of a class with an admin_preview override of its own (the admin4 overrides for folder,
+   article, image ...): they draw .content-view-full without the .node-preview-content box and its 20px, so the
+   preview of the root folder stood at the panel's edge. The override's box gets that inset and the room next to the
+   details panel. */
+#page .content-preview > .content-view-full, #page .content-preview > form > .content-view-full { padding: 20px; }
+#page .content-preview > .content-view-full, #page .content-preview > form { flex: 1 1 auto; min-width: 0; }

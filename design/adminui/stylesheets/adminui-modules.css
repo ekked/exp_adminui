@@ -10,8 +10,9 @@
    pulled every page 15px past both edges of the main column */
 .main-content > .ng-layouts-app.row { margin-left: 0; margin-right: 0; }
 /* the page area: style.css gives it 30px padding on a whitesmoke ground; the module's admin4 stylesheet forces 10px on
-   white (with !important), which put the content against the column edges */
-.main-content > .ng-layouts-app .layouts-content { padding: 30px 30px 60px !important; background: whitesmoke !important; }
+   white (with !important), which put the content against the column edges. The sides are 20px here, the inset of
+   the breadcrumbs above, so the page lines up with them like every other view (adminui.css). */
+.main-content > .ng-layouts-app .layouts-content { padding: 30px 20px 60px !important; background: whitesmoke !important; }
 /* the mappings list: style.css places it absolutely under the header (top: 164px, a scrolling pane), the module's
    stylesheet keeps it in the flow (position: relative; top: 0 !important). Mixed, the list sat on top of the
    header. In the flow it is here, with the reference's spacing. */
@@ -77,3 +78,9 @@
 #page .ezupdate-tabs a:focus-visible { outline-color: #2970ef; }
 #page .ezupdate-inv-card.is-on { box-shadow: 0 0 0 3px rgba(41, 112, 239, 0.15); }
 #page .ezupdate-inv-search input:focus { box-shadow: 0 0 0 3px rgba(41, 112, 239, 0.18); }
+
+/* the Layouts tab of the content view (explayouts tabs/explayouts.tpl, .ng-layouts-app.row.exp-node-layout-tab): the
+   tab's content already has the view's inset; Bootstrap's .row pulled it 15px out and the module's 10px page padding
+   put it back only part of the way, so it stood 5px left of the other tabs and the breadcrumbs */
+#page .main-content .exp-node-layout-tab.row { margin-left: 0; margin-right: 0; }
+#page .main-content .exp-node-layout-tab > .layouts-content { padding-left: 0 !important; padding-right: 0 !important; }
