@@ -235,3 +235,14 @@ table th a:hover { color: #fff; text-decoration: underline; }
     padding-left: var(--exp-adminui-inset);
     padding-right: var(--exp-adminui-inset);
 }
+/* wide content at 200% zoom (a window of about 960 CSS px leaves the main area about 600px): a legacy list table
+   wider than that scrolls sideways in the box that holds it, so the breadcrumbs and the rest of the view stay in
+   place (the table stays a table, at its full width); a git remote row stacks its actions; a textarea with a cols
+   attribute is held to the main area; the job queue's screen-reader header label stays inside its scrolling box */
+@media (max-width: 1199px) {
+    #page .main-content :is(.box-content, .box-ml, .box-mr, .panel, .block, form):has(> table.list) { overflow-x: auto; }
+    #page .main-content .gm-remote { grid-template-columns: minmax(0, 1fr); }
+    #page .main-content .gm-remote-actions { justify-content: flex-start; }
+}
+#page .main-content textarea { max-width: 100%; box-sizing: border-box; }
+#page .main-content .exp-queue-page .q-scroll { position: relative; }
