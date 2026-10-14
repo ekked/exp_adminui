@@ -121,12 +121,12 @@ table th a:hover { color: #fff; text-decoration: underline; }
     --a4-orange: #2970ef; --a4-orange-dark: #1862e6; --a4-orange-soft: rgba(41, 112, 239, 0.12);
     --exp-accent: #2970ef; --exp-accent-dark: #1862e6; --exp-accent-ring: rgba(41, 112, 239, 0.18);
 }
-/* the redesigned pages with an accent of their own (languages, maintenance, sections, workflow processes, cronjobs,
-   states: #c2410c, white text on it 5.2:1). The blue here keeps white text on it above 5.5:1. */
-#page .exp-languages, #page .exp-maintenance, #page .exp-sections, #page .exp-processes, #page .exp-cronjobs, #page .exp-states {
-    --lg-accent: #1a5fd8; --lg-accent-hover: #1450b8; --mt-accent: #1a5fd8; --mt-accent-hover: #1450b8;
-    --sc-accent: #1a5fd8; --sc-accent-hover: #1450b8; --wf-accent: #1a5fd8; --wf-accent-hover: #1450b8;
-    --cj-accent: #1a5fd8; --cj-accent-hover: #1450b8; --st-accent: #1a5fd8; --st-accent-hover: #1450b8;
+/* The administration's shared components (components.css, loaded before this file) take their accent from the --a4-accent*
+   tokens; inside the Admin UI they are its blue. Filled controls with white text (-strong) and accent text (-text) use
+   the darker blue, white text on it above 5.5:1; -press is their hovered fill. */
+:root {
+    --a4-accent: #2970ef; --a4-accent-hover: #1862e6; --a4-accent-strong: #1a5fd8; --a4-accent-press: #1450b8;
+    --a4-accent-text: #1a5fd8; --a4-accent-soft: rgba(41, 112, 239, 0.12); --a4-ring: rgba(41, 112, 239, 0.45);
 }
 
 /* ---- the details panel of the content view (preview.tpl, style.css ".node-info-list") --------------------------
