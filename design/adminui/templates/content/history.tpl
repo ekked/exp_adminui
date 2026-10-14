@@ -35,8 +35,10 @@
 
 {def $page_limit   = 30
      $list_count   = fetch( 'content', 'version_count', hash( 'contentobject', $object ))}
-<div class="path-edit-container"></div>
+{* The breadcrumbs are moved into .path-edit-container by app.js. It sits inside the form: straight in the main area it
+   took the main area's 20px inset on top of the breadcrumbs' own, and stood 20px right of the panels below. *}
 <form name="versionsform" action={concat( '/content/history/', $object.id, '/' )|ezurl} method="post">
+<div class="path-edit-container"></div>
 
     <div class="panel content-history">
 

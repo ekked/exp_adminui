@@ -156,7 +156,9 @@ table.list td.width-280 { max-width: 280px; }
                 <div class="float-break"></div>
             </div>
 
-<div class="content-navigation-childlist admin-dt">
+{* The list scrolls sideways inside its own box when its seven columns do not fit (200% zoom), so the page itself never
+   runs past the main area. *}
+<div class="content-navigation-childlist admin-dt" style="overflow-x: auto;">
     <table class="list" cellspacing="0">
     <tr>
          <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.trashform, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/content/trash' )}"></i></th>
