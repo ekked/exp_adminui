@@ -27,11 +27,20 @@
     {def $i18n_hash = hash()}
 {/if}
 
-{if $uri_string}
+{* the request address: uri_string when the menu template passes it on, else the page's own *}
+{if and( is_set( $uri_string ), $uri_string )}
     {def $current_uri_string = $uri_string}
+{elseif and( is_set( $module_result.uri ), $module_result.uri|trim( '/' ) )}
+    {def $current_uri_string = $module_result.uri|trim( '/' )}
 {else}
     {def $current_uri_string = ezini( 'SiteSettings', 'IndexPage')}
 {/if}
+{* the request address carries the siteaccess of a URI siteaccess (adminui/setup/cache); the links do not *}
+{def $site_prefix = '/'|ezurl( 'no' )|trim( '/' )}
+{if and( $site_prefix|ne( '' ), $current_uri_string|trim( '/' )|begins_with( concat( $site_prefix, '/' ) ) )}
+    {set $current_uri_string = $current_uri_string|trim( '/' )|extract_right( $current_uri_string|trim( '/' )|count_chars|sub( $site_prefix|count_chars, 1 ) )}
+{/if}
+{undef $site_prefix}
 
 
 {if ezini_hasvariable( $ini_section, 'Links', 'menu.ini' )}

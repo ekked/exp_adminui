@@ -246,3 +246,14 @@ table th a:hover { color: #fff; text-decoration: underline; }
 }
 #page .main-content textarea { max-width: 100%; box-sizing: border-box; }
 #page .main-content .exp-queue-page .q-scroll { position: relative; }
+
+/* ---- the left menus: the link lists of parts/ini_menu.tpl and the trees of parts/content/menu.tpl,
+   parts/user/menu.tpl and parts/newsletter/menu.tpl. style.css draws their links in the link blue (3.58:1 on the grey
+   column) and the current item in the reference's orange (2.07:1 on the column, 2.61:1 on its white row), and
+   pagelayout.css gives the name of the current tree node its red (3.72:1); the accent text blue reads above 4.5:1 on
+   both. */
+.left-column .leftmenu-items-list > li > a,
+.left-column .leftmenu-items-list > li.current > a,
+.left-column #trash a,
+#content-tree-menu .currentnode > a { color: var(--a4-accent-text); }
+#contentstructure #content-tree-menu li.currentnode > a.image-text span.node-name-normal { color: inherit; }

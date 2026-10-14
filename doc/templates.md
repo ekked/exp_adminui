@@ -176,6 +176,8 @@ only adminui has it). Generated from the files; see merging.md for how "merged" 
 | `parts/ini_menu.tpl` | merged | `design/admin4` |
 | `parts/media/menu.tpl` | merged | `design/admin4` |
 | `parts/my/menu.tpl` | merged | `design/admin4` |
+| `parts/newsletter/menu.tpl` | new | cjw_newsletter `parts/newsletter/menu.tpl` |
+| `parts/newsletter/tree_list.tpl` | new | cjw_newsletter `contentstructuremenu/4_newsletter_list.tpl`, `5_newsletter_list_virtual.tpl` |
 | `parts/setup/menu.tpl` | merged | `design/admin4` |
 | `parts/shop/menu.tpl` | merged | `design/admin4` |
 | `parts/tags/menu.tpl` | copy |  |
