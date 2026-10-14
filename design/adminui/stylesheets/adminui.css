@@ -226,3 +226,12 @@ table th a:hover { color: #fff; text-decoration: underline; }
    details panel. */
 #page .content-preview > .content-view-full, #page .content-preview > form > .content-view-full { padding: 20px; }
 #page .content-preview > .content-view-full, #page .content-preview > form { flex: 1 1 auto; min-width: 0; }
+/* the design/admin pages that draw their own card (.exp-standalone: class copy and language choice, package
+   uninstall, PDF export edit, role copy ...): the card centres itself at 980-1080px with a margin and its own
+   padding, reset there only inside admin4's #maincontent, which this design has not. Here it is part of the view,
+   with the breadcrumbs' inset when it stands straight in the main area. */
+#page .main-content .exp-standalone { max-width: none; margin: 0; padding: 0; border-radius: 0; background: transparent; box-shadow: none; }
+#page .main-content > .exp-standalone:not(:has(.context-block, .panel, .box-header, .box-content, .box-bc)) {
+    padding-left: var(--exp-adminui-inset);
+    padding-right: var(--exp-adminui-inset);
+}
