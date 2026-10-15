@@ -185,7 +185,7 @@ function _setSubstituteValue( key, value )
    'event' This parameter is for the mouse event.
    'menuID' is the identification of the menu to use.
    'substituteValues' is an associative array. The string value of each item in the menu will have they keys, substituted by the value in this array.
-   'menuHeader' If the menu has a header it is replaced with this value.
+   'menuHeader' If the menu has a header it is replaced with this text (plain text, not markup).
    'disableID' If this id is found in the list of known disabled for this menu the item is disabled.
  */
 function _showTopLevel( event, menuID, substituteValues, menuHeader, disableIDList, disableMenuID )
@@ -347,11 +347,11 @@ function _doItemSubstitution( menuID, menuHeader )
         }
     }
 
-    // set header
+    // set header: the header is text (a node or class name), never markup
     if ( menuHeader && typeof( menuArray[menuID]['headerID'] ) != 'undefined' )
     {
         var header = document.getElementById( menuArray[menuID]['headerID'] );
-        if ( header ) header.innerHTML = menuHeader;
+        if ( header ) header.textContent = String( menuHeader );
     }
 }
 

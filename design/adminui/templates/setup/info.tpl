@@ -498,7 +498,7 @@
 
     {if $can_flush_caches}
     <form method="post" action={'/setup/info'|ezurl} style="margin-top: 0.7em;">
-        <button type="submit" class="button" name="HttpCacheAction" value="purge" onclick="return confirm( '{'Purge every cached page?'|i18n( 'design/admin/setup/info' )|wash( javascript )}' );">{'Purge all pages'|i18n( 'design/admin/setup/info' )}</button>
+        <button type="submit" class="button" name="HttpCacheAction" value="purge" onclick="return confirm( '{'Purge every cached page?'|i18n( 'design/admin/setup/info' )|wash( javascript )|wash}' );">{'Purge all pages'|i18n( 'design/admin/setup/info' )}</button>
         <button type="submit" class="button" name="HttpCacheAction" value="gc">{'Remove dead entries'|i18n( 'design/admin/setup/info' )}</button>
         {if $http_cache.stats}<button type="submit" class="button" name="HttpCacheAction" value="reset">{'Reset counters'|i18n( 'design/admin/setup/info' )}</button>{/if}
     </form>
