@@ -26,6 +26,18 @@
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>...</strong></button>
                     <ul class="dropdown-menu dropdown-menu-right">
+                        {* Upload: ezmultiupload's upload page for this node, only where the module is enabled and
+                           fetch( 'ezmultiupload', 'can_upload' ) says the current user can upload here (the
+                           ezmultiupload/upload policy, read and create access, a container or a configured upload
+                           class or node); published objects only. The icon is components.css's Bootstrap Icon. *}
+                        {def $exp_can_upload = false()}
+                        {if and( is_set( $node.node_id ), eq( $node.object.status, 1 ) )}
+                            {if ezmodule( 'ezmultiupload/upload' )}{set $exp_can_upload = fetch( 'ezmultiupload', 'can_upload', hash( 'node_id', $node.node_id ) )}{/if}
+                        {/if}
+                        {if $exp_can_upload}
+                            <li><a class="exp-node-upload" href={concat( 'ezmultiupload/upload/', $node.node_id )|ezurl} title="{'Upload files to this location.'|i18n( 'design/admin/node/view/full' )|wash}"><span class="a4-icon a4-bi-upload" aria-hidden="true"></span> {'Upload'|i18n( 'design/admin/node/view/full' )}</a></li>
+                        {/if}
+                        {undef $exp_can_upload}
                         {* Move button. *}
                         {if $node.can_move}
                             <li><input type="submit" name="MoveNodeButton" value="{'Move'|i18n( 'design/admin/node/view/full' )}" title="{'Move this item to another location.'|i18n( 'design/admin/node/view/full' )}" /></li>
