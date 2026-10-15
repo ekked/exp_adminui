@@ -53,12 +53,12 @@
    panels. Each is darkened within its hue, only here. Measured values in the comments. */
 #page .rad-tag.is-ready { color: #19733f; }                                      /* #1f8a4c on #fafafb, 4.20 */
 #page .gm-avatar { background-color: #8f5a33; }                                  /* white on #a66a3f, 4.42 */
-#page .xe-handle { color: #6f7b88; }                                             /* drag handle #9aa5b1, 2.50 */
+#page .xe-handle { color: var(--a4-muted); }                                     /* drag handle #9aa5b1, 2.50; the muted token, light and dark */
 #page .au-quick a, #page .sd-toc a, #page .exp-bm-row a.exp-bm-link,
 #page .main-content td a, #page .main-content p.path a.path { color: #1a5fd8; }  /* #2970ef on tints, 4.03 to 4.32 */
 #page .exp-bm-meta, #page .exp-bm-hint { color: #666; }                          /* #777 on white, 4.48 */
 #page .xe-help, #page .xe-help code, #page #xe-sep-help code, #page .xe-colinfo small, #page .xe-node-count,
-#page .xe-tab-active small, #page .xrowextract p { color: #535e6a; }            /* #66727f on #f3f5f8 / #eaf1ff, 4.33 to 4.49 */
+#page .xe-tab-active small, #page .xrowextract p { color: var(--a4-muted); }    /* #66727f on #f3f5f8 / #eaf1ff, 4.33 to 4.49; the token 5.2 and more */
 #page .gm-log-meta, #page .gm-when, #page .gm-copy, #page .gm-muted,
 #page .extension-order-hint, #page .extension-order-count { color: #56616e; }   /* #6b7785, 4.19 to 4.44 */
 #page .ezupdate-bar .ezupdate-method, #page .ezupdate-badge.ezupdate-good { color: #4f5d6e; }  /* #66768a, 4.06 to 4.33 */
@@ -67,8 +67,7 @@
 #page .pvf-badge-muted, #page .pvf-badges .label { background-color: #666; }      /* white on #777, 4.48 */
 #page .exp-dt-first:disabled, #page .exp-dt-prev:disabled, #page .exp-dt-next:disabled, #page .exp-dt-last:disabled { color: #767676; }  /* #a9a9a9, 2.35 */
 /* second pass, measured again: colours set through each module's own variables or inline styles */
-#page .xe-preview, #page .xe-view { --xe-muted: #535e6a; }                         /* xrowextract #66727f, 4.33 to 4.49 */
-#page .xe-handle { color: #5b6672; }                                              /* drag handle, 4.32 after the first pass */
+#page .xe-preview, #page .xe-view { --xe-muted: var(--a4-muted); }                 /* xrowextract #66727f, 4.33 to 4.49 */
 #page .gm-avatar { background-color: #8f5a33 !important; }                         /* set inline per author: white on #a66a3f, 4.42 */
 #page .sd-pills .sd-pill.warning { background-color: #9c5d00; }                    /* white on #c77700, 3.46 */
 #page .main-content span.text.disabled { color: #686868; }                         /* disabled pager label, #d0d0d0 */
