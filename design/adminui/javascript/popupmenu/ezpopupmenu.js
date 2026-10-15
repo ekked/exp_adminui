@@ -2,8 +2,9 @@
 // Created on: <1-Aug-2002 16:45:00 fh>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
+// SOFTWARE NAME: Exponential
 // SOFTWARE RELEASE: 4.1.x
+// COPYRIGHT NOTICE: Copyright (C) 1998 - 2026 7x & Exponential Foundation
 // COPYRIGHT NOTICE: Copyright (C) 1999-2014 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -39,12 +40,12 @@
   - Multilevel popupmenu
   - Supports all major browsers
   - All HTML code in template
-  - Supports context sensitivity for eZ Publish through:
+  - Supports context sensitivity for Exponential through:
      - String substitution in the href attribute of menuitems.
      - Form submital with string substitution.
 
   Currenty not supported but possible if requested:
-  - Dynamic building of menus based on eZ Publish content.
+  - Dynamic building of menus based on Exponential content.
 
  Public interface:
 ezpopmenu_showTopLevel - This method opens a new top-level popupmenu.
@@ -57,7 +58,7 @@ In order to use the popupmenu javascript you need to provide:
 1. The HTML/CSS structure for you menu(s)
 2. The menuArray javascript array containing the configuration of your popupmenu(s).
 
-eZ Publish provides a default template for this purpose. It is located in popupmenu/popup_menu.tpl. You are encouraged to override this file in the siteacess where you want to use the menu.
+Exponential provides a default template for this purpose. It is located in popupmenu/popup_menu.tpl. You are encouraged to override this file in the siteacess where you want to use the menu.
 
  1. Setting up the HTML/CSS structure for your popup menu(s).
  Your menu should be set up completely with all elements. The following requirements apply:
@@ -147,6 +148,8 @@ var CurrentSubstituteValues = -1;
 {
 //POPUPMENU CONSTANTS
 var EZPOPMENU_OFFSET = 8, EZPOPMENU_SUBOFFSET = 4, EZPOPMENU_SUBTOPOFFSET = 4;
+// The least height of a menu squeezed between the page header and the window's bottom edge (it scrolls)
+var EZPOPMENU_MIN_HEIGHT = 96;
 
 // POPUPMENU VARS
 var CurrentDisableIDList = [];
@@ -156,6 +159,8 @@ var CurrentDisableMenuID = -1;
 var CurrentDisabledMenusItems = {}, DefaultDisabledMenuItemCSSClass = 'menu-item-disabled';;
 // VisibleMenus is an array that holds the names of the currently visible menus
 var VisibleMenus = [];
+// The element that opened the visible top-level menu, and per submenu the item that opened it (keyboard layer)
+var MenuOpener = null, SubMenuOpeners = {};
 
 /*!
   Controls the popup offsets of the menu relative to the mouse position.
@@ -192,11 +197,22 @@ function _showTopLevel( event, menuID, substituteValues, menuHeader, disableIDLi
 {
     if ( !document.getElementById( menuID ) ) return;
     var mousePos = _mouseHandler( event ); // register new mouse position
+    var byKeyboard = _isKeyboardEvent( event );
+    var anchor = null;
 
     if ( substituteValues != -1 ) // new topmenu
     {
         _hideAll();
         CurrentSubstituteValues = substituteValues;
+        _setOpener( event );
+        // Opened with the keyboard (Enter on the trigger, Shift+F10): no mouse position, so open under the trigger.
+        if ( byKeyboard && MenuOpener && MenuOpener.getBoundingClientRect )
+        {
+            var rect = MenuOpener.getBoundingClientRect(), screenData = _getScreenProperties();
+            mousePos = { 'x': rect.left + screenData.ScrollX - EZPOPMENU_OFFSET, 'y': rect.bottom + screenData.ScrollY - EZPOPMENU_OFFSET };
+            // below the trigger, or above it when there is no room below
+            anchor = { 'top': rect.top + screenData.ScrollY, 'bottom': rect.bottom + screenData.ScrollY };
+        }
     }
 
     if ( disableIDList && disableIDList != -1 )
@@ -210,7 +226,8 @@ function _showTopLevel( event, menuID, substituteValues, menuHeader, disableIDLi
 
     // make menu visible
     _makeVisible( menuID );
-    _moveTopLevelOnScreen( menuID, mousePos );
+    _moveTopLevelOnScreen( menuID, mousePos, anchor );
+    if ( byKeyboard ) _focusItem( menuID, 0 );
 }
 
 /*!
@@ -233,6 +250,27 @@ function _showSubLevel( event, menuID, overItem )
     // make menu visible (show first since width is used in _moveSubLevelOnScreen)
     _makeVisible( menuID );
     _moveSubLevelOnScreen( menuID, overItem );
+
+    var opener = document.getElementById( overItem );
+    if ( opener )
+    {
+        SubMenuOpeners[menuID] = opener;
+        opener.setAttribute( 'aria-expanded', 'true' );
+    }
+
+    // A submenu whose items are filled in when it opens (menuArray[menuID]['onshow'], e.g. the classes below the
+    // node of the Export menu): it gets the menu, the values of the item (%nodeID% ...) and a function to call
+    // once its items changed, which gives the new items their roles and places the menu again for its new size.
+    var onShow = menuArray[menuID]['onshow'];
+    if ( typeof onShow === 'function' )
+    {
+        onShow( document.getElementById( menuID ), CurrentSubstituteValues, function()
+        {
+            if ( VisibleMenus[menuArray[menuID]['depth']] !== menuID ) return;
+            _decorate( menuID );
+            _moveSubLevelOnScreen( menuID, overItem );
+        } );
+    }
 }
 
 /*!
@@ -245,10 +283,31 @@ function _makeVisible( menuID )
     var el = document.getElementById( menuID );
     if ( el ) el.style.display = 'block';
     VisibleMenus[menuArray[menuID]['depth']] = menuID;
+    _decorate( menuID );
 
-    document.getElementById( menuID ).onmouseover = function() { document.onmousedown = null; }
-    document.getElementById( menuID ).onmouseout = function() { document.onmousedown = _hideAll; }
-    document.onmousedown = _hideAll;
+    _listenForOutsideClicks();
+}
+
+/*!
+  A press of the mouse outside every shown menu hides them all. The listener is added once, beside any other
+  mousedown handler of the page (an assignment to document.onmousedown replaced the page's own), and does nothing
+  while no menu is shown.
+*/
+var OutsideClickListening = false;
+function _listenForOutsideClicks()
+{
+    if ( OutsideClickListening || !document.addEventListener ) return;
+    OutsideClickListening = true;
+    document.addEventListener( 'mousedown', function( e )
+    {
+        if ( !VisibleMenus[0] || VisibleMenus[0] == 'none' ) return;
+        for ( var i = 0, l = VisibleMenus.length; i < l && VisibleMenus[i] != 'none'; i++ )
+        {
+            var menu = document.getElementById( VisibleMenus[i] );
+            if ( menu && e.target && menu.contains( e.target ) ) return;
+        }
+        _hideAll();
+    }, false );
 }
 
 /*!
@@ -281,30 +340,7 @@ function _doItemSubstitution( menuID, menuHeader )
 
         if ( loopingVariable )
         {
-            var content = '';
-
-            for ( var localVariableIndex in CurrentSubstituteValues[loopingVariable] )
-            {
-                var localVariable = CurrentSubstituteValues[loopingVariable][localVariableIndex];
-                if ( typeof localVariable != 'object' )
-                    continue;
-
-                var partialContent = menuArray[menuID]['elements'][i]['content'];
-                for ( var substItem in CurrentSubstituteValues )
-                {
-                    if ( typeof CurrentSubstituteValues[substItem] != 'object' && typeof CurrentSubstituteValues[substItem] != 'function' )
-                    {
-                        partialContent = partialContent.replace( substItem, CurrentSubstituteValues[substItem] );
-                    }
-                }
-                for ( var localItem in localVariable )
-                {
-                    partialContent = partialContent.replace( '%' + localItem + '%', localVariable[localItem] );
-                }
-                content += partialContent;
-            }
-
-            hrefElement.innerHTML = content;
+            _fillItems( hrefElement, menuArray[menuID]['elements'][i]['content'], CurrentSubstituteValues[loopingVariable] );
         }
 
         var disabledForElement = false;
@@ -355,6 +391,81 @@ function _doItemSubstitution( menuID, menuHeader )
     }
 }
 
+/*!
+  Fills element with one copy of the item markup 'content' (the menu template's own markup) per entry of the
+  looping variable (%languages%, %classList%). The values - the entry's own (%name%, %locale%, %classID%) and the
+  plain values of the menu (%nodeID%, ...) - are data: they are put into the parsed copy as text and as attribute
+  values, escaped for a script in an event handler attribute, so a language or class name never becomes markup.
+ */
+function _fillItems( element, content, entries )
+{
+    while ( element.firstChild ) element.removeChild( element.firstChild );
+    if ( !content ) return;
+    for ( var index in entries )
+    {
+        var entry = entries[index];
+        if ( typeof entry != 'object' || entry === null )
+            continue;
+
+        var values = {};
+        for ( var localItem in entry )
+        {
+            values['%' + localItem + '%'] = entry[localItem];
+        }
+        for ( var substItem in CurrentSubstituteValues )
+        {
+            if ( typeof CurrentSubstituteValues[substItem] != 'object' && typeof CurrentSubstituteValues[substItem] != 'function' )
+            {
+                values[substItem] = CurrentSubstituteValues[substItem];
+            }
+        }
+
+        var holder = document.createElement( 'div' );
+        holder.innerHTML = content;
+        _fillNodes( holder, values );
+        while ( holder.firstChild ) element.appendChild( holder.firstChild );
+    }
+}
+
+function _fillNodes( parent, values )
+{
+    for ( var node = parent.firstChild; node; node = node.nextSibling )
+    {
+        if ( node.nodeType === 3 )
+        {
+            node.nodeValue = _fillString( node.nodeValue, values, false );
+        }
+        else if ( node.nodeType === 1 )
+        {
+            for ( var a = 0; a < node.attributes.length; a++ )
+            {
+                var name = node.attributes[a].name, value = node.attributes[a].value;
+                var filled = _fillString( value, values, /^on/i.test( name ) );
+                if ( filled !== value ) node.setAttribute( name, filled );
+            }
+            _fillNodes( node, values );
+        }
+    }
+}
+
+// Every placeholder of values in text, in one pass (a value that holds a placeholder stays as it is); in a script
+// (an event handler attribute) as the content of a string literal.
+function _fillString( text, values, inScript )
+{
+    var keys = [];
+    for ( var key in values )
+    {
+        if ( text.indexOf( key ) !== -1 ) keys.push( key.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' ) );
+    }
+    if ( !keys.length ) return text;
+    keys.sort( function( x, y ) { return y.length - x.length; } );
+    return text.replace( new RegExp( keys.join( '|' ), 'g' ), function( key )
+    {
+        var value = String( values[key] );
+        return inScript ? JSON.stringify( value ).slice( 1, -1 ).replace( /'/g, "\\'" ) : value;
+    } );
+}
+
 function _substituteString( replaceString, substituteValues )
 {
     // loop though substitute values and substitute for each of them
@@ -375,19 +486,22 @@ function _substituteString( replaceString, substituteValues )
   The menu is repositioned like most OS's do if it doesn't fit at the normal position: is moved
   to the opposite side of the mouse pointer/menu.
 */
-function _moveTopLevelOnScreen( menuID, mousePos )
+function _moveTopLevelOnScreen( menuID, mousePos, anchor )
 {
     var menuElement = document.getElementById( menuID ), screenData = _getScreenProperties();
-    var newX = 0, newY = 0;
+    var newX = 0; var newY = 0;
 
-    // compensate if we are below the screen
-    if ( (screenData.ScrollY + screenData.Height) < ( mousePos.y + EZPOPMENU_OFFSET + menuElement.offsetHeight ) )
-        newY = mousePos.y - EZPOPMENU_OFFSET - menuElement.offsetHeight;
-    // compensate if we are above the top of the screen
-    else if ( screenData.ScrollY > EZPOPMENU_OFFSET + mousePos.y )
-        newY = screenData.ScrollY;
-    else
-        newY = mousePos.y + EZPOPMENU_OFFSET;
+    // The menu opens below the pointer (or below the trigger it was opened from with the keyboard, anchor), or
+    // above it when it does not fit below. The visible area starts under a fixed page header: a menu moved to the
+    // window's top edge was drawn under the header, away from the row it belongs to. When it fits on neither side,
+    // it opens on the side with more room, as tall as that room (it scrolls).
+    menuElement.style.maxHeight = '';
+    var areaTop = screenData.ScrollY + _fixedHeaderHeight(), areaBottom = screenData.ScrollY + screenData.Height;
+    var below = anchor ? anchor.bottom : mousePos.y + EZPOPMENU_OFFSET;
+    var above = anchor ? anchor.top : mousePos.y - EZPOPMENU_OFFSET;
+    var place = _verticalPlace( areaTop, areaBottom, above, below, menuElement.offsetHeight, EZPOPMENU_MIN_HEIGHT );
+    newY = place.top;
+    if ( place.maxHeight !== null ) menuElement.style.maxHeight = place.maxHeight + 'px';
 
     // compensate if we are to the right of the screen
     if ( (screenData.ScrollX + screenData.Width) < ( mousePos.x + EZPOPMENU_OFFSET + menuElement.offsetWidth ) )
@@ -398,11 +512,46 @@ function _moveTopLevelOnScreen( menuID, mousePos )
     else
         newX = mousePos.x + EZPOPMENU_OFFSET;
     // reposition menu
-    if(newY<=0){
-        newY = 4;
-    }
     menuElement.style.left = newX + "px";
     menuElement.style.top = newY + "px";
+}
+
+/*!
+  Where a menu of the given height goes in the visible area areaTop..areaBottom (page coordinates), opened from a
+  point or trigger whose free edges are above (its top) and below (its bottom): { top, maxHeight }, maxHeight null
+  when the menu keeps its own height. Below when it fits, else above, else on the side with more room, as tall as
+  that room but at least minHeight; a menu that needs more than the room on that side stays inside the visible area
+  (it then covers the trigger) instead of reaching under the header or past the window's bottom edge.
+*/
+function _verticalPlace( areaTop, areaBottom, above, below, height, minHeight )
+{
+    var visible = Math.max( areaBottom - areaTop, 0 );
+    if ( below + height <= areaBottom )
+        return { 'top': below, 'maxHeight': null };
+    if ( above - height >= areaTop )
+        return { 'top': above - height, 'maxHeight': null };
+    var maxHeight;
+    if ( areaBottom - below >= above - areaTop )
+    {
+        maxHeight = Math.min( Math.max( areaBottom - below, minHeight ), visible );
+        return { 'top': Math.max( areaTop, Math.min( below, areaBottom - maxHeight ) ), 'maxHeight': maxHeight };
+    }
+    maxHeight = Math.min( Math.max( above - areaTop, minHeight ), visible );
+    return { 'top': Math.max( areaTop, above - maxHeight ), 'maxHeight': maxHeight };
+}
+
+/*!
+  The height of a page header that stays at the top of the window (#header with position fixed or sticky), 0
+  without one.
+*/
+function _fixedHeaderHeight()
+{
+    var header = document.getElementById( 'header' );
+    if ( !header || !window.getComputedStyle || !header.getBoundingClientRect ) return 0;
+    var position = window.getComputedStyle( header ).position;
+    if ( position !== 'fixed' && position !== 'sticky' ) return 0;
+    var bottom = header.getBoundingClientRect().bottom;
+    return bottom > 0 ? bottom : 0;
 }
 
 function _mouseHandler( e )
@@ -428,45 +577,72 @@ function _mouseHandler( e )
 function _moveSubLevelOnScreen( menuID, alignItem )
 {
     var menuElement = document.getElementById( menuID ), screenData = _getScreenProperties();
-    var newX = 0, newY = 0, newBottom = '', windowH = window.innerHeight, elementH = menuElement.offsetHeight;
+    var newX = 0; var newY = 0;
+    // a submenu gets no height limit; one left from an earlier opening would cut it off
+    menuElement.style.maxHeight = '';
+    var areaTop = screenData.ScrollY + _fixedHeaderHeight();
 
-    alignElement = document.getElementById( alignItem );
-    parentElement = document.getElementById( VisibleMenus[menuArray[menuID]['depth'] - 1] );
+    var alignElement = document.getElementById( alignItem );
+    var parentElement = document.getElementById( VisibleMenus[menuArray[menuID]['depth'] - 1] );
 
     if ( alignElement && parentElement )
     {
-        newX = parseInt( parentElement.style.left ) + menuElement.offsetWidth - EZPOPMENU_SUBOFFSET;
-        newY = parseInt( parentElement.style.top ) + alignElement.offsetTop + EZPOPMENU_SUBTOPOFFSET;
+        // Next to the parent menu: its width, not the submenu's (they differ now that menus size to their items),
+        // at the item that opened it (less the parent's own scrolling)
+        var parentLeft = parseInt( parentElement.style.left );
+        newX = _horizontalSubPlace( screenData.ScrollX, screenData.ScrollX + screenData.Width, parentLeft,
+                                    parentLeft + parentElement.offsetWidth, menuElement.offsetWidth, EZPOPMENU_SUBOFFSET );
+        newY = parseInt( parentElement.style.top ) + alignElement.offsetTop - parentElement.scrollTop + EZPOPMENU_SUBTOPOFFSET;
     }
-    // compensate if we are below the screen
-    if ( ( screenData.ScrollY + windowH ) < ( newY + elementH ) )
-        newY = screenData.ScrollY + windowH - elementH;
-    // compensate if above the screen
-    else if ( screenData.ScrollY > newY )
-        newY = screenData.ScrollY;
-
-    // compensate if we are to the right of the screen
-    if ( ( screenData.ScrollX + screenData.Width ) < ( newX + menuElement.offsetWidth ) )
+    else
     {
-        newX = parseInt( parentElement.style.left ) + EZPOPMENU_SUBOFFSET - menuElement.offsetWidth;
+        // (without its parent menu the submenu stays where it is: there is no side to move it to)
+        newX = parseInt( menuElement.style.left ) || 0;
     }
-    // to the left is impossible
-    if(newY <= 3){
-        newY = 4;
-    }
+    // up from the window's bottom edge, never above the visible part (under a fixed header); taller than that
+    // part, it gets its height and scrolls
+    var place = _subVerticalPlace( areaTop, screenData.ScrollY + screenData.Height, newY, menuElement.offsetHeight );
+    newY = place.top;
+    if ( place.maxHeight !== null ) menuElement.style.maxHeight = place.maxHeight + 'px';
+
     // reposition menu
-
-    // if bigger than screen
-    if (windowH < elementH) {
-        newY = 4;
-        newBottom = 4;
-    }
-    $(menuElement).css({'top': newY, 'left': newX, 'bottom': newBottom});
-
+    menuElement.style.left = newX + "px";
+    menuElement.style.top = newY + "px";
 }
 
 /*!
-  Submit the form with id formID. All fields of type hidden will have the texts %nodeID%
+  Where a submenu of the given width goes beside its parent menu (page coordinates, parentLeft..parentRight) in the
+  visible area areaLeft..areaRight, overlapping the parent by overlap: on the right when it fits, else on the left
+  when it fits, else on the side with more room, moved inside the area (a narrow window, a phone); at the area's left
+  edge when it is wider than the area.
+*/
+function _horizontalSubPlace( areaLeft, areaRight, parentLeft, parentRight, width, overlap )
+{
+    var right = parentRight - overlap, left = parentLeft + overlap - width;
+    if ( right + width <= areaRight )
+        return right;
+    if ( left >= areaLeft )
+        return left;
+    var x = ( areaRight - parentRight >= parentLeft - areaLeft ) ? right : left;
+    return Math.max( areaLeft, Math.min( x, areaRight - width ) );
+}
+
+/*!
+  Where a submenu that would start at top goes in the visible area areaTop..areaBottom: { top, maxHeight }, moved up
+  when it reaches past the bottom, never above areaTop; maxHeight (it scrolls) only when it is taller than the area.
+*/
+function _subVerticalPlace( areaTop, areaBottom, top, height )
+{
+    var visible = Math.max( areaBottom - areaTop, 0 );
+    if ( height > visible )
+        return { 'top': areaTop, 'maxHeight': visible };
+    if ( top + height > areaBottom )
+        top = areaBottom - height;
+    return { 'top': Math.max( areaTop, top ), 'maxHeight': null };
+}
+
+/*!
+  Submit the form with id formID. All fields of type hidden, and the form's action, will have the texts %nodeID%
   and %objectID% replaced with the corresponding real values.
 */
 function _submitForm( formID, customSubstitute )
@@ -474,6 +650,18 @@ function _submitForm( formID, customSubstitute )
     var formElement = document.getElementById( formID );
     if ( formElement )
     {
+        var action = formElement.getAttribute( 'action' );
+        if ( action && action.indexOf( '%' ) !== -1 )
+        {
+            // Numbers in a path (%nodeID%): each value is URL-encoded
+            var encoded = {};
+            for ( var key in CurrentSubstituteValues )
+            {
+                if ( typeof CurrentSubstituteValues[key] != 'object' && typeof CurrentSubstituteValues[key] != 'function' )
+                    encoded[key] = encodeURIComponent( String( CurrentSubstituteValues[key] ) );
+            }
+            formElement.setAttribute( 'action', _fillString( action, encoded, false ) );
+        }
         // for all children do replacement
         var children = formElement.childNodes,
             origValue = '', resetInputs = [];
@@ -505,6 +693,7 @@ function _submitForm( formID, customSubstitute )
 
         // restoring the form so that it gets correctly filled
         // if another click from the user occurs
+        if ( action ) formElement.setAttribute( 'action', action );
         for( var i = 0; i != resetInputs.length; i++ )
         {
             resetInputs[i].input.value = resetInputs[i].originalValue;
@@ -526,8 +715,8 @@ function _hide( id )
 */
 function _hideAll()
 {
-    document.onmousedown = null;
     _hideHigher( -1 );
+    if ( MenuOpener ) MenuOpener.setAttribute( 'aria-expanded', 'false' );
 }
 
 /*
@@ -539,6 +728,7 @@ function _hideHigher( level, el )
     {
         el = document.getElementById( VisibleMenus[i] );
         if ( el ) el.style.display = 'none';
+        if ( SubMenuOpeners[VisibleMenus[i]] ) SubMenuOpeners[VisibleMenus[i]].setAttribute( 'aria-expanded', 'false' );
         VisibleMenus[i] = 'none';
     }
 }
@@ -621,6 +811,267 @@ function _getScreenProperties()
 
   return result;
 }
+
+/*
+ * Keyboard and ARIA layer (WAI-ARIA menu pattern). The menus stay plain markup with inline mouse handlers, as
+ * extensions and older templates write them; the roles are added when a menu is shown, so every menu gets them.
+ *
+ * - The trigger gets aria-haspopup="menu" and aria-expanded; a menu opened from the keyboard (Enter or Space on
+ *   the trigger, Shift+F10 or the context menu key on a tree item or table row) opens under the trigger and its
+ *   first item takes the focus.
+ * - Arrow Down/Up, Home and End move between the items, Arrow Right, Enter or Space open a submenu, Arrow Left
+ *   closes it, Enter or Space activate an item, Escape closes the menu and returns the focus to the trigger, Tab
+ *   closes the menu.
+ */
+function _isKeyboardEvent( event )
+{
+    if ( !event ) return true;
+    if ( event.type && event.type.indexOf( 'key' ) === 0 ) return true;
+    // A click made with Enter or Space, or by element.click() (Shift+F10), counts no clicks: detail 0. Its position
+    // in the window is 0, but pageX/pageY are not: they add the scroll offset, so on a scrolled page they would
+    // make it look like a mouse click and open the menu in the window's top left corner.
+    if ( event.type === 'click' && typeof event.detail === 'number' ) return event.detail === 0;
+    return !event.clientX && !event.clientY;
+}
+
+function _setOpener( event )
+{
+    var el = event && ( event.currentTarget || event.target || event.srcElement );
+    if ( !el || el.nodeType !== 1 || el === window || el === document ) el = document.activeElement;
+    if ( el && el.closest ) el = el.closest( 'a, button, [tabindex]' ) || el;
+    if ( !el || el === document.body || ( el.closest && el.closest( 'div.popupmenu' ) ) )
+    {
+        MenuOpener = null;
+        return;
+    }
+    MenuOpener = el;
+    if ( !el.hasAttribute( 'aria-haspopup' ) ) el.setAttribute( 'aria-haspopup', 'menu' );
+    el.setAttribute( 'aria-expanded', 'true' );
+}
+
+function _menuItems( menu )
+{
+    var items = [], links = menu ? menu.getElementsByTagName( 'a' ) : [];
+    for ( var i = 0, l = links.length; i < l; i++ )
+    {
+        if ( links[i].offsetParent !== null || links[i].getClientRects().length ) items.push( links[i] );
+    }
+    return items;
+}
+
+function _decorate( menuID )
+{
+    var menu = document.getElementById( menuID );
+    if ( !menu ) return;
+    menu.setAttribute( 'role', 'menu' );
+
+    var headerID = menuArray[menuID] && menuArray[menuID]['headerID'];
+    if ( headerID && document.getElementById( headerID ) )
+    {
+        var header = document.getElementById( headerID );
+        menu.setAttribute( 'aria-labelledby', headerID );
+        // The title names the menu (aria-labelledby works on hidden elements) but is not a child of it.
+        ( header.parentNode && header.parentNode !== menu ? header.parentNode : header ).setAttribute( 'aria-hidden', 'true' );
+    }
+
+    var links = menu.getElementsByTagName( 'a' );
+    for ( var i = 0, l = links.length; i < l; i++ )
+    {
+        var a = links[i];
+        a.setAttribute( 'role', 'menuitem' );
+        a.setAttribute( 'tabindex', '-1' );
+        if ( /(^|\s)more(\s|$)/.test( a.className ) )
+        {
+            a.setAttribute( 'aria-haspopup', 'menu' );
+            if ( !a.hasAttribute( 'aria-expanded' ) ) a.setAttribute( 'aria-expanded', 'false' );
+        }
+        else
+        {
+            // An item that lost its submenu (a disabled "Create here") must not announce one any more.
+            a.removeAttribute( 'aria-haspopup' );
+            a.removeAttribute( 'aria-expanded' );
+        }
+        if ( /disabled/.test( a.className ) ) a.setAttribute( 'aria-disabled', 'true' );
+        else a.removeAttribute( 'aria-disabled' );
+    }
+    var rules = menu.getElementsByTagName( 'hr' );
+    for ( var j = 0, k = rules.length; j < k; j++ ) rules[j].setAttribute( 'role', 'separator' );
+}
+
+function _focusItem( menuID, index )
+{
+    var items = _menuItems( document.getElementById( menuID ) );
+    if ( !items.length ) return;
+    if ( index < 0 ) index = items.length - 1;
+    items[index % items.length].focus();
+}
+
+function _visibleDepth()
+{
+    var depth = -1;
+    for ( var i = 0, l = VisibleMenus.length; i < l && VisibleMenus[i] != 'none'; i++ ) depth = i;
+    return depth;
+}
+
+function _menuOf( el )
+{
+    var menu = el && el.closest ? el.closest( 'div.popupmenu' ) : null;
+    return menu && menuArray[menu.id] ? menu : null;
+}
+
+function _openSubmenu( item )
+{
+    var menu = _menuOf( item );
+    if ( !menu ) return;
+    var level = menuArray[menu.id]['depth'];
+    // Calls ezpopmenu_showSubLevel(); the submenu may already be open from the mouse hovering the item.
+    if ( typeof item.onmouseover === 'function' ) item.onmouseover.call( item );
+    var sub = VisibleMenus[level + 1];
+    if ( sub && sub != 'none' && SubMenuOpeners[sub] === item ) _focusItem( sub, 0 );
+}
+
+function _activate( item )
+{
+    if ( item.getAttribute( 'aria-disabled' ) === 'true' ) return;
+    if ( item.getAttribute( 'aria-haspopup' ) === 'menu' ) _openSubmenu( item );
+    else item.click();
+}
+
+function _keyHandler( e )
+{
+    var key = e.key, active = document.activeElement;
+
+    // Shift+F10 or the context menu key on a tree item or table row opens that row's menu.
+    if ( ( key === 'ContextMenu' || ( key === 'F10' && e.shiftKey ) ) && active && active.closest && !_menuOf( active ) )
+    {
+        // In a form field (the priority input of a row, a checkbox) the browser's own context menu stays.
+        if ( /^(INPUT|TEXTAREA|SELECT)$/.test( active.tagName ) || active.isContentEditable ) return;
+        var row = active.closest( 'li, tr' ), trigger = null;
+        // The row's own menu button: in the content tree a node's li also holds the li of its loaded sub items,
+        // so a button inside one of those belongs to another node.
+        var candidates = row ? row.querySelectorAll( '[aria-haspopup="menu"]' ) : [];
+        for ( var i = 0; i < candidates.length && !trigger; i++ )
+        {
+            if ( candidates[i].closest( 'li, tr' ) === row )
+                trigger = candidates[i];
+        }
+        if ( trigger )
+        {
+            e.preventDefault();
+            trigger.click();
+        }
+        return;
+    }
+
+    // Space on a link that is a menu button (role="button") opens its menu as Enter does.
+    if ( ( key === ' ' || key === 'Spacebar' ) && active && active.tagName === 'A' && !_menuOf( active ) &&
+         active.getAttribute( 'aria-haspopup' ) === 'menu' )
+    {
+        e.preventDefault();
+        active.click();
+        return;
+    }
+
+    var depth = _visibleDepth();
+    if ( depth < 0 ) return;
+
+    // A menu opened with the mouse: the keys reach it from its trigger or the page, never from a form field.
+    if ( !_menuOf( active ) && active && active !== document.body && active !== MenuOpener && key !== 'Escape' && key !== 'Esc' ) return;
+
+    var menu = _menuOf( active ) || document.getElementById( VisibleMenus[depth] );
+    if ( !menu ) return;
+    var items = _menuItems( menu ), index = items.indexOf( active ), level = menuArray[menu.id]['depth'];
+
+    // Moving within a level closes a submenu the mouse opened from another item of it.
+    if ( /^(ArrowDown|Down|ArrowUp|Up|Home|End)$/.test( key ) && _visibleDepth() > level ) _hideHigher( level );
+
+    switch ( key )
+    {
+        case 'ArrowDown':
+        case 'Down':
+            e.preventDefault();
+            ( items[index + 1] || items[0] ).focus();
+            break;
+        case 'ArrowUp':
+        case 'Up':
+            e.preventDefault();
+            ( index > 0 ? items[index - 1] : items[items.length - 1] ).focus();
+            break;
+        case 'Home':
+            e.preventDefault();
+            if ( items.length ) items[0].focus();
+            break;
+        case 'End':
+            e.preventDefault();
+            if ( items.length ) items[items.length - 1].focus();
+            break;
+        case 'ArrowRight':
+        case 'Right':
+            if ( index >= 0 && items[index].getAttribute( 'aria-haspopup' ) === 'menu' )
+            {
+                e.preventDefault();
+                _openSubmenu( items[index] );
+            }
+            break;
+        case 'ArrowLeft':
+        case 'Left':
+        case 'Escape':
+        case 'Esc':
+            if ( level > 0 )
+            {
+                e.preventDefault();
+                var opener = SubMenuOpeners[menu.id];
+                _hideHigher( level - 1 );
+                if ( opener ) opener.focus();
+            }
+            else if ( key === 'Escape' || key === 'Esc' )
+            {
+                e.preventDefault();
+                var trigger = MenuOpener;
+                _hideAll();
+                // Back to the button only from the menu or the button itself, never out of a form field.
+                if ( trigger && trigger.focus && ( index >= 0 || active === trigger || active === document.body ) ) trigger.focus();
+            }
+            break;
+        case 'Enter':
+        case ' ':
+        case 'Spacebar':
+            if ( index >= 0 )
+            {
+                // Also for Enter: an item without href (the siteaccess override items) gets no click from the browser.
+                e.preventDefault();
+                _activate( items[index] );
+            }
+            break;
+        default:
+            // Typeahead: a printable character moves to the next item whose label starts with it.
+            if ( index >= 0 && key && key.length === 1 && key !== ' ' && !e.ctrlKey && !e.metaKey && !e.altKey )
+            {
+                var ch = key.toLowerCase();
+                for ( var n = 1; n <= items.length; n++ )
+                {
+                    var cand = items[( index + n ) % items.length];
+                    if ( ( cand.textContent || '' ).replace( /^\s+/, '' ).toLowerCase().indexOf( ch ) === 0 )
+                    {
+                        e.preventDefault();
+                        cand.focus();
+                        break;
+                    }
+                }
+            }
+            break;
+        case 'Tab':
+            if ( index >= 0 )
+            {
+                var back = MenuOpener;
+                _hideAll();
+                if ( back && back.focus ) back.focus();
+            }
+            break;
+    }
+}
+
+if ( document.addEventListener ) document.addEventListener( 'keydown', _keyHandler );
 
 // Register some functions on global scope
 window.ezpopup_SubstituteAndRedirect = _SubstituteAndRedirect;
