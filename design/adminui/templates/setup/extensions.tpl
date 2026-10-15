@@ -11,6 +11,12 @@
 </div>
 {/if}
 
+{if and( is_set( $download_error ), $download_error )}
+<div class="alert alert-danger" role="alert">
+    <p>{$download_error|wash}</p>
+</div>
+{/if}
+
 {if and( is_set( $save_error ), $save_error )}
 <div class="alert alert-danger" role="alert">
     <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {'The extensions were not changed'|i18n( 'design/admin/setup/extensions' )}</h2>
@@ -130,10 +136,7 @@
             </dl>
             <div class="extension-downloads">
                 <strong>{'Download'|i18n( 'design/admin/setup/extensions' )}</strong>
-                <a href={concat( '/setup/extensions/', $Extensions.item, '/tar.gz' )|ezurl}>tar.gz</a>
-                <a href={concat( '/setup/extensions/', $Extensions.item, '/zip' )|ezurl}>.zip</a>
-                <a href={concat( '/setup/extensions/', $Extensions.item, '/tar.bz2' )|ezurl}>tar.bz2</a>
-                <a href={concat( '/setup/extensions/', $Extensions.item, '/ezpkg' )|ezurl}>.ezpkg</a>
+                {foreach array( 'tar.gz', 'zip', 'tar.bz2', 'ezpkg' ) as $format}<button type="submit" class="button" name="ExtensionDownload" value="{concat( $Extensions.item, '/', $format )|wash}" aria-label="{'Download %name as %format'|i18n( 'design/admin/setup/extensions',, hash( '%name', $Extensions.item, '%format', $format ) )|wash}">{$format|wash}</button>{delimiter} {/delimiter}{/foreach}
             </div>
             <a href="#" class="extension-card-close">{'Close'|i18n( 'design/admin/setup/extensions' )}</a>
         </div>
