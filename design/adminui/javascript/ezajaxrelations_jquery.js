@@ -20,8 +20,8 @@ jQuery(function( $ )
         {
             var params = { 'CallbackID': box.attr('id'), 'EncodingFetchSection': 1 };
             var node = box.find("*[name*='_for_object_start_node']"), classes = box.find("input[name*='_for_object_class_constraint_list']");
-            if ( node.size() ) params['SearchSubTreeArray'] = node.val();
-            if ( classes.size() ) params['SearchContentClassIdentifier'] = classes.val();
+            if ( node.length ) params['SearchSubTreeArray'] = node.val();
+            if ( classes.length ) params['SearchContentClassIdentifier'] = classes.val();
             $.ez( 'ezjsc::search::' + text.val(), params, _searchCallBack );
         }
         return false;
@@ -39,24 +39,25 @@ jQuery(function( $ )
                 var arr = data.content.SearchResult, pub = $('#ezobjectrelation-search-published-text');
                 for ( var i = 0, l = arr.length; i < l; i++ )
                 {
-                    var liElem = $('<li></li>');
+                    var liElem = $('<li></li>'),
                         aElem = $( '<a></a>' ),
                         spanElem = $('<span></span>'),
                         elPath = "/" + arr[i].url_alias;
-                    aElem.bind( 'click', { boxID: boxID,
-                                           id: arr[i].id,
-                                           name: arr[i].name,
-                                           className: arr[i].class_name,
-                                           sectionName: arr[i].section.name,
-                                           publishedTxt: pub.val() }, function(e) {
+                    aElem.on( 'click', { boxID: boxID,
+                                         id: arr[i].id,
+                                         name: arr[i].name,
+                                         className: arr[i].class_name,
+                                         sectionName: arr[i].section.name,
+                                         publishedTxt: pub.val() }, function(e) {
                         ezajaxrelationsSearchAddObject( this, e.data.boxID, e.data.id, e.data.name, e.data.className, e.data.sectionName, e.data.publishedTxt );
                     } );
-                    aElem.append( arr[i].name + " <span>[" + arr[i].class_name + "]</span>");
+                    // the name arrives HTML-encoded (ezjscAjaxContent); the class name and the path are text
+                    aElem.append( arr[i].name, ' ', $( '<span></span>' ).text( '[' + arr[i].class_name + ']' ) );
                     aElem.attr( 'title', aElem.text() );
 
                     elPath = elPath.substring(0, elPath.lastIndexOf('/'));
                     if(elPath.length){
-                        spanElem.append( elPath );
+                        spanElem.text( elPath );
                     }
 
                     liElem.append( aElem );
@@ -68,8 +69,15 @@ jQuery(function( $ )
             }
             else
             {
-                var html = '<p class="ezobjectrelation-search-empty-result">' + $('#ezobjectrelation-search-empty-result-text').html().replace( '--search-string--', '<em>' + data.content.SearchString + '<\/em>' ) + '<\/p>';
-                boxElem.html( html ).removeClass('hide');
+                // The message is the template's markup; the search string goes in as text.
+                var parts = $('#ezobjectrelation-search-empty-result-text').html().split( '--search-string--' ),
+                    message = $( '<p class="ezobjectrelation-search-empty-result"><\/p>' );
+                for ( var k = 0; k < parts.length; k++ )
+                {
+                    if ( k > 0 ) message.append( $( '<em><\/em>' ).text( data.content.SearchString ) );
+                    message.append( parts[k] );
+                }
+                boxElem.empty().append( message ).removeClass('hide');
             }
         }
         else
@@ -83,7 +91,7 @@ jQuery(function( $ )
     {
         link.onclick = function(){return false;};
         link.className = 'disabled';
-        var tr = $( boxID + ' table tbody tr:last-child' ), tds = tr.find('td'), listMode = tds.size() > 4;
+        var tr = $( boxID + ' table tbody tr:last-child' ), tds = tr.find('td'), listMode = tds.length > 4;
         if ( listMode )
         {
             if ( tds[1].innerHTML !== '--name--' )
@@ -104,10 +112,11 @@ jQuery(function( $ )
         {
             $( boxID + ' input[name*=_data_object_relation_id_]' ).val( id )
         }
+        // The name arrives HTML-encoded (ezjscAjaxContent); the class and section names and the date are text.
         tds.eq( 0 ).html( name );
-        tds.eq( 1 ).html( className );
-        tds.eq( 2 ).html( sectionName );
-        tds.eq( 3 ).html( publishedTxt );
+        tds.eq( 1 ).text( className );
+        tds.eq( 2 ).text( sectionName );
+        tds.eq( 3 ).text( publishedTxt );
         $(boxID + ' table').removeClass('hide');
         $(boxID + ' .ezobject-relation-remove-button').removeClass('button-disabled').addClass('button').attr('disabled', false);
         $(boxID + ' .ezobject-relation-no-relation').addClass('hide');
