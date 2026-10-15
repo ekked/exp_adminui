@@ -38,6 +38,10 @@
                             <li><a class="exp-node-upload" href={concat( 'ezmultiupload/upload/', $node.node_id )|ezurl} title="{'Upload files to this location.'|i18n( 'design/admin/node/view/full' )|wash}"><span class="a4-icon a4-bi-upload" aria-hidden="true"></span> {'Upload'|i18n( 'design/admin/node/view/full' )}</a></li>
                         {/if}
                         {undef $exp_can_upload}
+                        {* Import/Export: the node's export and import menu (the administration's
+                           node/view/import_export_button.tpl, the entries of popupmenu/popup_export_items.tpl), only
+                           with an entry for the user here *}
+                        {include uri='design:node/view/import_export_button.tpl' node=$node button_class='' in_list=true()}
                         {* Move button. *}
                         {if $node.can_move}
                             <li><input type="submit" name="MoveNodeButton" value="{'Move'|i18n( 'design/admin/node/view/full' )}" title="{'Move this item to another location.'|i18n( 'design/admin/node/view/full' )}" /></li>
