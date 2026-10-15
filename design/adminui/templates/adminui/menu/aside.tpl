@@ -80,4 +80,28 @@
         </div>
     </li>
 {/if}
+{* the interface choices after Bookmarks, as in admin4's right toolbar: the providers of uiswitch.ini the user holds
+   uiswitch/<provider> for (fetch( 'uiswitch', 'toolbar' ), empty elsewhere), not while editing or browsing *}
+{if and( $plugins|contains( 'uiswitch' ), ne( $ui_context, 'edit' ), ne( $ui_context, 'browse' ) )}
+    {def $exp_ui_choices = fetch( 'uiswitch', 'toolbar' )}
+    {if $exp_ui_choices|count}
+    <li class="aside-dropdown">
+        <a href="#" class="aside-dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-language" aria-hidden="true"></i>
+            <span class="tt">{'Interface'|i18n( 'design/admin/toolbar/uiswitch' )}</span>
+            <span class="caret"></span>
+        </a>
+
+        <div class="dropdown-menu dropdown-cache">
+            <div id="uiswitch-tool" class="a4-uiswitch">
+                <h4>{'Interface'|i18n( 'design/admin/toolbar/uiswitch' )}</h4>
+                <div class="box-content">
+                    {include uri='design:uiswitch/choices.tpl' choices=$exp_ui_choices prefix='adminui-uiswitch'}
+                </div>
+            </div>
+        </div>
+    </li>
+    {/if}
+    {undef $exp_ui_choices}
+{/if}
 {undef $plugins $hide_navigation_parts}

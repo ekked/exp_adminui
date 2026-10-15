@@ -52,8 +52,9 @@ the reference never had (audit, newsletter, git manager, layouts ...). They get 
    persistent variable `top_menu`, as the content view and the version preview do (node/view/full.tpl, content/view/versionview.tpl).
 3. **Side bar** (`#aside`): the user menu (`adminui/page_aside_user.tpl`), then `adminui/menu/aside.tpl`. That
    template replaces the reference's PHP menu plugins: the admin top menu (`menu.ini [TopAdminMenu]`, drawn by
-   `menu/plugins/legacy/aside.tpl`), then Layouts, Tags and Collected information, then the Cache and Bookmarks
-   dropdowns. `exp_adminui.ini [MenuPlugins]` switches each block on or off.
+   `menu/plugins/legacy/aside.tpl`), then Layouts, Tags and Collected information, then the Cache, Bookmarks and Interface
+   dropdowns (Interface: the UI switch of the kernel, the display language; uiswitch/choices.tpl of admin4).
+   `exp_adminui.ini [MenuPlugins]` switches each block on or off.
 4. **Left column** (`adminui/page_leftmenu.tpl`): the view's own left menu (`$module_result.left_menu`), otherwise
    `parts/<navigation part>/menu.tpl` (content tree, setup links, my account ...). It is drawn only when it has content.
 5. **Main column**: the path (`adminui/page_toppath.tpl`), the module result and the footer.

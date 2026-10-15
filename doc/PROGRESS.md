@@ -17,6 +17,7 @@ scale 2, light and dark, Apache and Velocity), **gap** (see gaps.md).
 | Root font size | live | adminui-rem.css: 16px root for rem-sized module CSS; style.css's own rem rules kept in px |
 | Login page | live | loginpagelayout.tpl, user/login.tpl |
 | Side bar Cache and Bookmarks dropdowns | live, merged | bookmark folder tree |
+| Side bar Interface dropdown (UI switch: the display language) | live | needs the kernel uiswitch module; policy uiswitch/language |
 | Left menus (ini_menu) | live, merged | Exponential's access checks; full Setup menu |
 
 ## Views

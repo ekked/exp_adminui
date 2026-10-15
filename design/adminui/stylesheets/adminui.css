@@ -267,3 +267,26 @@ table th a:hover { color: #fff; text-decoration: underline; }
     padding: 0.5rem;
     margin: 0;
 }
+
+/* ---- the interface choices (the side bar's "Interface" dropdown, menu/aside.tpl; the shared list
+   uiswitch/choices.tpl of the admin4 design). admin4.js is not loaded here, so the disclosure button stays hidden and
+   the list is open inside the dropdown: per provider its name, then the choices as full-width buttons at least 24px
+   high, the current one in the accent tint with the bar on its left. Colours and sizes from the --a4-* tokens
+   (components.css). */
+.dropdown-menu .a4-uiswitch-provider { display: grid; gap: 0.25rem; padding: 0.25rem 0; }
+.dropdown-menu .a4-uiswitch-label { color: var(--a4-muted); font-size: 0.875rem; }
+.dropdown-menu .a4-uiswitch-toggle[hidden], .dropdown-menu .a4-uiswitch-menu[hidden] { display: none; }
+.dropdown-menu .a4-uiswitch-menu { margin: 0; }
+.dropdown-menu .a4-uiswitch-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.dropdown-menu .a4-uiswitch-list li { margin: 0; padding: 0; }
+.dropdown-menu .a4-uiswitch-option {
+    display: block; width: 100%; min-height: 24px; padding: 0.25rem 0.5rem; border: 0; border-radius: var(--a4-radius-s);
+    background: transparent; color: var(--a4-ink); font: inherit; text-align: start; cursor: pointer;
+}
+.dropdown-menu .a4-uiswitch-option:hover { background-color: var(--a4-soft); }
+.dropdown-menu .a4-uiswitch-option[aria-current="true"] {
+    background-color: var(--a4-accent-soft); box-shadow: inset 3px 0 0 var(--a4-accent); color: var(--a4-accent-text); font-weight: 600;
+}
+@media (forced-colors: active) {
+    .dropdown-menu .a4-uiswitch-option[aria-current="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
