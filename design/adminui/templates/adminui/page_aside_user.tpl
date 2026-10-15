@@ -8,8 +8,9 @@
     {set $user_avatar = $user_avatar|trim}
     {if eq( $user_avatar, '' )}{set $user_avatar = 'a0.jpg'|ezimage( 'no' )}{/if}
 
-    <a href="#" class="user-dropdown-toggle" data-toggle="dropdown">
-        <span class="user-avatar" style="background-image:url({$user_avatar})"></span>
+    <a href="#" class="user-dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{'User menu (%name)'|i18n( 'design/admin/pagelayout',, hash( '%name', $user_content.name ) )|wash}">
+        <span class="user-avatar" style="background-image:url({$user_avatar})" aria-hidden="true"></span>
+        <span class="sr-only">{'User menu (%name)'|i18n( 'design/admin/pagelayout',, hash( '%name', $user_content.name ) )|wash}</span>
     </a>
 
     <!-- dropdown -->
