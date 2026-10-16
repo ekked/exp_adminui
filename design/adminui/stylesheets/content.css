@@ -60,13 +60,13 @@ text-decoration:none;
 
 table.list .sort-asc a
 {
-padding-right:1.5em;
+padding-inline-end:1.5em;
 background:url(../images/icons-sprite.png) no-repeat right -270px;
 }
 
 table.list .sort-desc a
 {
-padding-right:1.5em;
+padding-inline-end:1.5em;
 background:url(../images/icons-sprite.png) no-repeat right -250px;
 }
 
@@ -118,6 +118,7 @@ div.list-thumbnails div.list-thumbnails-item
     text-align: center;
     position: relative;
 }
+:where([dir="rtl"]) div.list-thumbnails div.list-thumbnails-item { float: right; }
 
 div.list-thumbnails div.list-thumbnails-item:hover
 {
@@ -185,7 +186,7 @@ del:hover
 div.blockchanges ins, div.blockchanges del
 {
     color: #000000;
-    padding-left: 0.5em;
+    padding-inline-start: 0.5em;
     text-decoration: none;
     border-bottom-width: 0;
     display: block;
@@ -193,12 +194,12 @@ div.blockchanges ins, div.blockchanges del
 
 div.blockchanges ins
 {
-    border-left: 0.5em solid #008000;
+    border-inline-start: 0.5em solid #008000;
 }
 
 div.blockchanges del
 {
-    border-left: 0.5em solid #d98078;
+    border-inline-start: 0.5em solid #d98078;
 }
 
 div.previous ins
@@ -232,7 +233,7 @@ div.latest ins
 fieldset.ezcca-collapsible legend a
 {
     text-decoration: none;
-    padding-left: 20px;
+    padding-inline-start: 20px;
 }
 
 fieldset.ezcca-collapsible.ezcca-collapsed
@@ -244,7 +245,7 @@ fieldset.ezcca-collapsible.ezcca-collapsed
 
 fieldset.ezcca-collapsible.ezcca-collapsed legend
 {
-    margin-left: 1px;
+    margin-inline-start: 1px;
 }
 
 fieldset.ezcca-collapsible legend a

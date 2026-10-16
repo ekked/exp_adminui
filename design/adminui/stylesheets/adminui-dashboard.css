@@ -22,7 +22,7 @@
 /* ---- Welcome: the grey band of an Admin UI page header ---- */
 .aui-dash-hero {
   display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 24px;
-  padding: 20px 20px 18px; background: var(--aui-band); border-left: 3px solid var(--aui-blue);
+  padding: 20px 20px 18px; background: var(--aui-band); border-inline-start: 3px solid var(--aui-blue);
 }
 .aui-dash-hero-text { min-width: 0; }
 .aui-dash-date {
@@ -32,7 +32,7 @@
 .aui-dash-sub { margin: 0; color: var(--aui-muted); }
 .aui-dash-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .aui-dash-actions .btn { white-space: nowrap; }
-.aui-dash-actions .btn .fa { margin-right: 4px; }
+.aui-dash-actions .btn .fa { margin-inline-end: 4px; }
 
 /* ---- Key figures: one small panel each ---- */
 .aui-dash-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
@@ -43,7 +43,7 @@
 }
 .aui-dashboard a.aui-dash-figure:hover,
 .aui-dashboard a.aui-dash-figure:focus { border-color: var(--aui-blue); background: #f5f5f5; color: var(--aui-muted); text-decoration: none; }
-.aui-dash-figure .fa { position: absolute; top: 14px; right: 14px; font-size: 16px; color: #8a8a8a; }
+.aui-dash-figure .fa { position: absolute; top: 14px; inset-inline-end: 14px; font-size: 16px; color: #8a8a8a; }
 .aui-dash-figure strong { font-size: 28px; line-height: 1.1; font-weight: 300; color: var(--aui-ink); font-variant-numeric: tabular-nums; }
 .aui-dash-figure span { font-size: 13px; line-height: 1.35; color: var(--aui-muted); }
 .aui-dashboard .aui-dash-figure.aui-accent { border-color: var(--aui-blue); background: var(--aui-blue-soft); }
@@ -85,7 +85,7 @@
 
 /* ---- Stay secure ---- */
 .aui-dashboard .aui-dash-secure { border-top: 3px solid var(--aui-blue); }
-.aui-dash-secure .panel-hl h2 .fa { color: var(--aui-blue); margin-right: 4px; }
+.aui-dash-secure .panel-hl h2 .fa { color: var(--aui-blue); margin-inline-end: 4px; }
 .aui-dash-secure-intro { margin: 0 0 14px; color: var(--aui-text); max-width: 75ch; }
 .aui-dash-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
 .aui-dash-steps > li { display: flex; gap: 12px; min-width: 0; padding: 14px 16px; border: 1px solid var(--aui-line); background: #fafafa; }
@@ -96,7 +96,7 @@
 }
 .aui-dashboard .aui-dash-steps h3 { margin: 3px 0 6px; font-size: 15px; font-weight: 500; color: var(--aui-ink); }
 .aui-dash-steps p { margin: 0 0 10px; color: var(--aui-text); line-height: 1.5; }
-.aui-dash-steps .btn { white-space: normal; text-align: left; }
+.aui-dash-steps .btn { white-space: normal; text-align: start; }
 .aui-dash-step-note { font-style: italic; }
 
 /* ---- The configured blocks ---- */

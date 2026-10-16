@@ -30,7 +30,7 @@ font-size:1em;
 
 .yui-dt-tmp {
     position: absolute;
-    left: -9000px;
+    inset-inline-start: -9000px;
 }
 
 .yui-dt-scrollable .yui-dt-bd {
@@ -45,7 +45,7 @@ font-size:1em;
 .yui-dt-scrollable .yui-dt-bd thead tr,.yui-dt-scrollable .yui-dt-bd thead th
     {
     position: absolute;
-    left: -1500px;
+    inset-inline-start: -1500px;
 }
 
 .yui-dt-scrollable tbody {
@@ -75,7 +75,7 @@ th.yui-dt-resizeable .yui-dt-resizerliner {
 
 .yui-dt-resizer {
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     bottom: 0;
     height: 100%;
     cursor: e-resize;
@@ -134,7 +134,7 @@ th.yui-dt-hidden, tr.yui-dt-odd .yui-dt-hidden, tr.yui-dt-even .yui-dt-hidden {
 
 .yui-dt th,.yui-dt th a {
     text-decoration: none;
-    text-align: left;
+    text-align: start;
     vertical-align: bottom;
     color:#fff;
 }
@@ -144,10 +144,10 @@ th.yui-dt-hidden, tr.yui-dt-odd .yui-dt-hidden, tr.yui-dt-even .yui-dt-hidden {
     margin: 0;
     padding: 0;
     border: none;
-    border-left: 1px solid rgba(255,255,255,0.25);
+    border-inline-start: 1px solid rgba(255,255,255,0.25);
 }
 
-.yui-dt th.yui-dt-first {border-left:none;}
+.yui-dt th.yui-dt-first {border-inline-start:none;}
 
 .yui-dt tr.yui-dt-first td {
     border-top: none;
@@ -172,7 +172,7 @@ th.yui-dt-hidden, tr.yui-dt-odd .yui-dt-hidden, tr.yui-dt-even .yui-dt-hidden {
     margin: 0;
     padding: 0;
     border: none;
-    text-align: left;
+    text-align: start;
     vertical-align:middle;
 }
 
@@ -208,15 +208,15 @@ th.yui-dt-hidden, tr.yui-dt-odd .yui-dt-hidden, tr.yui-dt-even .yui-dt-hidden {
 }
 
 .yui-dt-scrollable .yui-dt-hd {
-    border-left: 1px solid #CCCCCC;
+    border-inline-start: 1px solid #CCCCCC;
     border-top: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    border-inline-end: 1px solid #CCCCCC;
 }
 
 .yui-dt-scrollable .yui-dt-bd {
-    border-left: 1px solid #CCCCCC;
+    border-inline-start: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
-    border-right: 1px solid #CCCCCC;
+    border-inline-end: 1px solid #CCCCCC;
     background-color: #FFF;
 }
 
@@ -229,12 +229,12 @@ th.yui-dt-asc,th.yui-dt-desc {
 }
 
 th.yui-dt-sortable .yui-dt-label {
-    margin-right: 10px;
+    margin-inline-end: 10px;
 }
 
 th.yui-dt-sortable .yui-dt-liner {position:relative;}
 th.yui-dt-sortable .yui-dt-liner:after,
-th.yui-dt-sortable .yui-dt-liner:before {display:inline-block; content:""; border-right:3px solid transparent; border-left:3px solid transparent; border-top-color:#fff; border-bottom-color:#fff; position:absolute; right:6px; top:50%;}
+th.yui-dt-sortable .yui-dt-liner:before {display:inline-block; content:""; border-inline-end:3px solid transparent; border-inline-start:3px solid transparent; border-top-color:#fff; border-bottom-color:#fff; position:absolute; inset-inline-end:6px; top:50%;}
 th.yui-dt-sortable .yui-dt-liner:after {border-top:6px solid; margin-top:1px;}
 th.yui-dt-sortable .yui-dt-liner:before {border-bottom:6px solid; margin-top:-6px;}
 th.yui-dt-sortable.yui-dt-asc .yui-dt-liner:after,
@@ -248,20 +248,20 @@ tbody .yui-dt-editable {
 }
 
 .yui-dt-editor {
-    text-align: left;
+    text-align: start;
     background-color: #F2F2F2;
     border: 1px solid #808080;
     padding: 6px;
 }
 
 .yui-dt-editor label {
-    padding-left: 4px;
-    padding-right: 6px;
+    padding-inline-start: 4px;
+    padding-inline-end: 6px;
 }
 
 .yui-dt-editor .yui-dt-button {
     padding-top: 6px;
-    text-align: right;
+    text-align: end;
 }
 
 .yui-dt-editor .yui-dt-button button {
@@ -271,7 +271,7 @@ tbody .yui-dt-editable {
     border: 1px solid #999;
     width: 4em;
     height: 1.8em;
-    margin-left: 6px;
+    margin-inline-start: 6px;
 }
 
 .yui-dt-editor .yui-dt-button button.yui-dt-default {
@@ -442,7 +442,7 @@ a.yui-dt-page {
     text-decoration: none;
     font-size: 2em;
     line-height: 24px;
-    margin-left:5px;
+    margin-inline-start:5px;
 }
 
 span.yui-pg-first,span.yui-pg-previous,span.yui-pg-next,span.yui-pg-last
@@ -459,11 +459,13 @@ a.yui-pg-first:hover,a.yui-pg-previous:hover,a.yui-pg-next:hover,a.yui-pg-last:h
 {
     margin: 0 5px 0 2px;
 }
+:where([dir="rtl"]) .yui-pg-previous span { margin: 0 2px 0 5px; }
 
 .yui-pg-next span
 {
     margin: 0 5px 0 4px;
 }
+:where([dir="rtl"]) .yui-pg-next span { margin: 0 4px 0 5px; }
 
 .yui-pg-pages {
     padding: 0;
@@ -493,13 +495,13 @@ span.yui-pg-first,span.yui-pg-previous,span.yui-pg-next,span.yui-pg-last
 }
 
 .yui-pg-page {
-    margin-left: 1px;
-    margin-right: 1px;
+    margin-inline-start: 1px;
+    margin-inline-end: 1px;
 }
 
 .yui-pg-current,.yui-pg-rpp-options {
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-inline-start: 1em;
+    margin-inline-end: 1em;
 }
 
 /* Column icons */
@@ -537,7 +539,7 @@ span.yui-pg-first,span.yui-pg-previous,span.yui-pg-next,span.yui-pg-last
     position: absolute;
     background-color: white;
     padding: 5px;
-    left: -1000px;
+    inset-inline-start: -1000px;
     border: 1px solid #999;
     visibility: hidden;
     color: black;
@@ -547,6 +549,6 @@ span.yui-pg-first,span.yui-pg-previous,span.yui-pg-next,span.yui-pg-last
 .thumbview:hover span {
     visibility: visible;
     top: 0;
-    left: 25px;
+    inset-inline-start: 25px;
 }
 

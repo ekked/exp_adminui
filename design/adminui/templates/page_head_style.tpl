@@ -26,7 +26,7 @@
 {include uri='design:page_head_style_inline.tpl'}
 <link rel="stylesheet" type="text/css" href={'stylesheets/font-awesome.css'|ezdesign} />
 <link rel="stylesheet" type="text/css" href={'stylesheets/icomoon.css'|ezdesign} />
-<link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|ezdesign} />
+{* style.css right to left (style-rtl.css, built from it) for a right-to-left interface language *}{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )}<link rel="stylesheet" type="text/css" href={'stylesheets/style-rtl.css'|ezdesign} />{else}<link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|ezdesign} />{/if}
 {* the 16px root that the modules' rem sizes expect, with style.css's own rem rules kept at their size *}
 <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rem.css'|ezdesign} />
 {* this design's own additions: the Admin UI look for Exponential's markup (the Exponential UI widgets) *}

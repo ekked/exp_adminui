@@ -20,7 +20,7 @@
     background: var(--a4-soft);
     color: var(--a4-ink);
 }
-.extensions-summary strong { font-size: 1.1em; margin-right: 0.2em; }
+.extensions-summary strong { font-size: 1.1em; margin-inline-end: 0.2em; }
 .extensions-summary-active { background: var(--a4-ok-bg) !important; color: var(--a4-ok) !important; }
 .extensions-summary-access { background: var(--a4-info-bg) !important; color: var(--a4-info) !important; }
 
@@ -38,6 +38,7 @@
 }
 .extension-order-title { font-weight: bold; font-size: 1.05em; color: var(--a4-ink); }
 .extension-order-hint { display: block; margin: 0.25em 0 0 1.2em; color: var(--a4-muted); font-size: var(--a4-text-xs); }
+:where([dir="rtl"]) .extension-order-hint { margin: 0.25em 1.2em 0 0; }
 
 .extension-order {
     margin: 0;
@@ -60,6 +61,7 @@
     transition: background-color 0.15s, box-shadow 0.15s;
     user-select: none;
 }
+:where([dir="rtl"]) .extension-order-item { padding: 0.3em 0.3em 0.3em 0.4em; }
 .extension-order-item:hover { background: var(--a4-soft); box-shadow: var(--a4-shadow-s); }
 .extension-order-item.is-dragging { opacity: 0.45; border-style: dashed; }
 .extension-order-item:active { cursor: grabbing; }
@@ -92,7 +94,7 @@
     font-size: var(--a4-text-xs);
     min-width: 0;
 }
-.extension-order-moves { margin-left: auto; flex: none; display: flex; gap: 0.15em; }
+.extension-order-moves { margin-inline-start: auto; flex: none; display: flex; gap: 0.15em; }
 .extension-order-moves button {
     padding: 0 0.35em;
     border: 1px solid transparent;
@@ -139,17 +141,18 @@
 .extension-card {
     margin: 0.3em 0;
     padding: 0.8em 1em;
-    border-left: 3px solid var(--a4-info);
+    border-inline-start: 3px solid var(--a4-info);
     border-radius: 0 4px 4px 0;
     background: var(--a4-soft);
 }
+:where([dir="rtl"]) .extension-card { border-radius: 4px 0 0 4px; }
 .extension-card h3 { margin: 0 0 0.4em 0; }
 .extension-card .extension-folder { color: var(--a4-muted); font-weight: normal; }
 .extension-card dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.2em 1em; margin: 0.5em 0; }
 .extension-card dt { font-weight: bold; }
 .extension-card dd { margin: 0; }
 .extension-downloads { margin: 0.5em 0; }
-.extension-downloads a { margin-left: 0.6em; }
+.extension-downloads a { margin-inline-start: 0.6em; }
 
 @media (max-width: 700px) {
     .extension-order { columns: 1; }

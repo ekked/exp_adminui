@@ -43,8 +43,8 @@
 
 .loginpage #columns #maincolumn
 {
-    border-right: 0 none;
-    margin-right: 0px;
+    border-inline-end: 0 none;
+    margin-inline-end: 0px;
 }
 
 .loginpage #columns #maincontent
@@ -142,6 +142,7 @@ width:19px;
 margin-top:50%;
 background: url(../../images/3/sprite.png) no-repeat -20px -461px;
 }
+:where([dir="rtl"]) #leftmenu a.show-hide-control { float: left; }
 #leftmenu a.show-hide-control:hover,
 #leftmenu a.show-hide-control:focus,
 #leftmenu a.show-hide-control:active
@@ -175,6 +176,7 @@ a.show-hide-tabs:hover
 {
     margin: 5px 5px 0 0;
 }
+:where([dir="rtl"]) .tab-block .button-left { margin: 5px 0 0 5px; }
 
 .controlbar form .button-left
 {
@@ -249,7 +251,7 @@ a.show-hide-tabs:hover
 p.versions
 {
     padding-top:10px;
-    padding-right:21px;
+    padding-inline-end:21px;
     background: url('../../images/3/sprite.png') no-repeat right -770px;
 
 }
@@ -268,7 +270,7 @@ p.versions a:hover
 p.table-preferences
 {
     border-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-end-end-radius: 3px;
     border: 1px solid #CCCCCC;
     background-color: #f0f0f0;
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
@@ -283,13 +285,14 @@ p.table-preferences > a, p.table-preferences > span
 {
     border: solid #CCC;
     border-width: 0 1px 0 0;
-    padding-right: 1em;
+    padding-inline-end: 1em;
     line-height: 1.5em;
 }
+:where([dir="rtl"]) p.table-preferences > a, :where([dir="rtl"]) p.table-preferences > span { border-width: 0 0 0 1px; }
 
 p.table-preferences :last-child
 {
-    border-right: 0px;
+    border-inline-end: 0px;
 }
 
 input.button, input.defaultbutton, input.button-disabled
@@ -376,16 +379,17 @@ div.community-block-title span
 {
     float: left;
 }
+:where([dir="rtl"]) div.community-block-title h2, :where([dir="rtl"]) div.community-block-title span { float: right; }
 
 div.community-block-title span
 {
     margin-top: 1.5em;
-    margin-left: 4px;
+    margin-inline-start: 4px;
 }
 
 div.community-block-title span.first
 {
-    margin-left: 8px;
+    margin-inline-start: 8px;
 }
 
 div.community-activity
@@ -460,12 +464,14 @@ div.pagenavigator span.previous
     display: block;
     float: left;
 }
+:where([dir="rtl"]) div.pagenavigator span.previous { float: right; }
 
 div.pagenavigator span.next
 {
     display: block;
     float: right;
 }
+:where([dir="rtl"]) div.pagenavigator span.next { float: left; }
 
 div.pagenavigator span.disabled
 {
@@ -475,8 +481,8 @@ div.pagenavigator span.disabled
 div.pagenavigator span.pages span.other, div.pagenavigator span.pages span.current
 {
     font-size: 1em;
-    margin-left: 1px;
-    margin-right: 1px;
+    margin-inline-start: 1px;
+    margin-inline-end: 1px;
     background-color: #fff;
     border: 1px solid #CBCBCB;
     -moz-border-radius: 2px;
@@ -525,7 +531,7 @@ table.list th, table.special th
     background-color: #6F6E6B;
     padding-top:0;
     padding-bottom:0;
-    border-left: 1px solid #a9a9a9;
+    border-inline-start: 1px solid #a9a9a9;
 }
 
 #leftmenu-design ul

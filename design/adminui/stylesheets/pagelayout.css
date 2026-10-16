@@ -8,25 +8,26 @@ div#fix
     float: left;
     width: 100%;
 }
+:where([dir="rtl"]) div#fix { float: right; }
 
 span.vertical-seperator
 {
     height: 100%;
     width: 4px;
-    border-right: 1px solid #bbb;
-    margin-left: 12px;
-    margin-right: 16px;
+    border-inline-end: 1px solid #bbb;
+    margin-inline-start: 12px;
+    margin-inline-end: 16px;
 }
 
 .inline { display: inline; }
 
-label.inline { padding-right: 0.1em; }
+label.inline { padding-inline-end: 0.1em; }
 
 div.widthcontrol-grippy
 {
     position:absolute;
     top:320px;
-    left:-15px;
+    inset-inline-start:-15px;
     height: 33px;
     width: 15px;
     background: url('../images/3/sprite.png') no-repeat 0 -505px;
@@ -98,6 +99,7 @@ a.image-text:hover > span
     margin-top: 12px;
     margin-bottom: 20px;
 }
+:where([dir="rtl"]) #header-usermenu { float: left; }
 
 #header-usermenu a
 {
@@ -126,22 +128,24 @@ a.image-text:hover > span
     width: 94px;
     height: 65px;
     display: block;
-    text-align: left;
+    text-align: start;
     text-decoration: none;
     color:#f4f4f4;
     font-size:11px;
     background: transparent url('../images/3/logo_separator_sprite.png') -117px 11px no-repeat;
-    padding-left:11px;
-    padding-right:11px;
+    padding-inline-start:11px;
+    padding-inline-end:11px;
 }
+:where([dir="rtl"]) #header-logo a, :where([dir="rtl"]) #header-logo span { float: right; }
 
 #header-search
 {
-    text-align: right;
+    text-align: end;
     float: right;
     padding: 10px 20px 0;
-    text-align: right;
+    text-align: end;
 }
+:where([dir="rtl"]) #header-search { float: left; }
 
 .loginpage #header #header-design
 {
@@ -154,8 +158,8 @@ a.image-text:hover > span
 
 #header-topmenu
 {
-    margin-left:120px;
-    margin-right:350px;
+    margin-inline-start:120px;
+    margin-inline-end:350px;
     padding-top: 20px;
     min-height: 25px;
 }
@@ -182,13 +186,14 @@ a
     list-style-type: none;
     margin: 0;
 }
+:where([dir="rtl"]) #header-topmenu ul li { float: right; }
 
 #header-topmenu ul li a, #header-topmenu ul li span.disabled
 {
     display: block;
     text-decoration: none;
     padding: 2px 15px 2px 15px;
-    margin-left: 1px;
+    margin-inline-start: 1px;
     margin-top: 2px;
     margin-bottom: 8px;
     min-height: 18px;
@@ -211,7 +216,7 @@ a
 
 #header-topmenu ul li.first a, #header-topmenu ul li.first span.disabled
 {
-    margin-left: 0.1em;
+    margin-inline-start: 0.1em;
 }
 
 
@@ -226,7 +231,7 @@ div.tabs-content.disabled div.tab-content
 #path
 {
     padding: 0;
-    text-align: left;
+    text-align: start;
     min-height: 24px;
 }
 
@@ -251,8 +256,8 @@ div.tabs-content.disabled div.tab-content
 
 #maincolumn
 {
-    border-right: 1px #999 solid;
-    margin-right: 190px;
+    border-inline-end: 1px #999 solid;
+    margin-inline-end: 190px;
     position: relative;
 }
 
@@ -265,6 +270,7 @@ div.tabs-content.disabled div.tab-content
     padding-top:1px;
     padding-bottom:1px;
 }
+:where([dir="rtl"]) #maincontent { margin: 0 15em 0 0; }
 
 #maincontent-design
 {
@@ -290,6 +296,7 @@ div.tabs-content.disabled div.tab-content
     min-height: 400px;
     margin-bottom: 20px;
 }
+:where([dir="rtl"]) #leftmenu { float: right; }
 
 .leftmenu-items
 {
@@ -317,9 +324,10 @@ div.tabs-content.disabled div.tab-content
     min-height: 400px;
     position: relative;
 }
+:where([dir="rtl"]) #rightmenu { float: left; border-radius: 0 2px 2px 0; }
 
 div#columns.hide-rightmenu div#rightmenu  { display: none; }
-div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
+div#columns.hide-rightmenu div#maincolumn { margin-inline-end: 0; }
 
 /* PANELS SEPARATORS */
 #left-panels-separator, #right-panels-separator
@@ -368,7 +376,7 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #rightmenu-design
 {
-    margin-left:20px;
+    margin-inline-start:20px;
     padding: 0.8em 1em 10px 1em;
     background:white;
     position: relative;
@@ -384,7 +392,7 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #rightmenu-design ul
 {
-    margin-left: 1.5em;
+    margin-inline-start: 1.5em;
 }
 
 #rightmenu-design select
@@ -406,7 +414,7 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #leftmenu-design
 {
-    margin-right: 20px;
+    margin-inline-end: 20px;
     padding: 0.8em 0.8em 0.8em 0.8em;
     background:white;
     min-height: 100%;
@@ -414,7 +422,7 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
     min-height: 350px;
 }
 
-#leftmenu-design ul { margin-left: 1.5em; color: #aaa; }
+#leftmenu-design ul { margin-inline-start: 1.5em; color: #aaa; }
 .box-header { margin-top: 0.5em; }
 
 
@@ -447,7 +455,7 @@ ul.leftmenu-items li.current a
 #widthcontrol-handler
 {
     position: absolute;
-    right: -30px;
+    inset-inline-end: -30px;
     top:-20px;
     bottom: 0; /* strech div to full width of relative box */
     width: 10px;
@@ -492,8 +500,8 @@ div#contentstructure
 div#contentstructure ul#content_tree_menu
 {
     margin-top: 0;
-    margin-left: 0.25em;
-    padding-left: 0.5em;
+    margin-inline-start: 0.25em;
+    padding-inline-start: 0.5em;
 }
 
 div#contentstructure ul#content_tree_menu ul
@@ -505,7 +513,7 @@ div#contentstructure ul#content_tree_menu ul
 
 div#contentstructure ul#content_tree_menu ul ul
 {
-    margin-left: 0;
+    margin-inline-start: 0;
 }
 
 div#contentstructure ul#content_tree_menu li
@@ -519,7 +527,7 @@ div#contentstructure ul#content_tree_menu ul li
 {
     margin: 0;
     padding-top: 0;
-    padding-left: 20px;
+    padding-inline-start: 20px;
     padding-bottom: 4px;
     background-image: url(../images/bg_content_tree_li.png);
     background-repeat: no-repeat;
@@ -530,6 +538,7 @@ div#contentstructure ul#content_tree_menu ul li.lastli
     background-position: left -9990px;
     padding-bottom: 2px;
 }
+:where([dir="rtl"]) div#contentstructure ul#content_tree_menu ul li.lastli { background-position: right -9990px; }
 
 div#contentstructure ul#content_tree_menu li img
 {
@@ -538,8 +547,8 @@ div#contentstructure ul#content_tree_menu li img
 
 div#contentstructure a.nodeicon
 {
-    margin-left: 0;
-    padding-left: 0;
+    margin-inline-start: 0;
+    padding-inline-start: 0;
 }
 
 div#contentstructure li span.node-name-normal
@@ -552,6 +561,7 @@ div#contentstructure li.currentnode > a.image-text span.node-name-normal, div#co
     color: #e22303;
     padding: 0 0.25em 0 0.2em;
 }
+:where([dir="rtl"]) div#contentstructure li.currentnode > a.image-text span.node-name-normal, :where([dir="rtl"]) div#contentstructure li.currentnode > a.image-text span.node-name-hidden, :where([dir="rtl"]) div#contentstructure li.currentnode > a.image-text span.node-name-hiddenbyparent { padding: 0 0.2em 0 0.25em; }
 
 div#contentstructure li a.image-text span.node-name-hidden, div#contentstructure li.currentnode li a.image-text span.node-name-hidden
 {
@@ -593,7 +603,7 @@ div#contentstructure span.openclose
 div#contentstructure ul#content_tree_menu ul a.openclose-open, div#contentstructure ul#content_tree_menu ul a.openclose-close, div#contentstructure ul#content_tree_menu ul a.openclose-busy, div#contentstructure ul#content_tree_menu ul a.openclose-error
 {
     position: absolute;
-    left: 0;
+    inset-inline-start: 0;
     _left: -20px; /* to fix a bug in IE 6 */
     top: 0;
     width: 16px;
@@ -638,7 +648,7 @@ div#contentstructure ul#content_tree_menu div.error > span
     height: 9px;
     width: 9px;
     border-radius: 9px;
-    margin-right: 6px;
+    margin-inline-end: 6px;
     background: Red;
 }
 
@@ -721,14 +731,16 @@ div.context-information p.left
     margin-top:0;
     float: left;
 }
+:where([dir="rtl"]) div.context-information p.left { float: right; }
 
 div.context-information p.right
 {
     width: 48.5%;
     margin-top:0;
     float: right;
-    text-align: right;
+    text-align: end;
 }
+:where([dir="rtl"]) div.context-information p.right { float: left; }
 
 div.context-information p.center
 {
@@ -749,7 +761,7 @@ div.content-navigation div.context-information p.right
     position:absolute;
     top: -2.5em;
     width: 30%;
-    right:0em;
+    inset-inline-end:0em;
 }
 
 div.context-block
@@ -762,6 +774,7 @@ div.context-block h1.context-title img, div.context-block h2.context-title img
     vertical-align: middle;
     margin: -4px 8px 2px 0;
 }
+:where([dir="rtl"]) div.context-block h1.context-title img, :where([dir="rtl"]) div.context-block h2.context-title img { margin: -4px 0 2px 8px; }
 
 /* MENU-BLOCK */
 
@@ -785,11 +798,12 @@ div.context-block h1.context-title img, div.context-block h2.context-title img
     margin: 0;
 
 }
+:where([dir="rtl"]) .menu-block li { float: right; }
 
 .menu-block li a
 {
     padding: 0 0.5em;
-    margin-left: 4px;
+    margin-inline-start: 4px;
     text-decoration: none;
     display: block;
     border: 1px solid #999;
@@ -797,7 +811,7 @@ div.context-block h1.context-title img, div.context-block h2.context-title img
 
 .menu-block li:first-child a
 {
-    margin-left: 0;
+    margin-inline-start: 0;
 }
 
 .menu-block li.disabled a
@@ -850,6 +864,7 @@ input.button:hover
     position: relative;
     float:left;
 }
+:where([dir="rtl"]) .searchblock { float: right; }
 
 #searchtextwrapper
 {
@@ -858,6 +873,7 @@ input.button:hover
     border: 4px solid rgba(255,255,255,0.1);
     border-radius: 5px;
 }
+:where([dir="rtl"]) #searchtextwrapper { float: right; }
 
 #searchtext
 {
@@ -872,6 +888,7 @@ input.button:hover
     box-shadow: -1px -1px 1px #464a4b;
     background: #abadac;
 }
+:where([dir="rtl"]) #searchtext { padding: 0 25px 0 5px; box-shadow: 1px -1px 1px #464a4b; }
 
 #searchtext:focus
 {
@@ -883,12 +900,13 @@ input.button:hover
     height: 35px;
     float:left;
     width: 35px;
-    margin-left:5px;
+    margin-inline-start:5px;
     border: 4px solid rgba(255,255,255,0.1);
     border-radius: 5px;
     background: transparent url(../images/3/sprite.png) no-repeat 9px -578px;
 
 }
+:where([dir="rtl"]) .searchbuttonfield { float: right; }
 
 .searchbuttonfield:hover
 {
@@ -903,7 +921,7 @@ input.button:hover
     height: 14px;
     position: absolute;
     top: 15px;
-    left: 10px;
+    inset-inline-start: 10px;
     background: transparent url(../images/3/sprite.png) no-repeat 0 -868px;
 }
 
@@ -930,10 +948,10 @@ input.button:hover
     box-shadow: 0 0 13px rgba(0, 0, 0, 0.31);
     margin-top: 6px;
     position: absolute;
-    left: -80px;
+    inset-inline-start: -80px;
     width: 250px;
     z-index: 21;
-    text-align: left;
+    text-align: start;
 }
 
 .searchscope-pane.active,
@@ -945,8 +963,8 @@ input.button:hover
 .searchscope-pane,
 .searchscope-pane > .searchscope-body
 {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-end-start-radius: 4px;
+    border-end-end-radius: 4px;
 }
 
 .searchscope-pane > .searchscope-body
@@ -969,20 +987,21 @@ input.button:hover
     background: -webkit-linear-gradient(#f4f4f4, #f5f5f5);
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#f5f5f5')";
     border-bottom: 1px solid #f0f3f3;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px
+    border-start-start-radius: 4px;
+    border-start-end-radius: 4px
 }
 
 .searchscope-pane .close
 {
     display: block;
     float: right;
-    margin-right: 8px;
+    margin-inline-end: 8px;
     margin-top: 7px;
     width: 16px;
     height: 16px;
     background: transparent url(../images/3/sprite.png) no-repeat -28px -868px;
 }
+:where([dir="rtl"]) .searchscope-pane .close { float: left; }
 
 .searchscope-pane .close .mini-icon-remove-close
 {
@@ -1011,7 +1030,7 @@ input:-moz-placeholder {
 {
     border: 4px solid rgba(255, 255, 255, 0.1);
     border-radius: 5px 5px 5px 5px;
-    text-align: left;
+    text-align: start;
     display: table;
     margin: 0 auto;
     position:relative;
@@ -1047,7 +1066,7 @@ input:-moz-placeholder {
 #icon-login
 {
     position:absolute;
-    left:11px;
+    inset-inline-start:11px;
     top:8px;
     background: url('../images/3/sprite.png') no-repeat 0 -287px;
     width: 26px;
@@ -1057,7 +1076,7 @@ input:-moz-placeholder {
 #icon-password
 {
     position:absolute;
-    left:11px;
+    inset-inline-start:11px;
     top:14px;
     background: url('../images/3/sprite.png') no-repeat 0 -361px;
     width: 24px;
@@ -1071,24 +1090,25 @@ input:-moz-placeholder {
     z-index:200;
     position:fixed;
     top:0;
-    left:440px;
+    inset-inline-start:440px;
     padding:8px 20px 0 20px;
-    right:0;
+    inset-inline-end:0;
     border-radius:0;
     min-height: 50px;
 }
 
 .yui3-js-enabled .controlbar-fixed .element {float:left;}
+:where([dir="rtl"]) .yui3-js-enabled .controlbar-fixed .element { float: right; }
 
 .scroll-to-top
 {
     position:fixed;
     bottom:0;
-    right:0;
+    inset-inline-end:0;
     background:#000;
     opacity:0;
     padding:0.5em;
-    border-top-left-radius:5px;
+    border-start-start-radius:5px;
     color:#fff;
     text-decoration:none;
     display:none;
@@ -1110,12 +1130,13 @@ color:#fff;
     background: url(../images/3/logo_separator_sprite.png) no-repeat -239px 0;
     height:72px;
     margin-top:20px;
-    margin-left:20px;
+    margin-inline-start:20px;
 }
+:where([dir="rtl"]) #dashboard-logo { float: right; }
 
 #mainteinance-text
 {
-    margin-left: 182px;
+    margin-inline-start: 182px;
     font-size: 0.7em;
 }
 

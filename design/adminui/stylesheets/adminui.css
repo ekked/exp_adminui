@@ -16,28 +16,31 @@
 #action-controls-container { display: flex; flex-wrap: wrap; align-items: flex-start; margin: 5px 0 15px; }
 #action-controls-container #action-controls { display: flex; flex: 1 1 auto; flex-wrap: wrap; float: none; margin: 0; }
 #action-controls-container #tpg { float: none; margin: 0 0 0 5px; }
+:where([dir="rtl"]) #action-controls-container #tpg { margin: 0 5px 0 0; }
 #action-controls .exp-dt-action-group { display: block; vertical-align: top; }
 /* the reference's order: Select and More actions as one group, then the blue Create button, Table options on the right */
 #action-controls .exp-dt-action-group:has(#ezbtn-items) { order: 1; }
-#action-controls .exp-dt-action-group:has(#ezbtn-more) { order: 2; margin-left: -1px; }
-#action-controls .exp-dt-action-group:has(#ezbtn-new) { order: 3; margin-left: 5px; }
-#action-controls .exp-dt-action-group:has(#ezbtn-new-multi) { order: 4; margin-left: 5px; }
-#action-controls .exp-dt-action-group:has(#ezbtn-options) { order: 5; margin-left: auto; }
+#action-controls .exp-dt-action-group:has(#ezbtn-more) { order: 2; margin-inline-start: -1px; }
+#action-controls .exp-dt-action-group:has(#ezbtn-new) { order: 3; margin-inline-start: 5px; }
+#action-controls .exp-dt-action-group:has(#ezbtn-new-multi) { order: 4; margin-inline-start: 5px; }
+#action-controls .exp-dt-action-group:has(#ezbtn-options) { order: 5; margin-inline-start: auto; }
 #action-controls-container .exp-dt-action {
     margin: 0; padding: 9px 14px; border: 1px solid #e4e4e4; border-radius: 4px; background: #fff;
     color: #4b4b4b; font-size: 1em; line-height: 1.42857143; text-shadow: none; position: relative;
 }
 #action-controls-container .exp-dt-action:hover { z-index: 2; background: #e6e6e6; border-color: #adadad; }
 #action-controls-container #ezbtn-items { border-radius: 4px 0 0 4px; }
+:where([dir="rtl"]) #action-controls-container #ezbtn-items { border-radius: 0 4px 4px 0; }
 #action-controls-container #ezbtn-more { border-radius: 0 4px 4px 0; }
+:where([dir="rtl"]) #action-controls-container #ezbtn-more { border-radius: 4px 0 0 4px; }
 #action-controls-container .exp-dt-button {
     padding: 0; background: transparent; color: inherit; font: inherit; line-height: inherit;
 }
 #action-controls-container .exp-dt-button::before, #action-controls-container .exp-dt-button::after {
     display: inline-block; font: normal normal normal 14px FontAwesome; text-rendering: auto; -webkit-font-smoothing: antialiased;
 }
-#action-controls-container .exp-dt-button::before { margin-right: 6px; }
-#action-controls-container .exp-dt-button::after { margin-left: 6px; }
+#action-controls-container .exp-dt-button::before { margin-inline-end: 6px; }
+#action-controls-container .exp-dt-button::after { margin-inline-start: 6px; }
 #action-controls-container #ezbtn-items-button::before { content: "\f046"; }
 #action-controls-container #ezbtn-new-button::before { content: "\f0fe"; }
 #action-controls-container #ezbtn-new-multi-button::before { content: "\f0c5"; }
@@ -53,6 +56,7 @@
     min-width: 180px; padding: 5px 0; border: none; border-radius: 4px; box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.35);
     margin-top: 2px; line-height: 1.42857143;
 }
+:where([dir="rtl"]) #action-controls-container .exp-dt-menu { box-shadow: -1px 1px 4px 0 rgba(0, 0, 0, 0.35); }
 #action-controls-container .exp-dt-menu-group { background: #6b6b6b; color: #fff; font-weight: 400; font-size: 14px; margin: 0; padding: 4px 8px; }
 #action-controls-container .exp-dt-menu li { padding: 0; }
 #action-controls-container .exp-dt-menu [role=menuitem] { display: block; padding: 4px 8px; color: #333; text-decoration: none; }
@@ -63,6 +67,7 @@
     border: 1px solid #e4e4e4; border-radius: 0; background: #fff; color: #333;
     font-family: inherit; font-size: 12px; line-height: 1.42857143; text-align: center;
 }
+:where([dir="rtl"]) .exp-dt-first, :where([dir="rtl"]) .exp-dt-prev, :where([dir="rtl"]) .exp-dt-next, :where([dir="rtl"]) .exp-dt-last { float: right; }
 .exp-dt-prev, .exp-dt-next { font-size: 18px; }
 .exp-dt-first:hover, .exp-dt-prev:hover, .exp-dt-next:hover, .exp-dt-last:hover { background: #e6e6e6; border-color: #adadad; }
 .exp-dt-first:disabled, .exp-dt-prev:disabled, .exp-dt-next:disabled, .exp-dt-last:disabled {
@@ -78,7 +83,9 @@
 .exp-dt-last [data-icon]::before { content: "\f051"; }
 .exp-dt-pager-compact { display: flex; }
 .exp-dt-pager-compact .exp-dt-prev, .exp-dt-backward .exp-dt-first, .exp-dt-forward .exp-dt-next { border-radius: 4px 0 0 4px; }
-.exp-dt-pager-compact .exp-dt-next, .exp-dt-backward .exp-dt-prev, .exp-dt-forward .exp-dt-last { border-radius: 0 4px 4px 0; margin-left: -1px; }
+:where([dir="rtl"]) .exp-dt-pager-compact .exp-dt-prev, :where([dir="rtl"]) .exp-dt-backward .exp-dt-first, :where([dir="rtl"]) .exp-dt-forward .exp-dt-next { border-radius: 0 4px 4px 0; }
+.exp-dt-pager-compact .exp-dt-next, .exp-dt-backward .exp-dt-prev, .exp-dt-forward .exp-dt-last { border-radius: 0 4px 4px 0; margin-inline-start: -1px; }
+:where([dir="rtl"]) .exp-dt-pager-compact .exp-dt-next, :where([dir="rtl"]) .exp-dt-backward .exp-dt-prev, :where([dir="rtl"]) .exp-dt-forward .exp-dt-last { border-radius: 4px 0 0 4px; }
 .exp-dt-pager-compact .exp-dt-prev, .exp-dt-pager-compact .exp-dt-next { padding: 9px 16px; line-height: 20px; }
 .exp-dt-page { padding: 4px 8px; border: 1px solid #e4e4e4; border-radius: 2px; color: #333; font: inherit; }
 .exp-dt-page.exp-dt-current { border-color: #333; font-weight: 700; }
@@ -91,6 +98,7 @@
 .exp-dt-table thead th.exp-dt-sortable { padding: 0; }
 .exp-dt-table thead th.exp-dt-asc, .exp-dt-table thead th.exp-dt-desc { background: #919191; }
 .exp-dt-table thead th .exp-dt-sort { padding: 10px 26px 10px 10px; line-height: 20px; font-size: 11px; font-weight: 500; text-transform: uppercase; }
+:where([dir="rtl"]) .exp-dt-table thead th .exp-dt-sort { padding: 10px 10px 10px 26px; }
 .exp-dt-table thead th .fa { font-size: 16px; }
 .exp-dt-body tr, .exp-dt-body tr:nth-child(even) { background: #fff; }
 .exp-dt-body tr:hover { background: #f5f5f5; }
@@ -154,7 +162,7 @@ table th a:hover { color: #fff; text-decoration: underline; }
         min-width: clamp(160px, calc(100% - 360px), 200px);
         max-width: max(clamp(160px, calc(100% - 360px), 200px), min(640px, calc(100% - 360px)));
         margin: 0;
-        border-left: 3px solid #f5f5f5;
+        border-inline-start: 3px solid #f5f5f5;
         background: transparent;
         box-sizing: border-box;
     }
@@ -169,10 +177,11 @@ table th a:hover { color: #fff; text-decoration: underline; }
         touch-action: none;
         outline: none;
     }
+    :where([dir="rtl"]) .content-preview > .exp-adminui-details-resizer { margin: 0 -3px 0 -9px; }
     .content-preview > .exp-adminui-details-resizer::before {
         content: "";
         position: absolute;
-        top: 0; bottom: 0; left: 3px;
+        top: 0; bottom: 0; inset-inline-start: 3px;
         width: 3px;
         background: transparent;
         transition: background-color .15s;
@@ -196,8 +205,8 @@ table th a:hover { color: #fff; text-decoration: underline; }
         .path-edit-container, .title-wrapper, .tab-block, .content-view-full, .ng-layouts-app, .content-search, .content-edit,
         [class^="message-"], [class*=" message-"], .alert, #exp-adminui-details, .break, .footer, #footer):not(
         :has(.context-block, .panel, .box-header, .box-content, .box-bc, .content-navigation, .ng-layouts-app, .content-view-full))) {
-    padding-left: var(--exp-adminui-inset);
-    padding-right: var(--exp-adminui-inset);
+    padding-inline-start: var(--exp-adminui-inset);
+    padding-inline-end: var(--exp-adminui-inset);
 }
 /* the legacy admin's boxes inside a context block: the control bar under a list, and a body (.box-ml) that holds
    its content directly rather than in a .box-content */
@@ -205,10 +214,10 @@ table th a:hover { color: #fff; text-decoration: underline; }
 #page .main-content form > .controlbar,
 #page .main-content > .controlbar,
 #page .main-content .context-block > .box-ml:not(:has(.box-content, .panel)) {
-    padding-left: var(--exp-adminui-inset);
-    padding-right: var(--exp-adminui-inset);
+    padding-inline-start: var(--exp-adminui-inset);
+    padding-inline-end: var(--exp-adminui-inset);
 }
-#page .main-content :is(.box-content, .panel, .box-header) .controlbar { padding-left: 0; padding-right: 0; }
+#page .main-content :is(.box-content, .panel, .box-header) .controlbar { padding-inline-start: 0; padding-inline-end: 0; }
 /* the API access page (design/standard apikey/parts): it centres itself with an auto margin, which in the main
    area's column flex box gives it no width at all (it is an inline-size container) */
 #page .main-content > .ak.ak-public { margin: 0 0 2.5em; align-self: stretch; box-sizing: content-box; }
@@ -232,8 +241,8 @@ table th a:hover { color: #fff; text-decoration: underline; }
    with the breadcrumbs' inset when it stands straight in the main area. */
 #page .main-content .exp-standalone { max-width: none; margin: 0; padding: 0; border-radius: 0; background: transparent; box-shadow: none; }
 #page .main-content > .exp-standalone:not(:has(.context-block, .panel, .box-header, .box-content, .box-bc)) {
-    padding-left: var(--exp-adminui-inset);
-    padding-right: var(--exp-adminui-inset);
+    padding-inline-start: var(--exp-adminui-inset);
+    padding-inline-end: var(--exp-adminui-inset);
 }
 /* wide content at 200% zoom (a window of about 960 CSS px leaves the main area about 600px): a legacy list table
    wider than that scrolls sideways in the box that holds it, so the breadcrumbs and the rest of the view stay in
@@ -297,6 +306,7 @@ table th a:hover { color: #fff; text-decoration: underline; }
     -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
+:where([dir="rtl"]) #uiswitch-tool select.a4-input { padding: 5px 8px 5px 18px; }
 #uiswitch-tool select.a4-input:focus {
     border-color: #66afe9; outline: 0; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }

@@ -9,17 +9,19 @@ html { font-size: 16px; }
 .nl-modal-mask form[name="layout_wizard"] .nl-modal .layout-type { max-height: 200px; }
 .nl-modal-mask form[name="layout_wizard"] .nl-modal .layout-type .layout-type-item input[type='radio'] + label .icon { border-radius: 1.25px; }
 .nl-modal-mask form[name="layout_wizard"] .nl-modal .layout-type .layout-type-item input[type='radio']:checked + label .icon:after { font-size: 20px; width: 30px; height: 30px; line-height: 26px; border: 2px solid #fff; }
-.nl-modal-mask .nl-modal .choose-group-div .chosen-group { margin-right: 20px; }
+.nl-modal-mask .nl-modal .choose-group-div .chosen-group { margin-inline-end: 20px; }
 .nl-rule .nl-rule-head .rule-layout .icon-rule, .nl-rule .nl-rule-head .rule-layout .icon-rule-disabled { padding: 10px 10px 10px 0; }
+:where([dir="rtl"]) .nl-rule .nl-rule-head .rule-layout .icon-rule, :where([dir="rtl"]) .nl-rule .nl-rule-head .rule-layout .icon-rule-disabled { padding: 10px 0 10px 10px; }
 .nl-rule .nl-rule-head .rule-layout p { margin-top: 2.5px; }
 .nl-rule .nl-rule-body-overlay .nl-rule-body .sidebar-title { margin-bottom: 30px; }
 .nl-rule .nl-rule-body-overlay .nl-rule-body .nl-rule-description { margin-top: 30px; }
 .nl-rule .nl-rule-body-overlay .nl-rule-body .nl-layout-options { margin-top: 10px; }
-.nl-rule .nl-rule-body-overlay .nl-rule-body .nl-layout-options a { margin-right: 10px; }
+.nl-rule .nl-rule-body-overlay .nl-rule-body .nl-layout-options a { margin-inline-end: 10px; }
 .nl-rule .nl-rule-body-overlay .nl-rule-body .nl-rule-setting { padding-top: 30px; margin-top: 30px; }
 .nl-rule .nl-rule-body-overlay .nl-rule-body .nl-rule-setting:last-child { padding-bottom: 30px; }
 .nl-group .nl-group-details-overlay .nl-group-details .settings-action { padding-bottom: 30px; }
 .nl-group .nl-group-details-overlay .nl-group-details .sidebar-title { margin-bottom: 30px; }
 .nl-group .nl-group-description { margin-top: 30px; }
 .nl-group .nl-group-head .group-title .icon-group, .nl-group .nl-group-head .group-title .icon-group-open, .nl-group .nl-group-head .group-title .icon-group-disabled, .nl-group .nl-group-head .group-title .icon-group-disabled-open { padding: 10px 10px 10px 0; }
+:where([dir="rtl"]) .nl-group .nl-group-head .group-title .icon-group, :where([dir="rtl"]) .nl-group .nl-group-head .group-title .icon-group-open, :where([dir="rtl"]) .nl-group .nl-group-head .group-title .icon-group-disabled, :where([dir="rtl"]) .nl-group .nl-group-head .group-title .icon-group-disabled-open { padding: 10px 0 10px 10px; }
 .nl-group .nl-group-head .group-title p { margin-top: 2.5px; }

@@ -454,11 +454,20 @@ $(document).ready(function () {
       const leftColumn = $('#left-column');
       // leftColumn.width(colw);
       // $('.search-form').width(colw);
+      // the handle sits on the column's inner edge: east left to right, west right to left (dir="rtl"), where
+      // jQuery UI also moves the column by its "left" offset, which the table cell must not get
+      const rtl = window.getComputedStyle(document.documentElement).direction === 'rtl';
+      const keepInPlace = function () {
+        leftColumn.css('left', '');
+        $('.search-form').css('left', '');
+      };
       leftColumn.resizable({
-        handles: 'e',
+        handles: rtl ? 'w' : 'e',
         alsoResize: '.search-form',
+        resize: rtl ? keepInPlace : null,
+        stop: rtl ? keepInPlace : null,
       });
-      $('.ui-resizable-e').on('mouseup', function () {
+      $('.ui-resizable-e, .ui-resizable-w').on('mouseup', function () {
         colw = leftColumn.width();
         sessionStorage.setItem('lcw', colw);
       });

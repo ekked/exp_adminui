@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href={'exponential/favicon.ico'|ezimage} />
     <link rel="stylesheet" type="text/css" href={'stylesheets/font-awesome.css'|ezdesign} />
     <link rel="stylesheet" type="text/css" href={'stylesheets/icomoon.css'|ezdesign} />
-    <link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|ezdesign} />
+    {* style.css right to left (style-rtl.css, built from it) for a right-to-left interface language *}{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )}<link rel="stylesheet" type="text/css" href={'stylesheets/style-rtl.css'|ezdesign} />{else}<link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|ezdesign} />{/if}
     <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rem.css'|ezdesign} />
     <link rel="stylesheet" type="text/css" href={'stylesheets/adminui.css'|ezdesign} />
     {if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )}<link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rtl.css'|ezdesign} />{/if}
