@@ -5000,7 +5000,7 @@ button.close {
   box-sizing: border-box; }
 
 body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, var(--a4-font-intl, sans-serif), sans-serif; /* other scripts: components.css --a4-font-intl */
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
