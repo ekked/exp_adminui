@@ -268,25 +268,59 @@ table th a:hover { color: #fff; text-decoration: underline; }
     margin: 0;
 }
 
-/* ---- the interface choices (the side bar's "Interface" dropdown, menu/aside.tpl; the shared list
-   uiswitch/choices.tpl of the admin4 design). admin4.js is not loaded here, so the disclosure button stays hidden and
-   the list is open inside the dropdown: per provider its name, then the choices as full-width buttons at least 24px
-   high, the current one in the accent tint with the bar on its left. Colours and sizes from the --a4-* tokens
-   (components.css). */
-.dropdown-menu .a4-uiswitch-provider { display: grid; gap: 0.25rem; padding: 0.25rem 0; }
-.dropdown-menu .a4-uiswitch-label { color: var(--a4-muted); font-size: 0.875rem; }
-.dropdown-menu .a4-uiswitch-toggle[hidden], .dropdown-menu .a4-uiswitch-menu[hidden] { display: none; }
-.dropdown-menu .a4-uiswitch-menu { margin: 0; }
-.dropdown-menu .a4-uiswitch-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
-.dropdown-menu .a4-uiswitch-list li { margin: 0; padding: 0; }
-.dropdown-menu .a4-uiswitch-option {
-    display: block; width: 100%; min-height: 24px; padding: 0.25rem 0.5rem; border: 0; border-radius: var(--a4-radius-s);
-    background: transparent; color: var(--a4-ink); font: inherit; text-align: start; cursor: pointer;
+/* ---- the interface choices (the side bar's "Interface" dropdown, menu/aside.tpl, with the shared lists
+   uiswitch/choices.tpl and uiswitch/grouped.tpl). They are drawn like the side bar's other dropdowns, on the same
+   dark flyout (#383838, white text), not with the --a4-* tokens, whose ink is meant for a light surface (1.3:1 here):
+   - the provider names like the Cache dropdown's heading and labels: white, 14px, normal weight;
+   - the language list and its Apply button like the Cache dropdown's select and Clear button (Bootstrap
+     form-control input-sm, btn btn-primary btn-sm, with adminui-rem.css's light field);
+   - the design choices like the side bar's own entries: white, #424242 under the pointer and the focus, the current
+     one #606060 (as .aside-nav .active), square like the flyout. White reads 11.7:1, 10.4:1 and 6.3:1 on them.
+   No dark mode: AdminUI has one look. admin4.js is not loaded here, so the disclosure button stays hidden and the list
+   is open inside the dropdown. */
+#uiswitch-tool .box-content { padding: 0; }
+#uiswitch-tool .a4-uiswitch-provider { display: block; margin: 10px 0 0; padding: 0; }
+#uiswitch-tool .a4-uiswitch-provider:first-child { margin-top: 0; }
+#uiswitch-tool .a4-stack { display: block; gap: 0; }
+#uiswitch-tool .a4-uiswitch-label {
+    display: block; margin: 0 0 6px; color: inherit; font-size: 14px; font-weight: 400; line-height: 1.42857143;
 }
-.dropdown-menu .a4-uiswitch-option:hover { background-color: var(--a4-soft); }
-.dropdown-menu .a4-uiswitch-option[aria-current="true"] {
-    background-color: var(--a4-accent-soft); box-shadow: inset 3px 0 0 var(--a4-accent); color: var(--a4-accent-text); font-weight: 600;
+#uiswitch-tool .a4-uiswitch-toggle[hidden], #uiswitch-tool .a4-uiswitch-menu[hidden] { display: none; }
+#uiswitch-tool .a4-uiswitch-menu { margin: 0; }
+/* the language list: the Cache dropdown's select.form-control.input-sm */
+#uiswitch-tool select.a4-input {
+    display: block; width: 100%; height: 30px; min-height: 0; margin: 0 0 10px; padding: 5px 18px 5px 8px;
+    border: 1px solid #e8e8e8; border-radius: 2px;
+    background: #f8f8f8 url(../images/select-bg.png) no-repeat right 5px center; background-size: contain;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.025);
+    color: #555; font-family: inherit; font-size: 12px; line-height: 1.5;
+    -webkit-appearance: none; -moz-appearance: none; appearance: none; cursor: pointer;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
+#uiswitch-tool select.a4-input:focus {
+    border-color: #66afe9; outline: 0; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+#uiswitch-tool select.a4-input optgroup, #uiswitch-tool select.a4-input option { background-color: #fff; color: #333; }
+/* its Apply button: the Cache dropdown's Clear button (btn btn-primary btn-sm) */
+#uiswitch-tool .a4-btn {
+    display: inline-block; min-height: 0; margin: 0; padding: 5px 10px;
+    border: 1px solid #2970ef; border-radius: 3px; background-color: #2970ef; color: #fff;
+    font-family: inherit; font-size: 12px; font-weight: 400; line-height: 1.5; white-space: nowrap; cursor: pointer;
+}
+#uiswitch-tool .a4-btn:hover:not([disabled]), #uiswitch-tool .a4-btn:focus { border-color: #0f53cc; background-color: #1057d5; color: #fff; }
+#uiswitch-tool .a4-btn:active { border-color: #0b3a8e; background-color: #0d49b4; box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
+#uiswitch-tool .a4-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+/* the design choices: the side bar's own entries */
+#uiswitch-tool .a4-uiswitch-list { display: block; margin: 0; padding: 0; list-style: none; }
+#uiswitch-tool .a4-uiswitch-list li { margin: 0; padding: 0; }
+#uiswitch-tool .a4-uiswitch-option {
+    display: block; width: 100%; min-height: 24px; margin: 0; padding: 6px 10px;
+    border: 0; border-radius: 0; background: transparent; box-shadow: none;
+    color: #fff; font-family: inherit; font-size: 14px; font-weight: 400; line-height: 1.42857143; text-align: start; cursor: pointer;
+}
+#uiswitch-tool .a4-uiswitch-option:hover, #uiswitch-tool .a4-uiswitch-option:focus { background-color: #424242; color: #fff; outline: 0; }
+#uiswitch-tool .a4-uiswitch-option:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+#uiswitch-tool .a4-uiswitch-option[aria-current="true"] { background-color: #606060; color: #fff; font-weight: 400; box-shadow: none; }
 @media (forced-colors: active) {
-    .dropdown-menu .a4-uiswitch-option[aria-current="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+    #uiswitch-tool .a4-uiswitch-option[aria-current="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
 }

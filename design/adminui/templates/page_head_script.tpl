@@ -22,6 +22,8 @@ else if ( !jQuery.fn.resizable ) jQuery.fn.resizable = function () {ldelim} retu
 <script type="text/javascript" src={'javascript/ngadminui/ace/ace.js'|ezdesign}></script>
 <script type="text/javascript" src={'javascript/ngadminui/ace/ext-language_tools.js'|ezdesign}></script>
 <script type="text/javascript" src={'javascript/ngadminui/app.js'|ezdesign}></script>
+{* Escape and the arrow keys in the side bar's dropdowns *}
+<script type="text/javascript" src={'javascript/exp_adminui_aside_dropdown_keys.js'|ezdesign}></script>
 {* the resizable details panel of the content view (preview.tpl) *}
 <script type="text/javascript" src={'javascript/exp_adminui_details_resizer.js'|ezdesign}></script>
 {* app.js points Ace at the bundle's public path; point it at this design's copy *}

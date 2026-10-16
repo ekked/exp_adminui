@@ -47,13 +47,15 @@ the reference never had (audit, newsletter, git manager, layouts ...). They get 
    styles. `page_head_style.tpl` loads the legacy stylesheets and the extensions' `BackendCSSFileList` through
    ezjscore, then links `font-awesome.css`, `icomoon.css`, `style.css` and `adminui.css` as plain files, as the
    reference does. `page_head_script.tpl` loads jQuery 4 and the admin scripts (`BackendJavaScriptList`, with
-   Exponential UI), then the Admin UI scripts: jQuery UI resizable, Bootstrap 3 (side bar dropdowns), Ace and `app.js`.
+   Exponential UI), then the Admin UI scripts: jQuery UI resizable, Bootstrap 3 (side bar dropdowns), Ace, `app.js` and `exp_adminui_aside_dropdown_keys.js`
+   (Escape closes a side bar dropdown; the arrow keys in the Interface dropdown, which Bootstrap 3 cancelled).
 2. **Header**: the logo (`.logo-type-<LogoType>`) and the search box. A view can add its own top bar through the
    persistent variable `top_menu`, as the content view and the version preview do (node/view/full.tpl, content/view/versionview.tpl).
 3. **Side bar** (`#aside`): the user menu (`adminui/page_aside_user.tpl`), then `adminui/menu/aside.tpl`. That
    template replaces the reference's PHP menu plugins: the admin top menu (`menu.ini [TopAdminMenu]`, drawn by
    `menu/plugins/legacy/aside.tpl`), then Layouts, Tags and Collected information, then the Cache, Bookmarks and Interface
-   dropdowns (Interface: the UI switch of the kernel, the display language; uiswitch/choices.tpl of admin4).
+   dropdowns (Interface: the UI switch of the kernel, the display language and the administration design;
+   uiswitch/choices.tpl and grouped.tpl, drawn in adminui.css like the Cache dropdown and the side bar entries).
    `exp_adminui.ini [MenuPlugins]` switches each block on or off.
 4. **Left column** (`adminui/page_leftmenu.tpl`): the view's own left menu (`$module_result.left_menu`), otherwise
    `parts/<navigation part>/menu.tpl` (content tree, setup links, my account ...). It is drawn only when it has content.
