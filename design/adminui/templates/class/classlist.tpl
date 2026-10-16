@@ -53,7 +53,7 @@
 
         <div class="button-right">
             {if gt( $languages|count, 1 )}
-                <select class="form-control inline input-sm" name="ClassLanguageCode" title="{'Use this menu to select the language you to want use then click the "New class" button. The item will be created within the current location.'|i18n( 'design/admin/class/classlist' )|wash()}">
+                <select class="form-control inline input-sm" name="ClassLanguageCode" aria-label="{'Language of the new class'|i18n( 'design/admin/class/classlist' )|wash}" title="{'Use this menu to select the language you to want use then click the "New class" button. The item will be created within the current location.'|i18n( 'design/admin/class/classlist' )|wash()}">
                     {foreach $languages as $language}
                         <option value="{$language.locale|wash()}">{$language.name|wash()}</option>
                     {/foreach}
@@ -86,7 +86,7 @@
 
             {section var=Classes loop=$groupclasses sequence=array( bglight, bgdark )}
             <tr class="{$Classes.sequence}">
-                <td><input type="checkbox" name="DeleteIDArray[]" value="{$Classes.item.id}" title="{'Select class for removal.'|i18n( 'design/admin/class/classlist' )}" /></td>
+                <td><input type="checkbox" name="DeleteIDArray[]" value="{$Classes.item.id}" aria-label="{'Select %name for removal'|i18n( 'design/admin/class/grouplist',, hash( '%name', $Classes.item.name ) )|wash}" title="{'Select class for removal.'|i18n( 'design/admin/class/classlist' )}" /></td>
                 <td>{$Classes.item.identifier|class_icon( small, $Classes.item.name|wash )}&nbsp;<a href={concat( "/class/view/", $Classes.item.id )|ezurl}>{$Classes.item.name|wash}</a></td>
                 <td class="number" align="right">{$Classes.item.id}</td>
                 <td>{$Classes.item.identifier|wash}</td>
@@ -136,7 +136,7 @@
 
             <div class="button-right">
                 {if gt( $languages|count, 1 )}
-                    <select class="form-control inline input-sm" name="ClassLanguageCode" id="ClassLanguageCodeBottom" title="{'Use this menu to select the language you to want use then click the "New class" button. The item will be created within the current location.'|i18n( 'design/admin/class/classlist' )|wash()}">
+                    <select class="form-control inline input-sm" name="ClassLanguageCode" id="ClassLanguageCodeBottom" aria-label="{'Language of the new class'|i18n( 'design/admin/class/classlist' )|wash}" title="{'Use this menu to select the language you to want use then click the "New class" button. The item will be created within the current location.'|i18n( 'design/admin/class/classlist' )|wash()}">
                         {foreach $languages as $language}
                             <option value="{$language.locale|wash()}">{$language.name|wash()}</option>
                         {/foreach}

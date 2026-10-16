@@ -53,14 +53,14 @@
             <p>{$title}</p>
             <div class="form-inline">
                 <div class="form-group">
-                    <select id="ezasi-sort-field" name="SortingField" title="{$title}"{$disabled} class="form-control input-sm">
+                    <select id="ezasi-sort-field" name="SortingField" title="{$title}" aria-label="{'Sort by'|i18n( 'design/admin/node/view/full' )|wash}"{$disabled} class="form-control input-sm">
                     {foreach $sort_fields as $key => $field}
                         <option value="{$key}" {if eq( $key, $node.sort_field )}selected="selected"{/if}>{$field}</option>
                     {/foreach}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="ezasi-sort-order" name="SortingOrder" title="{$title}"{$disabled} class="form-control input-sm">
+                    <select id="ezasi-sort-order" name="SortingOrder" title="{$title}" aria-label="{'Sort order'|i18n( 'design/admin/node/view/full' )|wash}"{$disabled} class="form-control input-sm">
                         <option value="0"{if eq($node.sort_order, 0)} selected="selected"{/if}>{'Descending'|i18n( 'design/admin/node/view/full' )}</option>
                         <option value="1"{if eq($node.sort_order, 1)} selected="selected"{/if}>{'Ascending'|i18n( 'design/admin/node/view/full' )}</option>
                     </select>

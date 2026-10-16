@@ -94,7 +94,7 @@
         {/if}
     </div>
     <div class="right input-group">
-        <input type="text" class="form-control hide ezobject-relation-search-text" />
+        <input type="text" class="form-control hide ezobject-relation-search-text" aria-label="{'Find objects'|i18n( 'design/standard/content/datatype' )|wash}" />
         <span class="input-group-btn">
             <button type="submit" class="btn btn-default ezobject-relation-search-btn" name="CustomActionButton[{$attribute.id}_browse_object]"><i class="fa fa-search"></i> {'Find object'|i18n( 'design/standard/content/datatype' )}</button>
         </span>

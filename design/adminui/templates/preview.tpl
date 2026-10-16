@@ -45,7 +45,7 @@
             <p>{$node.object.id}</p>
         </li>
         <li>
-            <label>{'Section'|i18n( 'design/admin/node/view/full' )}:</label>
+            <label for="selected-section-id">{'Section'|i18n( 'design/admin/node/view/full' )}:</label>
             <form name="changesection" id="changesection" method="post" action={concat( 'content/edit/', $node.object.id )|ezurl}>
                 <input type="hidden" name="RedirectRelativeURI" value="{$node.url_alias|wash}" />
                 <input type="hidden" name="ChangeSectionOnly" value="1" />
