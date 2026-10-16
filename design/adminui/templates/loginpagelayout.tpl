@@ -1,7 +1,7 @@
 {* Exponential Admin UI: the login page frame, from pagelayout_login.html.twig of the Netgen Admin UI bundle.
    As in the reference only the Admin UI stylesheets and scripts are loaded, not the admin's. *}
 <!DOCTYPE html>
-<html lang="{$site.http_equiv.Content-language|wash}">
+<html lang="{$site.http_equiv.Content-language|wash}"{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )} dir="rtl"{/if}>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href={'stylesheets/style.css'|ezdesign} />
     <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rem.css'|ezdesign} />
     <link rel="stylesheet" type="text/css" href={'stylesheets/adminui.css'|ezdesign} />
+    {if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )}<link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rtl.css'|ezdesign} />{/if}
 </head>
 <body class="loginpage">
     {$module_result.content}

@@ -10,7 +10,7 @@
     {set $adminui_details_width = 0}
 {/if}
 <!DOCTYPE html>
-<html lang="{$site.http_equiv.Content-language|wash}"{if $adminui_details_width} style="--exp-adminui-details-width: {$adminui_details_width}px"{/if}>
+<html lang="{$site.http_equiv.Content-language|wash}"{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )} dir="rtl"{/if}{if $adminui_details_width} style="--exp-adminui-details-width: {$adminui_details_width}px"{/if}>
 <head>
 {def $ui_context_edit   = eq( $ui_context, 'edit' )
      $content_edit      = and( $ui_context_edit, eq( $ui_component, 'content' ) )

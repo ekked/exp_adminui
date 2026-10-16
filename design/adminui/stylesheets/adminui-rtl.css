@@ -1,0 +1,34 @@
+/*!
+ * Exponential Admin UI (exp_adminui): the page frame right to left. Loaded after the other stylesheets, and only
+ * when the interface language is written right to left (the pagelayout prints dir="rtl" on <html> from
+ * $site.text_direction), so a left-to-right page is the same as without it. The reference's style.css is copied
+ * unchanged; this file mirrors the parts of it that place the frame: the side bar and the header at the right
+ * edge, the content tree column after it, the search field and the tree's lines and toggles. Each block names the
+ * style.css rule it mirrors. Pages and widgets inside the frame are not covered yet (doc/features/6.0/right-to-left.md).
+ * GNU General Public License v2.0 (or any later version).
+ */
+
+/* ---- header (style.css .header-nav, .header-search, .search-form) ------------------------------------------- */
+[dir="rtl"] .header-nav { float: right; }
+[dir="rtl"] .header-search { margin-left: 0; margin-right: 100px; }
+[dir="rtl"] .search-form { float: right; }
+[dir="rtl"] .search-form .search-input { padding: 0 45px 0 20px; }
+[dir="rtl"] .search-form .search-btn { left: auto; right: 20px; }
+[dir="rtl"] .search-form .search-btn .fa { left: auto; right: -3px; }
+
+/* ---- the side bar and the content beside it (#aside, .aside-wrap, #content, .content-body) ------------------- */
+[dir="rtl"] #aside { float: right; }
+[dir="rtl"] .aside-wrap { left: auto; right: 0; }
+[dir="rtl"] #content { margin-left: 0; margin-right: 100px; }
+[dir="rtl"] .content-body { left: 0; right: 100px; }
+[dir="rtl"] .content-body.contentPreview { right: 0; }
+[dir="rtl"] .ui-resizable-handle.ui-resizable-e { right: auto; left: 0; }
+
+/* ---- the content tree (#content-tree-menu): indentation, guide lines and the open/close toggles ------------- */
+[dir="rtl"] #content-tree-menu { padding: 0 20px 0 5px; }
+[dir="rtl"] #content-tree-menu ul li { padding: 0 12px 8px 0; margin: 0 6px 0 0; border-left: 0; border-right: 1px solid #bfbfb7; }
+[dir="rtl"] #content-tree-menu ul li.lastli { border-right-color: transparent; }
+[dir="rtl"] #content-tree-menu ul li::before { left: auto; right: -1px; }
+[dir="rtl"] #content-tree-menu ul li.lastli::before { border-left: 0; border-right: 1px solid #bfbfb7; }
+[dir="rtl"] #content-tree-menu [class^='openclose'] { left: auto; right: -9px; }
+[dir="rtl"] #content-tree-menu .node-name-hidden::before { margin-right: 0; margin-left: 0.25em; }

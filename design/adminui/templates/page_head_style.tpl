@@ -34,3 +34,5 @@
 {* module pages with stylesheets of their own (Exponential Layouts, Exponential UI widgets ...) in the Admin UI frame *}
 <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-modules.css'|ezdesign} />
 <link rel="stylesheet" type="text/css" href={'stylesheets/adminui-dashboard.css'|ezdesign} />
+{* right to left (the interface language's direction): the frame mirrored, only then, so a left-to-right page is unchanged *}
+{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )}<link rel="stylesheet" type="text/css" href={'stylesheets/adminui-rtl.css'|ezdesign} />{/if}

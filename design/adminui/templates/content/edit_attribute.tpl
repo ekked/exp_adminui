@@ -42,10 +42,10 @@
                             </div>
                             <div class="attribute-edit">
                                 <div class="attribute-block float-break">
-                                    <div class="original">
+                                    <div class="original"{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$from_content_attributes_grouped_data_map[$attribute_group][$attribute_identifier].language_code exp_lang_always=true()}>
                                     {attribute_view_gui attribute_base=$attribute_base attribute=$from_content_attributes_grouped_data_map[$attribute_group][$attribute_identifier] view_parameters=$view_parameters}
                                     </div>
-                                    <div class="translation">
+                                    <div class="translation"{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code exp_lang_always=true()}>
                                     {if $attribute.display_info.edit.grouped_input}
                                         <fieldset class="attribute-fieldset">
                                         {attribute_edit_gui attribute_base=$attribute_base attribute=$attribute view_parameters=$view_parameters}
@@ -70,7 +70,9 @@
                                 </div>
                                 <div class="attribute-edit">
                                     <div class="attribute-block float-break">
+                                        {set-block variable=exp_text_attrs}{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code}{/set-block}{if $exp_text_attrs|ne( '' )}<div class="exp-content-text"{$exp_text_attrs}>{/if}
                                         {attribute_edit_gui attribute_base=$attribute_base attribute=$attribute view_parameters=$view_parameters}
+                                        {if $exp_text_attrs|ne( '' )}</div>{/if}{undef $exp_text_attrs}
                                         <input type="hidden" name="ContentObjectAttribute_id[]" value="{$attribute.id}" />
                                     </div>
                                 </div>
@@ -85,7 +87,9 @@
                                 </div>
                                 <div class="attribute-edit">
                                     <div class="attribute-block float-break">
+                                        {set-block variable=exp_text_attrs}{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code}{/set-block}{if $exp_text_attrs|ne( '' )}<div class="exp-content-text"{$exp_text_attrs}>{/if}
                                         {attribute_edit_gui attribute_base=$attribute_base attribute=$attribute view_parameters=$view_parameters}
+                                        {if $exp_text_attrs|ne( '' )}</div>{/if}{undef $exp_text_attrs}
                                         <input type="hidden" name="ContentObjectAttribute_id[]" value="{$attribute.id}" />
                                     </div>
                                 </div>
