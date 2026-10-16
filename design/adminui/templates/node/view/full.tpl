@@ -112,7 +112,7 @@
 
             {* the language the name is shown in: its current language when the object has it, else unknown (nothing marked) *}{def $exp_title_language = cond( $node.object.available_languages|contains( $node.object.current_language ), $node.object.current_language, '' )}
             <h1 class="context-title">
-                {set-block variable=exp_name_attrs}{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$exp_title_language}{/set-block}{if $exp_name_attrs|ne( '' )}<bdi{$exp_name_attrs}>{$node.name|wash}</bdi>{else}{$node.name|wash}{/if}{undef $exp_name_attrs}&nbsp;<span class="type">[{$node.class_name|wash}]</span> {$hide_status}
+                {set-block variable=exp_name_attrs}{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$exp_title_language}{/set-block}{if $exp_name_attrs|ne( '' )}<bdi{$exp_name_attrs}>{$node.name|wash}</bdi>{else}<bdi>{$node.name|wash}</bdi>{/if}{undef $exp_name_attrs}&nbsp;<span class="type">[<bdi>{$node.class_name|wash}</bdi>]</span> {$hide_status}
 
                 {undef $js_class_languages $disable_another_language $disabled_sub_menu $hide_status}
             </h1>{undef $exp_title_language}

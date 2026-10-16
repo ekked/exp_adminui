@@ -61,7 +61,7 @@
     <section class="aui-dash-hero">
         <div class="aui-dash-hero-text">
             <p class="aui-dash-date">{currentdate()|l10n( 'date' )}</p>
-            <h1>{$greeting}, {$user.contentobject.name|wash}</h1>
+            <h1>{$greeting}, <bdi>{$user.contentobject.name|wash}</bdi></h1>
             <p class="aui-dash-sub">{'Here is what is happening on %site.'|i18n( 'design/admin/dashboard', , hash( '%site', ezini( 'SiteSettings', 'SiteName' )|wash ) )}</p>
         </div>
         <nav class="aui-dash-actions" aria-label="{'Quick actions'|i18n( 'design/admin/dashboard' )|wash}">

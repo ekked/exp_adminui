@@ -19,8 +19,8 @@
         <li>
             <div class="user-avatar" style="background-image:url({$user_avatar})">
             </div>
-            <h4 class="user-name">{$user_content.name|wash}</h4>
-            <p class="user-role">{$current_user.login|wash}</p>
+            <h4 class="user-name"><bdi>{$user_content.name|wash}</bdi></h4>
+            <p class="user-role"><bdi>{$current_user.login|wash}</bdi></p>
         </li>
 
         <li class="divider"></li>

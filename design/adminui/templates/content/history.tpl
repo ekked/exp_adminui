@@ -43,7 +43,7 @@
     <div class="panel content-history">
 
         {* DESIGN: Header START *}
-        <h1>{'Versions for < %object_name > (%version_count)'|i18n( 'design/admin/content/history',, hash( '%object_name', $object.name, '%version_count', $list_count ) )|wash}</h1>
+        <h1>{'Versions for < %object_name > (%version_count)'|i18n( 'design/admin/content/history',, hash( '%object_name', '%object_name', '%version_count', $list_count ) )|wash|explode( '%object_name' )|implode( concat( '<bdi>', $object.name|wash, '</bdi>' ) )}</h1>
         {* DESIGN: Mainline *}<div class="header-mainline"></div>
         {* DESIGN: Header END *}
         {* DESIGN: Content START *}
@@ -90,7 +90,7 @@
                 </td>
 
                 {* Creator. *}
-                <td>{$version.creator.name|wash}</td>
+                <td><bdi>{$version.creator.name|wash}</bdi></td>
 
                 {* Created. *}
                 <td>{$version.created|l10n( shortdatetime )}</td>
@@ -235,7 +235,7 @@
                 </td>
 
                 {* Creator. *}
-                <td>{$published_item.creator.name|wash}</td>
+                <td><bdi>{$published_item.creator.name|wash}</bdi></td>
 
                 {* Created. *}
                 <td>{$published_item.created|l10n( shortdatetime )}</td>
@@ -311,7 +311,7 @@
                 </td>
 
                 {* Creator. *}
-                <td>{$draft_version.creator.name|wash}</td>
+                <td><bdi>{$draft_version.creator.name|wash}</bdi></td>
 
                 {* Created. *}
                 <td>{$draft_version.created|l10n( shortdatetime )}</td>

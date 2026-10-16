@@ -63,7 +63,7 @@
                 {section var=Drafts loop=fetch( content, draft_version_list, hash( limit, $number_of_items, offset, $view_parameters.offset ) ) sequence=array( bglight, bgdark )}
                 <tr class="{$Drafts.sequence}">
                     <td><input type="checkbox" name="DeleteIDArray[]" value="{$Drafts.item.id}" title="{'Select draft for removal.'|i18n( 'design/admin/content/draft' )}" /></td>
-                    <td>{$Drafts.item.contentobject.content_class.identifier|class_icon( small, $Drafts.item.contentobject.content_class.name|wash )}&nbsp;<a href={concat( '/content/versionview/', $Drafts.item.contentobject.id, '/', $Drafts.item.version, '/', $Drafts.item.initial_language.locale, '/' )|ezurl}>{$Drafts.item.version_name|wash}</a></td>
+                    <td>{$Drafts.item.contentobject.content_class.identifier|class_icon( small, $Drafts.item.contentobject.content_class.name|wash )}&nbsp;<a href={concat( '/content/versionview/', $Drafts.item.contentobject.id, '/', $Drafts.item.version, '/', $Drafts.item.initial_language.locale, '/' )|ezurl} dir="auto">{$Drafts.item.version_name|wash}</a></td>
                     <td>{$Drafts.item.contentobject.content_class.name|wash}</td>
                     <td>{let section_object=fetch( section, object, hash( section_id, $Drafts.item.contentobject.section_id ) )}{section show=$section_object}{$section_object.name|wash}{section-else}<i>{'Unknown'|i18n( 'design/admin/content/draft' )}</i>{/section}{/let}</td>
                     <td><img src="{$Drafts.item.initial_language.locale|flag_icon}" width="18" height="12" alt="{$Drafts.item.initial_language.locale|wash}" style="vertical-align: middle;" />&nbsp;{$Drafts.item.initial_language.name|wash}</td>

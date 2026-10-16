@@ -16,7 +16,7 @@
                     <div class="label-preview">
                         <legend title="identifier: {$attribute.contentclass_attribute_identifier}, attribute ID: {$attribute.id}, type: {$attribute.data_type_string}, class attribute ID: {$attribute.contentclassattribute_id}">{$attribute.contentclass_attribute.name|wash}{if $attribute.is_information_collector} <span class="collector">({'information collector'|i18n( 'design/admin/content/edit_attribute' )})</span>{/if}</legend>
                     </div>
-                    <div class="attribute-preview"{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code}>
+                    <div class="attribute-preview"{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code exp_dir_ltr=true()}>
                         {attribute_view_gui attribute=$attribute}
                     </div>
                 </fieldset>
@@ -24,7 +24,7 @@
                     <div class="label-preview">
                         <label title="identifier: {$attribute.contentclass_attribute_identifier}, attribute ID: {$attribute.id}, type: {$attribute.data_type_string}, class attribute ID: {$attribute.contentclassattribute_id}">{$attribute.contentclass_attribute.name|wash}{if $attribute.is_information_collector} <span class="collector">({'information collector'|i18n( 'design/admin/content/edit_attribute' )})</span>{/if}:</label>
                     </div>
-                    <div class="attribute-preview"{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code}>
+                    <div class="attribute-preview"{include uri='design:parts/exp_content_direction.tpl' exp_locale_code=$attribute.language_code exp_dir_ltr=true()}>
                         {attribute_view_gui attribute=$attribute}
                     </div>
                 {/if}
