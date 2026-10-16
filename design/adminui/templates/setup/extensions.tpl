@@ -116,7 +116,7 @@
     {* Version. *}
     <td>{if $ext.version}{$ext.version|wash}{else}&mdash;{/if}</td>
     {* Modified. *}
-    <td>{if $ext.mtime_formatted}{$ext.mtime_formatted|wash}{else}&mdash;{/if}</td>
+    <td>{if $ext.mtime_formatted}<bdi dir="ltr">{$ext.mtime_formatted|wash}</bdi>{else}&mdash;{/if}</td>
     {* Info popin trigger. *}
     <td><a href="#" class="extension-info-link" data-name="{$Extensions.item|wash}">{'Details'|i18n( 'design/admin/setup/extensions' )}</a></td>
 </tr>
@@ -128,7 +128,7 @@
             <dl>
                 {if is_set( $extension_positions[$Extensions.item] )}<dt>{'Loading order'|i18n( 'design/admin/setup/extensions' )}</dt><dd data-position-of="{$Extensions.item|wash}">{$extension_positions[$Extensions.item]}</dd>{/if}
                 {if $ext.version}<dt>{'Version'|i18n( 'design/admin/setup/extensions' )}</dt><dd>{$ext.version|wash}</dd>{/if}
-                {if $ext.mtime_formatted}<dt>{'Modified'|i18n( 'design/admin/setup/extensions' )}</dt><dd>{$ext.mtime_formatted|wash}</dd>{/if}
+                {if $ext.mtime_formatted}<dt>{'Modified'|i18n( 'design/admin/setup/extensions' )}</dt><dd><bdi dir="ltr">{$ext.mtime_formatted|wash}</bdi></dd>{/if}
                 {if $ext.meta.copyright}<dt>{'Copyright'|i18n( 'design/admin/setup/extensions' )}</dt><dd>{$ext.meta.copyright|wash}</dd>{/if}
                 {if $ext.meta.author}<dt>{'Author'|i18n( 'design/admin/setup/extensions' )}</dt><dd>{$ext.meta.author|wash}</dd>{/if}
                 {if $ext.meta.license}<dt>{'License'|i18n( 'design/admin/setup/extensions' )}</dt><dd>{$ext.meta.license|wash}</dd>{/if}

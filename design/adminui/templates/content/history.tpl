@@ -185,7 +185,7 @@
                 {if is_set( $redirect_uri )}
                 <input class="form-control" type="hidden" name="RedirectURI" value="{$redirect_uri}" />
                 {/if}
-                <input class="btn btn-primary" type="submit" name="BackButton" value="&larr; {'Back'|i18n( 'design/admin/content/history' )}" />
+                <input class="btn btn-primary" type="submit" name="BackButton" value="{cond( ezini( 'RegionalSettings', 'Locale' )|locale().is_right_to_left, '&rarr;', '&larr;' )} {'Back'|i18n( 'design/admin/content/history' )}" />
             </form>
         </div>
 
@@ -405,7 +405,7 @@
 
 <div class="block">
     <form action={concat( '/content/history/', $object.id, '/' )|ezurl} method="post">
-        <input class="btn btn-default" type="submit" value="&larr; {'Back to history'|i18n( 'design/admin/content/history' )}" />
+        <input class="btn btn-default" type="submit" value="{cond( ezini( 'RegionalSettings', 'Locale' )|locale().is_right_to_left, '&rarr;', '&larr;' )} {'Back to history'|i18n( 'design/admin/content/history' )}" />
     </form>
 </div>
 {/if}
