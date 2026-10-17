@@ -81,9 +81,9 @@
                 <div class="block">
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
-                            <label>{'Change repository'|i18n( 'design/admin/package/list' )}:</label>
+                            <label for="package-list-repository">{'Change repository'|i18n( 'design/admin/package/list' )}:</label>
                             <div class="input-group">
-                                <select class="form-control" name="RepositoryID">
+                                <select class="form-control" id="package-list-repository" name="RepositoryID">
                                     <option value="">{'All'|i18n( 'design/admin/package/list' )}</option>
                                     {section var=repository loop=$repository_list}
                                         <option value="{$repository.id|wash}"{if eq( $repository.id, $repository_id )} selected="selected"{/if}>{$repository.name|wash}</option>
@@ -110,9 +110,9 @@
                     {section name=Package loop=$package_list sequence=array(bglight,bgdark)}
                     <tr class="{$:sequence}">
                         {if $can_remove}
-                        <td width="1"><input type="checkbox" name="PackageSelection[]" value="{$:item.name|wash}"/></td>
+                        <td width="1"><label><input type="checkbox" name="PackageSelection[]" value="{$:item.name|wash}"/><span class="a4-sr-only">{'Select %name'|i18n( 'design/admin/package/list', , hash( '%name', $:item.name ) )|wash}</span></label></td>
                         {else}
-                          <input type="checkbox" disabled="disabled">
+                        <td width="1"><label><input type="checkbox" disabled="disabled"/><span class="a4-sr-only">{'Select %name'|i18n( 'design/admin/package/list', , hash( '%name', $:item.name ) )|wash}</span></label></td>
                         {/if}
                         <td><a href={concat('package/view/full/',$:item.name)|ezurl}>{$:item.name|wash}</a></td>
                         <td>{$:item.version-number}-{$:item.release-number}{if $:item.release-timestamp}({$:item.release-timestamp|l10n( shortdatetime )}){/if}{if $:item.type} [{$:item.type|wash}]{/if}</td>

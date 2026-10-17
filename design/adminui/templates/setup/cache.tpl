@@ -198,7 +198,7 @@
                several, each with its own host or url prefix, and generating all of them is
                rarely what is wanted. *}
             <tr class="bgdark">
-                <td>{'Site to generate'|i18n( 'design/admin/setup/cache' )}:</td>
+                <td><label for="staticcache-siteaccess">{'Site to generate'|i18n( 'design/admin/setup/cache' )}</label>:</td>
                 <td>
                     <select class="form-control input-sm" id="staticcache-siteaccess" name="StaticCacheSiteAccess">
                     {foreach $static_cache_siteaccess_list as $static_cache_target}
