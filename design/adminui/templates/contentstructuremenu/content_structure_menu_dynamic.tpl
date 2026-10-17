@@ -43,21 +43,18 @@
     {set $click_action = $click_action|ezurl(no)}
 {/if}
 
-<script type="text/javascript">
-var treeMenu;
-(function(){ldelim}
-
-{cache-block keys=array( $root_node_id, $access_type ) expiry=0}
-    {def $root_node_url = $root_node.url $class_list = array()}
-    {* The top node (1) has no URL alias of its own: it opens its full view, which lists the top-level nodes. *}
-    {if $root_node_url|eq('')}
-        {set $root_node_url = concat( 'content/view/full/', $root_node_id )}
-    {/if}
-    {foreach fetch( 'content', 'can_instantiate_class_list', hash( 'parent_node', $root_node, 'filter_type', $filter_type, 'group_id', $filter_groups ) ) as $class}
-        {set $class_list = $class_list|append( $class.id )}
-    {/foreach}
-
-    var rootNode = {json_encode( hash(
+{* The tree is drawn by exp_adminui_content_tree.js, printed right after this element, from its data (no inline
+   script, so it works under a Content Security Policy without 'unsafe-inline'): data-expui-tree-root the top node,
+   data-expui-tree-params the icons, classes, languages and texts (cached), data-expui-tree-request what depends on
+   the request and the user. Each is JSON. The script writes the list in place, as the inline script did. *}
+<div class="exp-adminui-tree-data" hidden{*
+*}{cache-block keys=array( $root_node_id, $access_type ) expiry=0}{*
+    *}{def $root_node_url = $root_node.url $class_list = array()}{*
+    The top node (1) has no URL alias of its own: it opens its full view, which lists the top-level nodes.
+    *}{if $root_node_url|eq('')}{set $root_node_url = concat( 'content/view/full/', $root_node_id )}{/if}{*
+    *}{foreach fetch( 'content', 'can_instantiate_class_list', hash( 'parent_node', $root_node, 'filter_type', $filter_type, 'group_id', $filter_groups ) ) as $class}{*
+        *}{set $class_list = $class_list|append( $class.id )}{*
+    *}{/foreach} data-expui-tree-root="{json_encode( hash(
         'node_id', $root_node_id,
         'object_id', cond( $root_node.object.id, $root_node.object.id, true(), 0 ),
         'class_id', $root_node.object.contentclass_id,
@@ -67,81 +64,53 @@ var treeMenu;
         'modified_subnode', $root_node.modified_subnode,
         'languages', $root_node.object.language_codes,
         'class_list', $class_list
-    ) )};
-
-    {cache-block keys=array( $root_node_id|gt( 1 ), $access_type ) expiry=86400 ignore_content_expiry}
-        {def $iconInfo      = icon_info('class')
-            $classIconsSize = ezini('TreeMenu','ClassIconsSize','contentstructuremenu.ini')}
-        var params = {ldelim}{*
-            *}"iconsList":[],{*
-            *}"contentTreeUrl":"{"content/treemenu"|ezurl(no)}/",{*
-            *}"wwwDirPrefix":"{ezsys('wwwdir')}/{$iconInfo.theme_path}/{$iconInfo.size_path_list[$classIconsSize]}/"{rdelim};
-
-        params.languages = {ldelim}{*
-            *}{foreach fetch('content','translation_list') as $language}{*
-                *}"{$language.locale_code|wash(javascript)}":"{$language.intl_language_name|wash(javascript)}"{*
-                *}{delimiter},{/delimiter}{*
-            *}{/foreach}{*
-        *}{rdelim};
-
-        {set $class_list = hash()}
-        {* Using an underscore to prefix the key because of merge not handling numeric keys correctly *}
-        {foreach fetch('class','list') as $class}
-            {set $class_list = $class_list|merge( hash( concat( '_', $class.id ), hash( 'name', $class.name, 'identifier', $class.identifier ) ) )}
-        {/foreach}
-
-        {if is_set($class_list['_1'])|not}
-            {set $class_list = $class_list|merge( hash( '_1', hash( 'name', 'Folder', 'identifier', 'folder' ) ) )}
-        {/if}
-
-        params.classes = {json_encode( $class_list ) }
-
-        {foreach $iconInfo.icons as $class => $icon}{*
-            *}params.iconsList['{$class}'] = params.wwwDirPrefix + "{$icon}";
-        {/foreach}
-        params.iconsList['__default__'] = params.wwwDirPrefix + "{$iconInfo.default}";
-
-        {if ezini('TreeMenu','PreloadClassIcons','contentstructuremenu.ini')|eq('enabled')}
-        ezjslib_preloadImageList( params.iconsList );
-        {/if}
-
-        params.showTips       = {if ezini('TreeMenu','ToolTips','contentstructuremenu.ini')|eq('enabled')}true{else}false{/if};
-        params.createHereMenu = "{ezini('TreeMenu','CreateHereMenu','contentstructuremenu.ini')}";
-        params.autoOpen       = {if ezini('TreeMenu','AutoopenCurrentNode','contentstructuremenu.ini')|eq('enabled')}true{else}false{/if};
-
-        var i18n = {ldelim}{*
-            *}"expand":"{'Click on the icon to display a context-sensitive menu.'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"node_id":"{'Node ID'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"object_id":"{'Object ID'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"visibility":"{'Visibility'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"hidden":"{'Hidden'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"visible":"{'Visible'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"hiddenbyparent":"{'Hidden by superior'|i18n('design/admin/contentstructuremenu')|wash(xhtml)|wash(javascript)}",{*
-            *}"disabled":"{'Dynamic tree menu is disabled for this siteaccess!'|i18n("design/admin/contentstructuremenu")|wash("javascript")}",{*
-            *}"not_exist":"{'Node does not exist'|i18n("design/admin/contentstructuremenu")|wash("javascript")}",{*
-            *}"internal_error":"{'Internal error'|i18n("design/admin/contentstructuremenu")|wash("javascript")}"{rdelim};
-        {undef $iconInfo $classIconsSize}
-    {/cache-block}
-{/cache-block}
-
-   {* Uncached (pr request / user) *}
-    params.action    = "{$click_action}";
-    params.context   = "{$ui_context}";
-    params.hideNodes = [{$hide_node_list|implode(',')}];
-    params.maxDepth  = {ezini('TreeMenu','MaxDepth','contentstructuremenu.ini')|int};
-    params.expiry    = "{fetch('content','content_tree_menu_expiry')}";
-    params.useCookie = {if $menu_persistence}true{else}false{/if};
-    params.path      = [{if is_set($module_result.path[0].node_id)}{foreach $module_result.path as $element}'{$element.node_id}'{delimiter},{/delimiter}{/foreach}{/if}];
-{default current_user=fetch('user','current_user')}
-    params.perm      = "{concat($current_user.role_id_list|implode(','),'|',$current_user.limited_assignment_value_list|implode(','))|md5}";
-{/default}
-
-    treeMenu = new ContentStructureMenu( params, i18n );
-
-    document.writeln( '<ul id="content-tree-menu">' );
-    document.writeln( treeMenu.generateEntry( rootNode, false, true ) );
-    document.writeln( '<\/ul>' );
-
-    treeMenu.load( false, rootNode.node_id, rootNode.modified_subnode );
-{rdelim})();
-</script>
+    ) )|wash}"{*
+    *}{cache-block keys=array( $root_node_id|gt( 1 ), $access_type ) expiry=86400 ignore_content_expiry}{*
+        *}{def $iconInfo       = icon_info('class')
+               $classIconsSize = ezini('TreeMenu','ClassIconsSize','contentstructuremenu.ini')
+               $tree_languages = hash()
+               $tree_classes   = hash()}{*
+        *}{foreach fetch('content','translation_list') as $language}{set $tree_languages = $tree_languages|merge( hash( $language.locale_code, $language.intl_language_name ) )}{/foreach}{*
+        Using an underscore to prefix the key because of merge not handling numeric keys correctly
+        *}{foreach fetch('class','list') as $class}{set $tree_classes = $tree_classes|merge( hash( concat( '_', $class.id ), hash( 'name', $class.name, 'identifier', $class.identifier ) ) )}{/foreach}{*
+        *}{if is_set($tree_classes['_1'])|not}{set $tree_classes = $tree_classes|merge( hash( '_1', hash( 'name', 'Folder', 'identifier', 'folder' ) ) )}{/if} data-expui-tree-params="{json_encode( hash(
+        'contentTreeUrl', concat( "content/treemenu"|ezurl(no), '/' ),
+        'wwwDirPrefix', concat( ezsys('wwwdir'), '/', $iconInfo.theme_path, '/', $iconInfo.size_path_list[$classIconsSize], '/' ),
+        'icons', $iconInfo.icons,
+        'defaultIcon', $iconInfo.default,
+        'preloadIcons', ezini('TreeMenu','PreloadClassIcons','contentstructuremenu.ini')|eq('enabled'),
+        'languages', $tree_languages,
+        'classes', $tree_classes,
+        'showTips', ezini('TreeMenu','ToolTips','contentstructuremenu.ini')|eq('enabled'),
+        'createHereMenu', ezini('TreeMenu','CreateHereMenu','contentstructuremenu.ini'),
+        'autoOpen', ezini('TreeMenu','AutoopenCurrentNode','contentstructuremenu.ini')|eq('enabled'),
+        'i18n', hash(
+            'expand', 'Click on the icon to display a context-sensitive menu.'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'node_id', 'Node ID'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'object_id', 'Object ID'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'visibility', 'Visibility'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'hidden', 'Hidden'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'visible', 'Visible'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'hiddenbyparent', 'Hidden by superior'|i18n('design/admin/contentstructuremenu')|wash(xhtml),
+            'disabled', 'Dynamic tree menu is disabled for this siteaccess!'|i18n("design/admin/contentstructuremenu"),
+            'not_exist', 'Node does not exist'|i18n("design/admin/contentstructuremenu"),
+            'internal_error', 'Internal error'|i18n("design/admin/contentstructuremenu")
+        )
+    ) )|wash}"{*
+        *}{undef $iconInfo $classIconsSize $tree_languages $tree_classes}{*
+    *}{/cache-block}{*
+*}{/cache-block}{*
+   Uncached (per request / user)
+*}{def $tree_path = array()}{*
+*}{if is_set($module_result.path[0].node_id)}{foreach $module_result.path as $element}{set $tree_path = $tree_path|append( concat( '', $element.node_id ) )}{/foreach}{/if}{*
+*}{default current_user=fetch('user','current_user')} data-expui-tree-request="{json_encode( hash(
+    'action', concat( '', $click_action ),
+    'context', concat( '', $ui_context ),
+    'hideNodes', $hide_node_list,
+    'maxDepth', ezini('TreeMenu','MaxDepth','contentstructuremenu.ini')|int,
+    'expiry', concat( '', fetch('content','content_tree_menu_expiry') ),
+    'useCookie', cond( $menu_persistence, true(), false() ),
+    'path', $tree_path,
+    'perm', concat($current_user.role_id_list|implode(','),'|',$current_user.limited_assignment_value_list|implode(','))|md5
+) )|wash}"{/default}{undef $tree_path}></div>
+{ezscript( array( 'exp_adminui_content_tree.js' ) )}
