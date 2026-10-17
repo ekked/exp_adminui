@@ -49,7 +49,7 @@
     <form method="post" action={$base|ezurl} id="nf-rules">
         <input type="hidden" name="UseConfirm" value="1" />
 {if $subscriptions|count|gt( 0 )}
-        <label class="nf-selectall"><input type="checkbox" onclick="var b=document.querySelectorAll('#nf-rules .nf-pick');for(var i=0;i&lt;b.length;i++)b[i].checked=this.checked;" /> {'Select all on this page'|i18n( 'design/admin/notification/settings' )}</label>
+        <label class="nf-selectall"><input type="checkbox" data-expui-check-all="#nf-rules .nf-pick" /> {'Select all on this page'|i18n( 'design/admin/notification/settings' )}</label>
         <ul class="nf-list">
     {foreach $subscriptions as $row}
             <li class="nf-row{if $row.missing} gone{/if}">

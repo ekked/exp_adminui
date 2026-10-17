@@ -12,7 +12,7 @@
 
     <table id="tab-translations-list" class="list" cellspacing="0" summary="{'Language list of translations for current object.'|i18n( 'design/admin/node/view/full' )}">
     <tr>
-        <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/node/view/full' )}" onclick="ezjs_toggleCheckboxes( document.translationsform, 'LanguageID[]' ); return false;"></i></th>
+        <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/node/view/full' )}" data-expui-toggle-checkboxes="LanguageID[]" data-expui-form="translationsform"></i></th>
         <th>{'Language'|i18n( 'design/admin/node/view/full' )}</th>
         <th>{'Locale'|i18n( 'design/admin/node/view/full' )}</th>
         <th class="tight">{'Main'|i18n( 'design/admin/node/view/full' )}</th>
@@ -50,7 +50,7 @@
 
     {if $object_can_edit}
 
-    <input type="radio" {if $Translations.item.id|eq($node.object.initial_language_id)} checked="checked" class="main-translation-radio main-translation-radio-initial"{else} class="main-translation-radio"{/if} name="InitialLanguageID" value="{$Translations.item.id}" title="{'Use these radio buttons to select the desired main language.'|i18n( 'design/admin/node/view/full' )}" />
+    <input type="radio" {if $Translations.item.id|eq($node.object.initial_language_id)} checked="checked" class="main-translation-radio main-translation-radio-initial"{else} class="main-translation-radio"{/if} name="InitialLanguageID" data-expui-highlight-main="#tab-translations-list-set-main" value="{$Translations.item.id}" title="{'Use these radio buttons to select the desired main language.'|i18n( 'design/admin/node/view/full' )}" />
 
     {/if}
 
@@ -90,20 +90,7 @@
         {if $object_can_edit}
             {if $translations_count|gt( 1 )}
             <input id="tab-translations-list-set-main" class="btn btn-default btn-sm" type="submit" name="UpdateInitialLanguageButton" value="{'Set main'|i18n( 'design/admin/node/view/full' )}" title="{'Select the desired main language using the radio buttons above then click this button to store the setting.'|i18n( 'design/admin/node/view/full' )}" />
-            <script type="text/javascript">
-            {literal}
-            (function( $ )
-            {
-                $('#tab-translations-list input.main-translation-radio').on('change', function()
-                {
-                    if ( this.className === 'main-translation-radio' )
-                        $('#tab-translations-list-set-main').removeClass('btn-default').addClass('btn-primary');
-                    else
-                        $('#tab-translations-list-set-main').removeClass('btn-primary').addClass('btn-default');
-                });
-            })( jQuery );
-            {/literal}
-            </script>
+            {* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}
             {else}
             <input class="btn btn-default btn-sm" type="submit" name="UpdateInitialLanguageButton" value="{'Set main'|i18n( 'design/admin/node/view/full' )}" disabled="disabled" title="{'You cannot change the main language because the object is not translated to any other languages.'|i18n( 'design/admin/node/view/full' )}" />
             {/if}
@@ -119,23 +106,13 @@
 
 
     <div class="form-group">
-        <label for="tab-translations-alwaysavailable-checkbox"><input id="tab-translations-alwaysavailable-checkbox" type="checkbox"{if $object_can_edit|not} disabled="disabled"{/if} name="AlwaysAvailable" value="1"{if $node.object.always_available} checked="checked"{/if} /> {'Use the main language if there is no prioritized translation.'|i18n( 'design/admin/node/view/full' )}</label>
+        <label for="tab-translations-alwaysavailable-checkbox"><input id="tab-translations-alwaysavailable-checkbox" type="checkbox"{if $object_can_edit|not} disabled="disabled"{/if} name="AlwaysAvailable" data-expui-highlight-toggle="#tab-translations-alwaysavailable-btn" value="1"{if $node.object.always_available} checked="checked"{/if} /> {'Use the main language if there is no prioritized translation.'|i18n( 'design/admin/node/view/full' )}</label>
     </div>
 
     <div class="form-group">
     {if $object_can_edit}
         <input id="tab-translations-alwaysavailable-btn" class="btn btn-default btn-sm" type="submit" name="UpdateAlwaysAvailableButton" value="{'Update'|i18n( 'design/admin/node/view/full' )}" title="{'Use this button to store the value of the checkbox above.'|i18n( 'design/admin/node/view/full' )}" />
-        <script type="text/javascript">
-        {literal}
-        (function( $ )
-        {
-            $('#tab-translations-alwaysavailable-checkbox').on('change', function()
-            {
-                $('#tab-translations-alwaysavailable-btn').toggleClass('btn-default btn-primary');
-            });
-        })( jQuery );
-        {/literal}
-        </script>
+        {* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}
     {else}
         <input class="btn btn-default btn-sm" disabled="disabled" type="submit" name="UpdateAlwaysAvailableButton" value="{'Update'|i18n( 'design/admin/node/view/full' )}" title="{'You do not have permission to change this setting.'|i18n( 'design/admin/node/view/full' )}" />
     {/if}

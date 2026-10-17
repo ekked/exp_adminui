@@ -80,7 +80,7 @@
             {else}
             <table class="list" cellspacing="0" >
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias_wildcard' )}" onclick="ezjs_toggleCheckboxes( document.wildcardform, 'WildcardIDList[]' ); return false;"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias_wildcard' )}" data-expui-toggle-checkboxes="WildcardIDList[]" data-expui-form="wildcardform"></i></th>
                     <th>{'URL alias wildcard'|i18n( 'design/admin/content/urlalias_wildcard' )}</th>
                     <th>{'Destination'|i18n( 'design/admin/content/urlalias_wildcard' )}</th>
                     <th>{'Type'|i18n( 'design/admin/content/urlalias_wildcard' )}</th>
@@ -136,8 +136,8 @@
                 {* buttons here *}
                 <div class="button-left">
                     {if $wildcard_list|count|gt( 0 )}
-                    <input class="btn btn-default" type="submit" name="RemoveWildcardButton" value="{'Remove selected'|i18n( 'design/admin/content/urlalias_wildcard' )}" title="{'Remove selected aliases from the list above.'|i18n( 'design/admin/content/urlalias_wildcard' )}" onclick="return confirm( '{'Are you sure you want to remove the selected wildcards?'|i18n( 'design/admin/content/urlalias_wildcard' )}' );"/>
-                    <input class="btn btn-default" type="submit" name="RemoveAllWildcardsButton" value="{'Remove all'|i18n( 'design/admin/content/urlalias_wildcard' )}" title="{'Remove all wildcard aliases.'|i18n( 'design/admin/content/urlalias_wildcard' )}" onclick="return confirm( '{'Are you sure you want to remove all wildcard aliases?'|i18n( 'design/admin/content/urlalias_wildcard' )}' );"/>
+                    <input class="btn btn-default" type="submit" name="RemoveWildcardButton" value="{'Remove selected'|i18n( 'design/admin/content/urlalias_wildcard' )}" title="{'Remove selected aliases from the list above.'|i18n( 'design/admin/content/urlalias_wildcard' )}" data-expui-confirm="{'Are you sure you want to remove the selected wildcards?'|i18n( 'design/admin/content/urlalias_wildcard' )|wash}"/>
+                    <input class="btn btn-default" type="submit" name="RemoveAllWildcardsButton" value="{'Remove all'|i18n( 'design/admin/content/urlalias_wildcard' )}" title="{'Remove all wildcard aliases.'|i18n( 'design/admin/content/urlalias_wildcard' )}" data-expui-confirm="{'Are you sure you want to remove all wildcard aliases?'|i18n( 'design/admin/content/urlalias_wildcard' )|wash}"/>
                     {else}
                     <input class="btn btn-default" type="submit" name="RemoveWildcardButton" value="{'Remove selected'|i18n( 'design/admin/content/urlalias_wildcard' )}" title="{'There are no removable aliases.'|i18n( 'design/admin/content/urlalias_wildcard' )}" disabled="disabled" />
                     <input class="btn btn-default" type="submit" name="RemoveAllWildcardsButton" value="{'Remove all'|i18n( 'design/admin/content/urlalias_wildcard' )}" title="{'There are no removable aliases.'|i18n( 'design/admin/content/urlalias_wildcard' )}" disabled="disabled" />

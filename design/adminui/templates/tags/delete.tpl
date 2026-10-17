@@ -39,7 +39,7 @@
     {else}
         <div class="controlbar">
             <div class="block">
-                <input class="btn btn-default" type="button" onclick="javascript:history.back();" value="{'Go back'|i18n( 'extension/eztags/errors' )}" />
+                <input class="btn btn-default" type="button" data-expui-history-back value="{'Go back'|i18n( 'extension/eztags/errors' )}" />
             </div>
         </div>
     {/if}

@@ -14,7 +14,7 @@
 
         <table class="list" cellspacing="0" summary="{'List of class groups'|i18n( 'design/admin/class/grouplist' )}">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/class/grouplist' )}" onclick="ezjs_toggleCheckboxes( document.GroupList, 'DeleteIDArray[]' ); return false;"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/class/grouplist' )}" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="GroupList"></i></th>
                 <th>{'Name'|i18n( 'design/admin/class/grouplist' )}</th>
                 <th>{'Modifier'|i18n( 'design/admin/class/grouplist' )}</th>
                 <th>{'Modified'|i18n( 'design/admin/class/grouplist' )}</th>

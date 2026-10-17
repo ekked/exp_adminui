@@ -7,7 +7,7 @@
         <tbody>
             <tr>
                 {if $has_edit_access}
-                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'extension/eztags/tags/view' )}" onclick="ezjs_toggleCheckboxes( document.translationsform, 'Locale[]' ); return false;"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'extension/eztags/tags/view' )}" data-expui-toggle-checkboxes="Locale[]" data-expui-form="translationsform"></i></th>
                 {/if}
                 <th>{'Language'|i18n( 'extension/eztags/tags/view' )}</th>
                 <th>{'Translation'|i18n( 'extension/eztags/tags/view' )}</th>
@@ -32,7 +32,7 @@
                     </td>
                     <td>{$translation.keyword|wash}</td>
                     <td>{$translation.locale|wash}</td>
-                    <td><input type="radio" {if $has_edit_access|not}disabled="disabled"{/if} {if $translation.locale|eq( $tag.main_translation.locale )} checked="checked" class="main-translation-radio main-translation-radio-initial"{else} class="main-translation-radio"{/if} name="MainLocale" value="{$translation.locale|wash}" /></td>
+                    <td><input type="radio" {if $has_edit_access|not}disabled="disabled"{/if} {if $translation.locale|eq( $tag.main_translation.locale )} checked="checked" class="main-translation-radio main-translation-radio-initial"{else} class="main-translation-radio"{/if} name="MainLocale" data-expui-highlight-main="#tab-translations-list-set-main" value="{$translation.locale|wash}" /></td>
                     {if $has_edit_access}
                         <td><a href={concat( '/tags/', cond( $tag.main_tag_id|eq( 0 ), 'edit', 'editsynonym' ), '/', $tag.id, '/', $translation.locale )|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit in <%language_name>.'|i18n( 'extension/eztags/tags/view', , hash( '%language_name', $translation.language_name.name ) )|wash}" /></a></td>
                     {/if}
@@ -55,18 +55,7 @@
             <div class="button-right">
                 {if $tag.translations|count}
                     <input id="tab-translations-list-set-main" class="btn-default" type="submit" name="UpdateMainTranslationButton" value="{'Set main'|i18n( 'extension/eztags/tags/view' )}" />
-                    <script type="text/javascript">
-                    {literal}
-                    (function( $ ) {
-                        $('input.main-translation-radio').on('change', function() {
-                            if ( this.className === 'main-translation-radio' )
-                                $('#tab-translations-list-set-main').removeClass('btn-default').addClass('btn-primary');
-                            else
-                                $('#tab-translations-list-set-main').removeClass('btn-primary').addClass('btn-default');
-                        });
-                    })( jQuery );
-                    {/literal}
-                    </script>
+                    {* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}
                 {else}
                     <input class="btn-default" type="submit" name="UpdateMainTranslationButton" value="{'Set main'|i18n( 'extension/eztags/tags/view' )}" disabled="disabled" />
                 {/if}
@@ -77,21 +66,13 @@
 
     <div class="block">
         <div class="block">
-            <input {if $has_edit_access|not}disabled="disabled"{/if} id="tab-translations-alwaysavailable-checkbox" type="checkbox" name="AlwaysAvailable" value="1"{if $tag.always_available} checked="checked"{/if} /> {'Use the main language if there is no prioritized translation.'|i18n( 'extension/eztags/tags/view' )}
+            <input {if $has_edit_access|not}disabled="disabled"{/if} id="tab-translations-alwaysavailable-checkbox" type="checkbox" name="AlwaysAvailable" data-expui-highlight="#tab-translations-alwaysavailable-btn" value="1"{if $tag.always_available} checked="checked"{/if} /> {'Use the main language if there is no prioritized translation.'|i18n( 'extension/eztags/tags/view' )}
         </div>
 
         {if $has_edit_access}
             <div class="block">
                 <input id="tab-translations-alwaysavailable-btn" class="btn-default" type="submit" name="UpdateAlwaysAvailableButton" value="{'Update'|i18n( 'extension/eztags/tags/view' )}" />
-                <script type="text/javascript">
-                {literal}
-                (function( $ ) {
-                    $('#tab-translations-alwaysavailable-checkbox').on('change', function() {
-                        $('#tab-translations-alwaysavailable-btn').removeClass('btn-default').addClass('btn-primary');
-                    });
-                })( jQuery );
-                {/literal}
-                </script>
+                {* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}
             </div>
         {/if}
     </div>

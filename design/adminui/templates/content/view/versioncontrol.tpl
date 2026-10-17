@@ -1,7 +1,7 @@
 <form method="post" id="versioncontrol" class="language-switch form-inline" action={concat( 'content/versionview/', $object.id, '/', $version.version, '/', $language, '/', $from_language )|ezurl}>
     {* Translation *}
     {if fetch( content, translation_list )|count|gt( 1 )}
-        <select class="form-control" id="SelectedLanguage" name="SelectedLanguage" onchange="this.form.submit()">
+        <select class="form-control" id="SelectedLanguage" name="SelectedLanguage" data-expui-submit-on-change>
             {def $locale_object = false}
             {foreach $translation_list as $locale_code}
                 {set $locale_object = $locale_code|locale()}
@@ -18,7 +18,7 @@
 
     {* Location }
     {section show=$version.node_assignments|count|gt( 0 )}
-        <select class="form-control" id="SelectedPlacement" name="SelectedPlacement" onchange="this.form.submit()">
+        <select class="form-control" id="SelectedPlacement" name="SelectedPlacement" data-expui-submit-on-change>
             {section var=Locations loop=$version.node_assignments}
                 <option name="SelectedPlacement" value="{$Locations.item.id}" {if eq( $Locations.item.id, $placement )}selected="selected"{/if}>{$Locations.item.parent_node_obj.name|wash}</option>
             {/section}
@@ -27,7 +27,7 @@
 
     {* Design *}
     {if $site_access_locale_map|count|gt( 1 )}
-        <select class="form-control" id="SelectedSiteAccess" name="SelectedSiteAccess" onchange="this.form.submit()">
+        <select class="form-control" id="SelectedSiteAccess" name="SelectedSiteAccess" data-expui-submit-on-change>
             {foreach $site_access_locale_map as $related_site_access => $related_site_access_locale}
                 <option name="SelectedSiteAccess" value="{$related_site_access}" {if eq( $related_site_access, $siteaccess )}selected="selected"{/if}>{$related_site_access|wash}</option>
             {/foreach}

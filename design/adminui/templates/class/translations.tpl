@@ -18,7 +18,7 @@
 
             <table class="list" cellspacing="0">
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/class/view' )}" onclick="ezjs_toggleCheckboxes( document.translationsform, 'LanguageID[]' ); return false;"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/class/view' )}" data-expui-toggle-checkboxes="LanguageID[]" data-expui-form="translationsform"></i></th>
                     <th>{'Language'|i18n( 'design/admin/class/view' )}</th>
                     <th>{'Locale'|i18n( 'design/admin/class/view' )}</th>
                     <th class="tight">{'Main'|i18n( 'design/admin/class/view' )}</th>

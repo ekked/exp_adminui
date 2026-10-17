@@ -79,7 +79,7 @@
 
 <table class="list" cellspacing="0">
 <tr>
-    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/workflow/view' )}" onclick="ezjs_toggleCheckboxes( document.workflowgroups, 'group_id_checked[]' ); return false;"></i></th>
+    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/workflow/view' )}" data-expui-toggle-checkboxes="group_id_checked[]" data-expui-form="workflowgroups"></i></th>
     <th class="wide">{'Group'|i18n( 'design/admin/workflow/view' )}</th>
 </tr>
 {section var=Groups loop=$workflow.ingroup_list sequence=array( bglight, bgdark )}

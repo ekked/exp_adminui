@@ -15,7 +15,7 @@
                 <label>{'Selected nodes'|i18n('design/admin/package')}</label>
                 <table class="list" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.objectlist, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/package' )}"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="objectlist" title="{'Invert selection.'|i18n( 'design/admin/package' )}"></i></th>
                     <th>{"Node"|i18n("design/admin/package")}</th>
                     <th>{"Export type"|i18n("design/admin/package")}</th>
                 </tr>

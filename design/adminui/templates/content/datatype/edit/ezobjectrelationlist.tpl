@@ -198,8 +198,7 @@
                      <input name="attribute_{$attribute.id}_new_object_name" id="attribute_{$attribute.id}_new_object_name"/>
                 </div>
                 <input class="button" type="button" value="{'Create New'|i18n( 'design/standard/content/datatype' )}" name="CustomActionButton[{$attribute.id}_new_object]"
-                       onclick="var divfield=document.getElementById('create_new_object_{$attribute.id}');divfield.style.display='block';
-                                var editfield=document.getElementById('attribute_{$attribute.id}_new_object_name');editfield.focus();this.style.display='none';return false;" />
+                       data-expui-reveal="create_new_object_{$attribute.id}" data-expui-reveal-focus="attribute_{$attribute.id}_new_object_name" />
            {/if}
         {/section}
 
@@ -220,7 +219,7 @@
             {if $attribute.content.relation_list}
                 <table class="list" cellspacing="0">
                     <tr class="bglight">
-                        <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.editform, '{$attribute_base}_selection[{$attribute.id}][]' ); return false;" title="{'Invert selection.'|i18n( 'design/standard/content/datatype' )}">f</i></th>
+                        <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="{$attribute_base}_selection[{$attribute.id}][]" data-expui-form="editform" title="{'Invert selection.'|i18n( 'design/standard/content/datatype' )}">f</i></th>
                         <th>{'Name'|i18n( 'design/standard/content/datatype' )}</th>
                         <th>{'Type'|i18n( 'design/standard/content/datatype' )}</th>
                         <th>{'Section'|i18n( 'design/standard/content/datatype' )}</th>
@@ -347,7 +346,7 @@
         <table class="list{if $attribute.content.relation_list|not} hide{/if}" cellspacing="0">
             <thead>
             <tr>
-                <th class="tight"><i onclick="ezjs_toggleCheckboxes( document.editform, '{$attribute_base}_selection[{$attribute.id}][]' ); return false;" title="{'Invert selection.'|i18n( 'design/standard/content/datatype' )}" class="fa fa-check-square-o"></i></th>
+                <th class="tight"><i data-expui-toggle-checkboxes="{$attribute_base}_selection[{$attribute.id}][]" data-expui-form="editform" title="{'Invert selection.'|i18n( 'design/standard/content/datatype' )}" class="fa fa-check-square-o"></i></th>
                 <th>{'Name'|i18n( 'design/standard/content/datatype' )}</th>
                 {if $attribute.content.relation_list}<th></th>{/if}
                 <th>{'Type'|i18n( 'design/standard/content/datatype' )}</th>

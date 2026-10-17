@@ -48,7 +48,20 @@ the reference never had (audit, newsletter, git manager, layouts ...). They get 
    ezjscore, then links `font-awesome.css`, `icomoon.css`, `style.css` and `adminui.css` as plain files, as the
    reference does. `page_head_script.tpl` loads jQuery 4 and the admin scripts (`BackendJavaScriptList`, with
    Exponential UI), then the Admin UI scripts: jQuery UI resizable, Bootstrap 3 (side bar dropdowns), Ace, `app.js` and `exp_adminui_aside_dropdown_keys.js`
-   (Escape closes a side bar dropdown; the arrow keys in the Interface dropdown, which Bootstrap 3 cancelled).
+   (Escape closes a side bar dropdown; the arrow keys in the Interface dropdown, which Bootstrap 3 cancelled), and
+   `exp_adminui_actions.js`.
+
+   **No inline JavaScript.** The templates carry no `<script>` with code, no `on...=` attribute and no `javascript:`
+   link, so the design runs under a Content Security Policy without `'unsafe-inline'` in `script-src` (only the
+   TinyMCE 3 edit template, `ezxmltext_ezoe.tpl`, keeps its inline start script: the editor needs it). The small
+   actions are `data-expui-*` attributes handled by one listener per event in `javascript/exp_adminui_actions.js`
+   (its header lists them: invert a selection, confirm, discard, submit or navigate on change, mark a button, focus a
+   field ...). Page scripts are `javascript/exp_adminui_<page>.js`, printed with `{ezscript( array( ... ) )}` where the
+   inline script stood; the values they need are `data-*` attributes (JSON for structured ones). The content tree and
+   the tags tree are drawn from the data of a hidden element by `exp_adminui_content_tree.js` and
+   `exp_adminui_tags_tree.js`, the sub-items table by `exp_adminui_children_detailed.js`. The class menu of the content
+   view opens through `data-menu-open` (the design's own `popupmenu/ezpopupmenu.js`). None of it needs a newer kernel.
+   `tests/expadminuiadmininlinescripttest.php` keeps it that way.
 2. **Header**: the logo (`.logo-type-<LogoType>`) and the search box. A view can add its own top bar through the
    persistent variable `top_menu`, as the content view and the version preview do (node/view/full.tpl, content/view/versionview.tpl).
 3. **Side bar** (`#aside`): the user menu (`adminui/page_aside_user.tpl`), then `adminui/menu/aside.tpl`. That

@@ -16,7 +16,7 @@
         <div class="row">
             <div class="form-group col-md-6 col-sm-12">
                 <label for="classGroupName">{'Name'|i18n( 'design/admin/class/groupedit' )}:</label>
-                <input class="form-control" id="classGroupName" name="Group_name" value="{$classgroup.name|wash}" />
+                <input class="form-control" id="classGroupName" data-expui-focus name="Group_name" value="{$classgroup.name|wash}" />
             </div>
         </div>
 
@@ -37,12 +37,4 @@
 
 
 
-{literal}
-<script type="text/javascript">
-jQuery(function( $ )//called on document.ready
-{
-    document.getElementById('classGroupName').select();
-    document.getElementById('classGroupName').focus();
-});
-</script>
-{/literal}
+{* the field with data-expui-focus is selected and focused on load (exp_adminui_actions.js) *}

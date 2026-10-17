@@ -51,7 +51,7 @@
 
             <table class="list" cellspacing="0">
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.draftaction, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/content/draft' )}"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="draftaction" title="{'Invert selection.'|i18n( 'design/admin/content/draft' )}"></i></th>
                     <th>{'Name'|i18n( 'design/admin/content/draft' )}</th>
                     <th>{'Type'|i18n( 'design/admin/content/draft' )}</th>
                     <th>{'Section'|i18n( 'design/admin/content/draft' )}</th>
@@ -93,7 +93,7 @@
                 {* DESIGN: Control bar START *}
                 {if $list_count}
                     <input class="btn btn-default" type="submit" name="RemoveButton" value="{'Remove selected'|i18n( 'design/admin/content/draft')}" title="{'Remove selected drafts.'|i18n( 'design/admin/content/draft' )}" />
-                    <input class="btn btn-default" type="submit" name="EmptyButton"  value="{'Remove all'|i18n( 'design/admin/content/draft')}" onclick="return confirmDiscard( '{'Are you sure you want to remove all drafts?'|i18n( 'design/admin/content/draft' )|wash(javascript)|wash}' );" title="{'Remove all drafts that belong to you.'|i18n( 'design/admin/content/draft' )}" />
+                    <input class="btn btn-default" type="submit" name="EmptyButton"  value="{'Remove all'|i18n( 'design/admin/content/draft')}" data-expui-confirm="{'Are you sure you want to remove all drafts?'|i18n( 'design/admin/content/draft' )|wash}" title="{'Remove all drafts that belong to you.'|i18n( 'design/admin/content/draft' )}" />
                 {else}
                     <input class="btn btn-default" type="submit" name="RemoveButton" value="{'Remove selected'|i18n( 'design/admin/content/draft')}" disabled="disabled" />
                     <input class="btn btn-default" type="submit" name="EmptyButton"  value="{'Remove all'|i18n( 'design/admin/content/draft')}" disabled="disabled" />
@@ -107,13 +107,5 @@
 </form>
 
 {/let}
-{literal}
-<script type="text/javascript">
-    function confirmDiscard( question )
-    {
-        // Ask user if he really wants to do it.
-        return confirm( question );
-    }
-</script>
-{/literal}
+{* Remove all asks first: data-expui-confirm (exp_adminui_actions.js) *}
 

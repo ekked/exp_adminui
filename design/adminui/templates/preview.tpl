@@ -50,7 +50,7 @@
                 <input type="hidden" name="RedirectRelativeURI" value="{$node.url_alias|wash}" />
                 <input type="hidden" name="ChangeSectionOnly" value="1" />
                 <div class="input-group">
-                    <select id="selected-section-id" class="form-control input-sm" name="SelectedSectionId">
+                    <select id="selected-section-id" class="form-control input-sm" name="SelectedSectionId" data-expui-highlight="#tab-details-set-section">
                     {foreach $node.object.allowed_assign_section_list as $allowed_assign_section}
                         {if eq( $allowed_assign_section.id, $node.object.section_id )}
                         <option value="{$allowed_assign_section.id}" selected="selected">{$allowed_assign_section.name|wash}</option>
@@ -91,7 +91,7 @@
                                 <td>
                                     <p>{$allowed_assign_state_info.group.current_translation.name|wash}</p>
                                     <label>{'Available states'|i18n( 'design/admin/node/view/full' )}</label>
-                                    <select class="form-control input-sm" name="SelectedStateIDList[]" {if $allowed_assign_state_info.states|count|eq(1)}disabled="disabled"{/if}>
+                                    <select class="form-control input-sm" name="SelectedStateIDList[]" data-expui-highlight="#tab-details-set-states" {if $allowed_assign_state_info.states|count|eq(1)}disabled="disabled"{/if}>
                                         {foreach $allowed_assign_state_info.states as $state}
                                             <option value="{$state.id}" {if $node.object.state_id_array|contains($state.id)}selected="selected"{/if}>{$state.current_translation.name|wash}</option>
                                         {/foreach}
@@ -108,26 +108,4 @@
         {/if}
     </ul>
 </div>
-<script type="text/javascript">
-{literal}
-(function( $ )
-{
-    $('#tab-details-states-list select').change(function()
-    {
-        var btn = $('#tab-details-set-states');
-        if ( !btn.attr('disabled') )
-        {
-            btn.removeClass('button').removeClass('btn-default').addClass('btn-primary');
-        }
-    });
-    $('#selected-section-id').change(function()
-    {
-        var btn = $('#tab-details-set-section');
-        if ( !btn.attr('disabled') )
-        {
-            btn.removeClass('button').removeClass('btn-default').addClass('btn-primary');
-        }
-    });
-})( jQuery );
-{/literal}
-</script>
+{* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}

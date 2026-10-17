@@ -47,7 +47,7 @@
                                                                      'class_filter_array', array( 'cjw_newsletter_list', 'cjw_newsletter_list_virtual' ) ) )
                          $nl_open  = $nl_path_ids|contains( $nl_system.node_id )}
                     <li id="n{$nl_system.node_id}" class="{if $nl_current_id|eq( $nl_system.node_id )}currentnode{/if}{if $nl_index|eq( $nl_systems|count|dec )} lastli{/if}">
-                        {if $nl_lists|count}<a class="{if $nl_open}openclose-close{else}openclose-open{/if}" href="#" title="{'Fold/Unfold'|i18n( 'cjw_newsletter/contentstructuremenu' )}" onclick="var o = this.className == 'openclose-open'; this.className = o ? 'openclose-close' : 'openclose-open'; this.parentNode.querySelector( 'div' ).className = o ? 'loaded' : 'hidden'; return false;"></a>{/if}
+                        {if $nl_lists|count}<a class="{if $nl_open}openclose-close{else}openclose-open{/if}" href="#" title="{'Fold/Unfold'|i18n( 'cjw_newsletter/contentstructuremenu' )}" data-expui-openclose></a>{/if}
                         {'cjw_newsletter_system'|class_icon( 'small' )}&nbsp;<a class="image-text" href={concat( 'content/view/full/', $nl_system.node_id )|ezurl}><span class="node-name-normal">{$nl_system.name|wash}</span></a>
                         {if $nl_lists|count}
                             <div class="{if $nl_open}loaded{else}hidden{/if}"><ul>

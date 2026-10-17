@@ -33,7 +33,7 @@
 
             <table class="list" cellspacing="0">
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" title="{'Toggle selection'|i18n( 'design/admin/role/list' )}" onclick="ezjs_toggleCheckboxes( document.roles, 'DeleteIDArray[]' ); return false;"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" title="{'Toggle selection'|i18n( 'design/admin/role/list' )}" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="roles"></i></th>
                     {* Sorted by the database, because the list is shown a page at a time. The
                        heading is the one the rss list and the locations tab use. *}
                     {include uri='design:parts/sortheader.tpl' key='id'   label='ID'|i18n( 'design/admin/role/list' )   sort=$role_sort page_uri='/role/list' cell_class='tight'}

@@ -10,22 +10,7 @@
     </div>
 
     {* Highlight "SetSorting" button on change *}
-    {literal}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $('#ezasi-sort-field, #ezasi-sort-order').each( function(){
-                $( this ).attr( 'initial', this.value );
-            } ).change(function(){
-                var t = $(this), o = $(this.id === 'ezasi-sort-field' ? '#ezasi-sort-order' : '#ezasi-sort-field'), s = $('#ezasi-sort-set');
-                // signal in gui if user needs to save this or not
-                if ( t.val() === t.attr('initial') && o.val() === o.attr('initial') )
-                    s.removeClass('btn-primary').addClass('btn-default');
-                else
-                    s.removeClass('btn-default').addClass('btn-primary');
-            });
-        });
-    </script>
-    {/literal}
+    {* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}
 </div>
 <div class="panel">
 
@@ -53,14 +38,14 @@
             <p>{$title}</p>
             <div class="form-inline">
                 <div class="form-group">
-                    <select id="ezasi-sort-field" name="SortingField" title="{$title}" aria-label="{'Sort by'|i18n( 'design/admin/node/view/full' )|wash}"{$disabled} class="form-control input-sm">
+                    <select id="ezasi-sort-field" name="SortingField" data-expui-highlight-initial="#ezasi-sort-set" title="{$title}" aria-label="{'Sort by'|i18n( 'design/admin/node/view/full' )|wash}"{$disabled} class="form-control input-sm">
                     {foreach $sort_fields as $key => $field}
                         <option value="{$key}" {if eq( $key, $node.sort_field )}selected="selected"{/if}>{$field}</option>
                     {/foreach}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="ezasi-sort-order" name="SortingOrder" title="{$title}" aria-label="{'Sort order'|i18n( 'design/admin/node/view/full' )|wash}"{$disabled} class="form-control input-sm">
+                    <select id="ezasi-sort-order" name="SortingOrder" data-expui-highlight-initial="#ezasi-sort-set" title="{$title}" aria-label="{'Sort order'|i18n( 'design/admin/node/view/full' )|wash}"{$disabled} class="form-control input-sm">
                         <option value="0"{if eq($node.sort_order, 0)} selected="selected"{/if}>{'Descending'|i18n( 'design/admin/node/view/full' )}</option>
                         <option value="1"{if eq($node.sort_order, 1)} selected="selected"{/if}>{'Ascending'|i18n( 'design/admin/node/view/full' )}</option>
                     </select>

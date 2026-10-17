@@ -15,7 +15,7 @@
         {section show=$pdfexport_list}
         <table class="list" cellspacing="0">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.pdfexportlist, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/pdf/list' )}"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="pdfexportlist" title="{'Invert selection.'|i18n( 'design/admin/pdf/list' )}"></i></th>
                 <th>{'Name'|i18n( 'design/admin/pdf/list' )}</th>
                 <th>{'Modifier'|i18n( 'design/admin/pdf/list' )}</th>
                 <th>{'Modified'|i18n( 'design/admin/pdf/list' )}</th>

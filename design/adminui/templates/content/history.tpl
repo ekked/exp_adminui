@@ -51,7 +51,7 @@
         {if $list_count}
         <table class="list" cellspacing="0">
             <tr>
-                <th class="tight"><i class="fa fa-pencil-square-o" title="{'Toggle selection'|i18n( 'design/admin/content/history' )}" onclick="ezjs_toggleCheckboxes( document.versionsform, 'DeleteIDArray[]' ); return false;"></i></th>
+                <th class="tight"><i class="fa fa-pencil-square-o" title="{'Toggle selection'|i18n( 'design/admin/content/history' )}" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="versionsform"></i></th>
                 <th>{'Version'|i18n( 'design/admin/content/history' )}</th>
                 <th>{'Status'|i18n( 'design/admin/content/history' )}</th>
                 <th>{'Modified translation'|i18n( 'design/admin/content/history' )}</th>
@@ -362,14 +362,7 @@
 </form>
 
 {elseif and( is_set( $object ), is_set( $diff ), is_set( $oldVersion ), is_set( $newVersion ) )}
-{literal}
-<script type="text/javascript">
-    function show( element, method )
-    {
-        document.getElementById( element ).className = method;
-    }
-</script>
-{/literal}
+{* the diff view buttons: data-expui-set-class (exp_adminui_actions.js) *}
 {* DESIGN: Header START *}
     <h2>{'Differences between versions %oldVersion and %newVersion'|i18n( 'design/admin/content/history',, hash( '%oldVersion', $oldVersion, '%newVersion', $newVersion ) )}</h2>
 
@@ -380,10 +373,10 @@
 
     <div class="context-toolbar">
         <div class="btn-group">
-            <a class="btn btn-default btn-sm" href="JavaScript:void(0);" onclick="show('diffview', 'previous'); return false;">{'Old version'|i18n( 'design/admin/content/history' )}</a>
-            <a class="btn btn-default btn-sm" href="JavaScript:void(0);" onclick="show('diffview', 'inlinechanges'); return false;">{'Inline changes'|i18n( 'design/admin/content/history' )}</a>
-            <a class="btn btn-default btn-sm" href="JavaScript:void(0);" onclick="show('diffview', 'blockchanges'); return false;">{'Block changes'|i18n( 'design/admin/content/history' )}</a>
-            <a class="btn btn-default btn-sm" href="JavaScript:void(0);" onclick="show('diffview', 'latest'); return false;">{'New version'|i18n( 'design/admin/content/history' )}</a>
+            <a class="btn btn-default btn-sm" href="#" role="button" data-expui-set-class="diffview previous">{'Old version'|i18n( 'design/admin/content/history' )}</a>
+            <a class="btn btn-default btn-sm" href="#" role="button" data-expui-set-class="diffview inlinechanges">{'Inline changes'|i18n( 'design/admin/content/history' )}</a>
+            <a class="btn btn-default btn-sm" href="#" role="button" data-expui-set-class="diffview blockchanges">{'Block changes'|i18n( 'design/admin/content/history' )}</a>
+            <a class="btn btn-default btn-sm" href="#" role="button" data-expui-set-class="diffview latest">{'New version'|i18n( 'design/admin/content/history' )}</a>
         </div>
     </div>
 

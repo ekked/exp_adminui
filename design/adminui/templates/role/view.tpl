@@ -144,7 +144,7 @@
                 {section show=$user_array}
                     <table class="list" cellspacing="0">
                         <tr>
-                            <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.role, 'IDArray[]' ); return false;"></i></th>
+                            <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="IDArray[]" data-expui-form="role"></i></th>
                             <th>{'User/group'|i18n( 'design/admin/role/view' )}</th>
                             <th>{'Limitation'|i18n( 'design/admin/role/view' )}</th>
                         </tr>

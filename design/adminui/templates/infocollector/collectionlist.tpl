@@ -44,7 +44,7 @@
         {* Collection table. *}
         <table class="list" cellspacing="0">
         <tr>
-            <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/infocollector/collectionlist' )}" onclick="ezjs_toggleCheckboxes( document.collections, 'CollectionIDArray[]' ); return false;"></i></th>
+            <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/infocollector/collectionlist' )}" data-expui-toggle-checkboxes="CollectionIDArray[]" data-expui-form="collections"></i></th>
             <th class="tight">{'Collection ID'|i18n( 'design/admin/infocollector/collectionlist' )}</th>
             <th>{'Created'|i18n( 'design/admin/infocollector/collectionlist' )}</th>
             <th>{'Modified'|i18n( 'design/admin/infocollector/collectionlist' )}</th>

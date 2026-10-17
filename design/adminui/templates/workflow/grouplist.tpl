@@ -16,7 +16,7 @@
             {section show=$groups}
             <table class="list" cellspacing="0">
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.grouplistform, 'ContentClass_id_checked[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/workflow/grouplist' )}"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="ContentClass_id_checked[]" data-expui-form="grouplistform" title="{'Invert selection.'|i18n( 'design/admin/workflow/grouplist' )}"></i></th>
                     <th>{'Name'|i18n( 'design/admin/workflow/grouplist' )}</th>
                     <th class="tight">&nbsp;</th>
 

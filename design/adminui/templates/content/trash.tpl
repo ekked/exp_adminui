@@ -139,7 +139,7 @@
 <div class="content-navigation-childlist admin-dt aui-scroll-x">
     <table class="list" cellspacing="0">
     <tr>
-         <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.trashform, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/content/trash' )}"></i></th>
+         <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="trashform" title="{'Invert selection.'|i18n( 'design/admin/content/trash' )}"></i></th>
         {* Name, Type and Section: sort link & asc/desc icon *}
         {foreach $sort_columns as $column}
         {set

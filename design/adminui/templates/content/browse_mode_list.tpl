@@ -6,7 +6,7 @@
 <tr>
     <th class="tight">
     {if eq( $select_type, 'checkbox' )}
-        <i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/content/browse' )}" onclick="ezjs_toggleCheckboxes( document.browse, '{$select_name}[]' ); return false;"></i>
+        <i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/content/browse' )}" data-expui-toggle-checkboxes="{$select_name}[]" data-expui-form="browse"></i>
     {else}
         &nbsp;
     {/if}

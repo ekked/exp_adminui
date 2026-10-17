@@ -45,7 +45,7 @@
             <div class="controlbar">
                 <div class="btn-group">
                     <input class="btn btn-primary" type="submit" name="SaveButton" value="{'Save'|i18n( 'extension/eztags/tags/edit' )}" />
-                    <input class="btn btn-default" type="submit" name="DiscardButton" value="{'Discard'|i18n( 'extension/eztags/tags/edit' )}" onclick="return confirmDiscard( '{'Are you sure you want to discard changes?'|i18n( 'extension/eztags/tags/edit' )|wash( javascript )|wash}' );" />
+                    <input class="btn btn-default" type="submit" name="DiscardButton" value="{'Discard'|i18n( 'extension/eztags/tags/edit' )}" data-expui-discard-confirm="{'Are you sure you want to discard changes?'|i18n( 'extension/eztags/tags/edit' )|wash}" />
                 </div>
                 <input type="hidden" name="DiscardConfirm" value="1" />
             </div>
@@ -55,17 +55,6 @@
 
 {include uri='design:ezjsctemplate/modal_dialog.tpl'}
 
-{literal}
-<script language="JavaScript" type="text/javascript">
-function confirmDiscard( question )
-{
-    // Disable/bypass the reload-based (plain HTML) confirmation interface.
-    document.tageditform.DiscardConfirm.value = "0";
-
-    // Ask user if she really wants do it, return this to the handler.
-    return confirm( question );
-}
-</script>
-{/literal}
+{* Discard asks first: data-expui-discard-confirm (exp_adminui_actions.js) *}
 
 {undef $parent_tag_id $always_available}

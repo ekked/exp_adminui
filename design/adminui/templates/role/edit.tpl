@@ -27,7 +27,7 @@
                 {* Name. *}
                 <div class="block">
                     <label for="roleName">{'Name'|i18n( 'design/admin/role/edit' )}:</label>
-                    <input class="form-control" id="roleName" type="text" name="NewName" value="{$role.name|wash}" />
+                    <input class="form-control" id="roleName" data-expui-focus type="text" name="NewName" value="{$role.name|wash}" />
                 </div>
 
                 {* Policies. *}
@@ -37,7 +37,7 @@
                         {section show=$policies}
                             <table class="list" cellspacing="0">
                                 <tr>
-                                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/role/edit' )}" onclick="ezjs_toggleCheckboxes( document.roleedit, 'DeleteIDArray[]' ); return false;"></i></th>
+                                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/role/edit' )}" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="roleedit"></i></th>
                                     {* Sorted by the database, because the list is shown a page at a time; the
                                        heading is the one the role list uses. ID ascending is the role's own
                                        order, the one the order buttons change. *}
@@ -170,12 +170,4 @@
 {if and( is_set( $redirect_if_discarded ), $redirect_if_discarded )}<input type="hidden" name="RedirectIfDiscarded" value="{$redirect_if_discarded|wash}" />{/if}
 </form>
 
-{literal}
-<script type="text/javascript">
-jQuery(function( $ )//called on document.ready
-{
-    document.getElementById('roleName').select();
-    document.getElementById('roleName').focus();
-});
-</script>
-{/literal}
+{* the field with data-expui-focus is selected and focused on load (exp_adminui_actions.js) *}

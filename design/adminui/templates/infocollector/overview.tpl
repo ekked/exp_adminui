@@ -35,7 +35,7 @@
         {* Object table. *}
         <table class="list" cellspacing="0">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/infocollector/overview' )}" onclick="ezjs_toggleCheckboxes( document.objects, 'ObjectIDArray[]' ); return false;"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/infocollector/overview' )}" data-expui-toggle-checkboxes="ObjectIDArray[]" data-expui-form="objects"></i></th>
                 <th>{'Name'|i18n( 'design/admin/infocollector/overview' )}</th>
                 <th>{'Type'|i18n( 'design/admin/infocollector/overview' )}</th>
                 <th>{'First collection'|i18n( 'design/admin/infocollector/overview' )}</th>

@@ -61,7 +61,7 @@
             {else}
                 <input type="hidden" name="ClassLanguageCode" value="{$languages[0].locale|wash()}" />
             {/if}
-            <input class="btn btn-default btn-sm" type="submit" name="NewButton" id="NewButtonTop" value="{'New class'|i18n( 'design/admin/class/classlist' )}" title="{'Create a new class within the %class_group_name class group.'|i18n( 'design/admin/class/classlist',, hash( '%class_group_name', $group.name ) )|wash}" />
+            <input class="btn btn-default btn-sm" type="submit" name="NewButton" id="NewButtonTop" data-expui-disable-on-click="#ClassLanguageCodeBottom" value="{'New class'|i18n( 'design/admin/class/classlist' )}" title="{'Create a new class within the %class_group_name class group.'|i18n( 'design/admin/class/classlist',, hash( '%class_group_name', $group.name ) )|wash}" />
         </div>
 
         <div class="break"></div>
@@ -73,7 +73,7 @@
         {section show=$class_count}
         <table class="list" cellspacing="0" summary="{'List of classes inside %group_name class group (%class_count)'|i18n( 'design/admin/class/classlist',, hash( '%group_name', $group.name, '%class_count', $class_count ) )|wash}">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/class/classlist' )}" onclick="ezjs_toggleCheckboxes( document.ClassList, 'DeleteIDArray[]' ); return false;"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/class/classlist' )}" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="ClassList"></i></th>
                 <th>{'Name'|i18n('design/admin/class/classlist')}</th>
                 <th class="tight">{'ID'|i18n('design/admin/class/classlist')}</th>
                 <th>{'Identifier'|i18n('design/admin/class/classlist')}</th>
@@ -152,16 +152,5 @@
         {undef $languages}
     </form>
 </div>
-{literal}
-<script type="text/javascript">
-jQuery(function( $ )//called on document.ready
-{
-    // Disable bottom datatype dropp down when using new button in top
-    jQuery('#NewButtonTop').on('click', function()
-    {
-        jQuery('#ClassLanguageCodeBottom').prop('disabled', true);
-    });
-});
-</script>
-{/literal}
+{* "New class" at the top disables the language list at the bottom: data-expui-disable-on-click (exp_adminui_actions.js) *}
 

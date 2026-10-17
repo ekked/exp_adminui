@@ -62,7 +62,7 @@
 
     <table id="tab-locations-list" class="list" cellspacing="0" summary="{'Locations (aka Nodes) for current object.'|i18n( 'design/admin/node/view/full' )}">
     <tr>
-        <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/node/view/full' )}" onclick="ezjs_toggleCheckboxes( document.locationsform, 'LocationIDSelection[]' ); return false;"></i></th>
+        <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/node/view/full' )}" data-expui-toggle-checkboxes="LocationIDSelection[]" data-expui-form="locationsform"></i></th>
         {* The headings sort the whole list, not the page on screen: the column
            travels on the address and the database does it. *}
         {include uri='design:parts/sortheader.tpl' key='path'       label='Location'|i18n( 'design/admin/node/view/full' )   sort=$locations_sort_state page_uri=$locations_sort_uri sort_name='location_sort' dir_name='location_sort_order' suffix=$locations_carried_parameters cell_class='wide'}
@@ -119,7 +119,7 @@
         {if $assignment_node.can_edit}
 
         {if $assignment_count|gt( 1 ) }
-        <input type="radio" {if $assignment_node.is_main}checked="checked" class="main-locations-radio main-locations-radio-initial"{else}class="main-locations-radio"{/if} name="MainAssignmentCheck" value="{$assignment_node.node_id}" title="{'Use these radio buttons to select the desired main location.'|i18n( 'design/admin/node/view/full' )}" />
+        <input type="radio" {if $assignment_node.is_main}checked="checked" class="main-locations-radio main-locations-radio-initial"{else}class="main-locations-radio"{/if} name="MainAssignmentCheck" data-expui-highlight-main="#tab-locations-list-set-main" value="{$assignment_node.node_id}" title="{'Use these radio buttons to select the desired main location.'|i18n( 'design/admin/node/view/full' )}" />
         {else}
         <input type="radio" {if $assignment_node.is_main}checked="checked"{/if} name="MainAssignmentCheck" value="{$assignment_node.node_id}" disabled="disabled" title="{'The item being displayed has only one location, which is by default the main location.'|i18n( 'design/admin/node/view/full' )}" />
         {/if}
@@ -182,20 +182,7 @@
 
     {if $assignment_count|gt( 1 )}
         <input id="tab-locations-list-set-main" class="btn btn-default btn-sm" type="submit" name="UpdateMainAssignmentButton" value="{'Set main'|i18n( 'design/admin/node/view/full' )}" title="{'Select the desired main location using the radio buttons above then click this button to store the setting.'|i18n( 'design/admin/node/view/full' )}" />
-        <script type="text/javascript">
-        {literal}
-        (function( $ )
-        {
-            $('#tab-locations-list input.main-locations-radio').on('change', function()
-            {
-                if ( this.className === 'main-locations-radio' )
-                    $('#tab-locations-list-set-main').removeClass('btn-default').addClass('btn-primary');
-                else
-                    $('#tab-locations-list-set-main').removeClass('btn-primary').addClass('btn-default');
-            });
-        })( jQuery );
-        {/literal}
-        </script>
+        {* the button is marked when the field changes: data-expui-highlight* (exp_adminui_actions.js) *}
     {else}
         <input class="btn btn-default btn-sm" type="submit" name="UpdateMainAssignmentButton" value="{'Set main'|i18n( 'design/admin/node/view/full' )}" disabled="disabled" title="{'You cannot set the main location because there is only one location present.'|i18n( 'design/admin/node/view/full' )}" />
     {/if}

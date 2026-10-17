@@ -17,7 +17,7 @@
             {* Title. *}
             <div class="block">
                 <label>{'Title'|i18n( 'design/admin/pdf/edit' )}:</label>
-                <input class="form-control" id="pdfTitle" type="text" name="Title" value="{$pdf_export.title|wash}" />
+                <input class="form-control" id="pdfTitle" data-expui-focus type="text" name="Title" value="{$pdf_export.title|wash}" />
             </div>
 
             <fieldset>
@@ -136,12 +136,4 @@
 
 </form>
 
-{literal}
-<script type="text/javascript">
-jQuery(function( $ )//called on document.ready
-{
-    document.getElementById('pdfTitle').select();
-    document.getElementById('pdfTitle').focus();
-});
-</script>
-{/literal}
+{* the field with data-expui-focus is selected and focused on load (exp_adminui_actions.js) *}

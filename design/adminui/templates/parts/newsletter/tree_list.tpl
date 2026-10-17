@@ -18,7 +18,7 @@
      $tl_sub_url    = concat( 'newsletter/subscription_list/', $tl_id )
      $tl_on_list    = and( $current_id|eq( $tl_id ), $uri_string|contains( '(status)' )|not, $uri_string|begins_with( 'newsletter/subscription_list/' )|not )}
 <li id="nt{$tl_id}" class="{if $tl_on_list}currentnode{/if}{if $last_item} lastli{/if}">
-    <a class="{if $tl_open}openclose-close{else}openclose-open{/if}" href="#" title="{'Fold/Unfold'|i18n( 'cjw_newsletter/contentstructuremenu' )}" onclick="var o = this.className == 'openclose-open'; this.className = o ? 'openclose-close' : 'openclose-open'; this.parentNode.querySelector( 'div' ).className = o ? 'loaded' : 'hidden'; return false;"></a>
+    <a class="{if $tl_open}openclose-close{else}openclose-open{/if}" href="#" title="{'Fold/Unfold'|i18n( 'cjw_newsletter/contentstructuremenu' )}" data-expui-openclose></a>
     {$list_node.class_identifier|class_icon( 'small' )}&nbsp;<a class="image-text" href={concat( 'content/view/full/', $tl_id )|ezurl}><span class="node-name-normal">{$list_node.name|wash}</span></a>
     <div class="{if $tl_open}loaded{else}hidden{/if}"><ul>
         <li id="n{$tl_id}_subscription_list"{if or( $uri_string|eq( $tl_sub_url ), $uri_string|begins_with( concat( $tl_sub_url, '/' ) ) )} class="currentnode"{/if}>

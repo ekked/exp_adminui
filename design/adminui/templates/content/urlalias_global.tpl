@@ -116,7 +116,7 @@
             {else}
             <table class="list" cellspacing="0" >
                 <tr>
-                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias_global' )}" onclick="ezjs_toggleCheckboxes( document.aliasform, 'ElementList[]' ); return false;"></i></th>
+                    <th class="tight"><i class="fa fa-check-square-o" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias_global' )}" data-expui-toggle-checkboxes="ElementList[]" data-expui-form="aliasform"></i></th>
                     <th>{'URL alias'|i18n( 'design/admin/content/urlalias_global' )}</th>
                     <th>{'Destination'|i18n( 'design/admin/content/urlalias_global' )}</th>
                     <th>{'Language'|i18n( 'design/admin/content/urlalias_global' )}</th>
@@ -192,8 +192,8 @@
                 {* buttons here *}
                 <div class="button-left">
                     {if $aliasList|count|gt( 0 )}
-                    <input class="btn btn-default" type="submit" name="RemoveAliasButton" value="{'Remove selected'|i18n( 'design/admin/content/urlalias_global' )}" title="{'Remove selected aliases from the list above.'|i18n( 'design/admin/content/urlalias_global' )}" onclick="return confirm( '{'Are you sure you want to remove the selected aliases?'|i18n( 'design/admin/content/urlalias_global' )}' );"/>
-                    <input class="btn btn-default" type="submit" name="RemoveAllAliasesButton" value="{'Remove all'|i18n( 'design/admin/content/urlalias_global' )}" title="{'Remove all global aliases.'|i18n( 'design/admin/content/urlalias_global' )}" onclick="return confirm( '{'Are you sure you want to remove all global aliases?'|i18n( 'design/admin/content/urlalias_global' )}' );"/>
+                    <input class="btn btn-default" type="submit" name="RemoveAliasButton" value="{'Remove selected'|i18n( 'design/admin/content/urlalias_global' )}" title="{'Remove selected aliases from the list above.'|i18n( 'design/admin/content/urlalias_global' )}" data-expui-confirm="{'Are you sure you want to remove the selected aliases?'|i18n( 'design/admin/content/urlalias_global' )|wash}"/>
+                    <input class="btn btn-default" type="submit" name="RemoveAllAliasesButton" value="{'Remove all'|i18n( 'design/admin/content/urlalias_global' )}" title="{'Remove all global aliases.'|i18n( 'design/admin/content/urlalias_global' )}" data-expui-confirm="{'Are you sure you want to remove all global aliases?'|i18n( 'design/admin/content/urlalias_global' )|wash}"/>
                     {else}
                     <input class="btn btn-default" type="submit" name="RemoveAliasButton" value="{'Remove selected'|i18n( 'design/admin/content/urlalias_global' )}" title="{'There are no removable aliases.'|i18n( 'design/admin/content/urlalias_global' )}" disabled="disabled" />
                     <input class="btn btn-default" type="submit" name="RemoveAllAliasesButton" value="{'Remove all'|i18n( 'design/admin/content/urlalias_global' )}" title="{'There are no removable aliases.'|i18n( 'design/admin/content/urlalias_global' )}" disabled="disabled" />
@@ -221,7 +221,7 @@
                 <div class="block">
                 {* Alias name field. *}
                     <label for="ezcontent_urlalias_global_source">{'New URL alias'|i18n( 'design/admin/content/urlalias_global' )}:</label>
-                    <input id="ezcontent_urlalias_global_source" class="form-control" type="text" name="AliasSourceText" value="{$aliasSourceText|wash}" title="{'Enter the URL for the new alias. Use forward slashes (/) to create subentries.'|i18n( 'design/admin/content/urlalias_global' )}" />
+                    <input id="ezcontent_urlalias_global_source" data-expui-focus class="form-control" type="text" name="AliasSourceText" value="{$aliasSourceText|wash}" title="{'Enter the URL for the new alias. Use forward slashes (/) to create subentries.'|i18n( 'design/admin/content/urlalias_global' )}" />
                 </div>
 
                 <div class="block">
@@ -271,22 +271,4 @@
 
 </form>
 
-{literal}
-<script type="text/javascript">
-jQuery(function( $ )//called on document.ready
-{
-    with( document.aliasform )
-    {
-        for( var i = 0, l = elements.length; i < l; i++ )
-        {
-            if( elements[i].type == 'text' && elements[i].name == 'AliasSourceText' )
-            {
-                elements[i].select();
-                elements[i].focus();
-                return;
-            }
-        }
-    }
-});
-</script>
-{/literal}
+{* the field with data-expui-focus is selected and focused on load (exp_adminui_actions.js) *}

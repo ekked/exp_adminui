@@ -13,7 +13,7 @@
     {/section}
 {/section}
         {section show=$MultiOptionList.item.imageoption|not()}
-            <select class="form-control" name="eZOption[{$attribute.id}][{$MultiOptionList.item.multioption_id|wash}]" id="{$attribute.id}_{$group.group_id|wash}_{$MultiOptionList.item.multioption_id|wash}" onchange="ezmultioption_check_option( this, rules{$attribute.id}, {$attribute.id} );">
+            <select class="form-control" name="eZOption[{$attribute.id}][{$MultiOptionList.item.multioption_id|wash}]" id="{$attribute.id}_{$group.group_id|wash}_{$MultiOptionList.item.multioption_id|wash}" data-expui-multioption="{$attribute.id}">
             {section var=Option loop=$MultiOptionList.item.optionlist}
                 <option value="{$Option.item.option_id|wash}" id="{$attribute.id}_{$Option.item.option_id|wash}"
                 {cond(eq( sum( $Option.index, 1 ), $default_option_id), 'selected="selected"',true(),'')}
@@ -28,7 +28,7 @@
               <td> <input type="radio" value="{$Option.item.option_id|wash}" name="eZOption[{$attribute.id}][{$MultiOptionList.item.multioption_id|wash}]"
               id="{$attribute.id}_{$group.group_id|wash}_{$MultiOptionList.item.multioption_id|wash}"
               {cond(eq( sum( $Option.index, 1 ), $default_option_id ), 'checked="checked"',true(),'')}
-              onchange="ezmultioption_check_option( this, rules{$attribute.id}, {$attribute.id} );"
+              data-expui-multioption="{$attribute.id}"
               {cond(not(eq($Option.item.is_selectable, 1 )),'disabled="disabled"', true(),'')}  />
               </td>
               <td  id="td-{$attribute.id}_{$Option.item.option_id|wash}" >{$Option.item.value|wash}{cond(ne( $Option.item.additional_price, '' ),$Option.item.additional_price|l10n( currency )|prepend('-'), true(),'')}</td>

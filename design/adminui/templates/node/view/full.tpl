@@ -58,7 +58,7 @@
                     <input type="hidden" name="ChangeSettingsButton" value="{'Update view'|i18n( 'design/admin/content/view/versionview' )}" title="{'View the version that is currently being displayed using the selected language, location and design.'|i18n( 'design/admin/content/view/versionview' )}" />
                     <input type="hidden" name="ezxform_token" value="@$ezxFormToken@" />
                 </form>
-                <a type="submit" name="ChangeSettingsButton" title="{'View the version that is currently being displayed using the selected language, location and design.'|i18n( 'design/admin/content/view/versionview' )}" onclick="document.getElementById('previewForm').submit();"><i class="fa fa-globe"></i> {'Preview'|i18n( 'design/admin/node/view/full' )}</a>
+                <a type="submit" name="ChangeSettingsButton" title="{'View the version that is currently being displayed using the selected language, location and design.'|i18n( 'design/admin/content/view/versionview' )}" data-expui-submit-form="previewForm"><i class="fa fa-globe"></i> {'Preview'|i18n( 'design/admin/node/view/full' )}</a>
             </li>
         </ul>
     </div>
@@ -79,16 +79,14 @@
             {include uri='design:window_preview_toolbar.tpl'}
 
             {def $js_class_languages = '[]'
-                 $disable_another_language = cond( eq( 0, count( $node.object.content_class.can_create_languages ) ),"'edit-class-another-language'", '-1' )
-                 $disabled_sub_menu = "['class-createnodefeed', 'class-removenodefeed']"
+                 $disable_another_language = cond( eq( 0, count( $node.object.content_class.can_create_languages ) ), 'edit-class-another-language', '' )
+                 $disabled_sub_menu = '["class-createnodefeed","class-removenodefeed"]'
                  $hide_status = ''}
             {if is_set( $node.object.content_class.prioritized_languages_js_array )}
                 {set $js_class_languages = $node.object.content_class.prioritized_languages_js_array}
                 {if is_array( $js_class_languages )}
                     {set $js_class_languages = $js_class_languages|implode( ',' )}
                 {/if}
-                {* the menu call sits in a double-quoted onclick attribute *}
-                {set $js_class_languages = $js_class_languages|explode( '"' )|implode( "'" )}
             {/if}
 
             {if $node.is_invisible}
@@ -100,15 +98,15 @@
                 {def $create_rss_access = fetch( 'user', 'has_access_to', hash( 'module', 'rss', 'function', 'edit' ) )}
                 {if $create_rss_access}
                     {if fetch( 'rss', 'has_export_by_node', hash( 'node_id', $node.node_id ) )}
-                        {set $disabled_sub_menu = "'class-createnodefeed'"}
+                        {set $disabled_sub_menu = '"class-createnodefeed"'}
                     {else}
-                        {set $disabled_sub_menu = "'class-removenodefeed'"}
+                        {set $disabled_sub_menu = '"class-removenodefeed"'}
                     {/if}
                 {/if}
             {/if}
             {* span class="pull-right translation small">{$node.object.current_language_object.locale_object.intl_language_name}&nbsp;<img src="{$node.object.current_language|flag_icon}" width="18" height="12" alt="{$language_code|wash}" class="a4-flag" /></span> *}
 
-            <a href={concat( '/class/view/', $node.object.contentclass_id )|ezurl} onclick="ezpopmenu_showTopLevel( event, 'ClassMenu', ez_createAArray( new Array( '%classID%', {$node.object.contentclass_id}, '%objectID%', {$node.contentobject_id}, '%nodeID%', {$node.node_id}, '%currentURL%', '{$node.url|wash( javascript )|wash}', '%languages%', {$js_class_languages} ) ), '{$node.class_name|wash(javascript)|wash}', {$disabled_sub_menu}, {$disable_another_language} ); return false;" class="title-edit">{$node.class_identifier|class_icon( normal, $node.class_name )}</a>
+            <a href={concat( '/class/view/', $node.object.contentclass_id )|ezurl} aria-haspopup="menu" aria-expanded="false" data-menu-open="ClassMenu" data-menu-values="{json_encode( hash( '%classID%', $node.object.contentclass_id, '%objectID%', $node.contentobject_id, '%nodeID%', $node.node_id, '%currentURL%', $node.url ) )|wash}" data-menu-languages="{$js_class_languages|wash}" data-menu-title="{$node.class_name|wash}" data-menu-disable="{$disabled_sub_menu|wash}"{if $disable_another_language} data-menu-disable-item="{$disable_another_language|wash}"{/if} class="title-edit">{$node.class_identifier|class_icon( normal, $node.class_name )}</a>
 
             {* the language the name is shown in: its current language when the object has it, else unknown (nothing marked) *}{def $exp_title_language = cond( $node.object.available_languages|contains( $node.object.current_language ), $node.object.current_language, '' )}
             <h1 class="context-title">

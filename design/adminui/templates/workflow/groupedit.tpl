@@ -17,7 +17,7 @@
 
                 <div class="block">
                     <label>{'Name'|i18n( 'design/admin/workflow/groupedit' )}:</label>
-                    <input class="form-control" id="workflowGroupName" type="text" name="WorkflowGroup_name" value="{$workflow_group.name|wash}" />
+                    <input class="form-control" id="workflowGroupName" data-expui-focus type="text" name="WorkflowGroup_name" value="{$workflow_group.name|wash}" />
                 </div>
 
             </div>
@@ -38,12 +38,4 @@
 
 </form>
 
-{literal}
-<script type="text/javascript">
-jQuery(function( $ )//called on document.ready
-{
-    document.getElementById('workflowGroupName').select();
-    document.getElementById('workflowGroupName').focus();
-});
-</script>
-{/literal}
+{* the field with data-expui-focus is selected and focused on load (exp_adminui_actions.js) *}
