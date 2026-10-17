@@ -529,6 +529,11 @@ $(document).ready(function () {
         .animate({ marginLeft: '-=50' }, duration);
     });
     $('.dropdown-menu').on('click', function (e) {
+      // An entry that opens a declared popup menu (data-menu-open, the Import/Export entry of the node toolbar) needs
+      // its click on the document, where the popup menu script listens; the dropdown closes as the menu opens.
+      if ($(e.target).closest('[data-menu-open]').length) {
+        return;
+      }
       e.stopPropagation();
     });
   }());
