@@ -334,3 +334,7 @@ table th a:hover { color: #fff; text-decoration: underline; }
 @media (forced-colors: active) {
     #uiswitch-tool .a4-uiswitch-option[aria-current="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
 }
+
+/* The sign-in frame's footer (the login page and the second step of a two-factor sign-in): the theme's #7b7b7b was
+   3.3:1 on the frame's dark grey; #b3b3b3 is 5.4:1 (WCAG 1.4.3) */
+.loginpage #footer, .loginpage #footer p { color: #b3b3b3; }
