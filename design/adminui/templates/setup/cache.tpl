@@ -129,7 +129,7 @@
 
         <table class="list" cellspacing="0">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.clearcacheform, 'CacheList[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/setup/cache' )}"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="CacheList[]" data-expui-form="clearcacheform" title="{'Invert selection.'|i18n( 'design/admin/setup/cache' )}"></i></th>
                 <th>{'Name'|i18n( 'design/admin/setup/cache' )}</th>
                 <th>{'Path'|i18n( 'design/admin/setup/cache' )}</th>
             </tr>
@@ -240,117 +240,9 @@
 
 {* A fixed height, scrolling region: a full site prints hundreds of lines and
    should not push the rest of the interface off the screen. *}
-<pre id="staticcache-console" class="aui-cache-console" hidden></pre>
+<pre id="staticcache-console" class="aui-cache-console" hidden data-expui-stream-url="{$static_cache_stream_url|ezurl( 'no' )|wash}" data-expui-text="{json_encode( hash( 'running', 'running…'|i18n( 'design/admin/setup/cache' ), 'finished', 'finished'|i18n( 'design/admin/setup/cache' ), 'stopped', 'stopped'|i18n( 'design/admin/setup/cache' ), 'noStream', 'Could not open the stream. Check that you have the setup/managecache policy.'|i18n( 'design/admin/setup/cache' ), 'closed', 'Stream closed.'|i18n( 'design/admin/setup/cache' ), 'stoppedByOperator', 'Stopped by operator. Pages written so far are kept.'|i18n( 'design/admin/setup/cache' ) ) )|wash}"></pre>
 
-<script type="text/javascript">
-(function () {ldelim}
-    var streamUrl = {$static_cache_stream_url|ezurl()};
-    var consoleEl = document.getElementById( 'staticcache-console' );
-    var startBtn  = document.getElementById( 'staticcache-start' );
-    var stopBtn   = document.getElementById( 'staticcache-stop' );
-    var statusEl  = document.getElementById( 'staticcache-status' );
-    var saEl      = document.getElementById( 'staticcache-siteaccess' );
-    var source    = null;
-    var lines     = 0;
-
-    if ( !startBtn || typeof window.EventSource === 'undefined' )
-        return; {* No EventSource: the button stays an ordinary form submit. *}
-
-    var colours = {ldelim}
-        phase:        '#7fd1ff',
-        'phase-item': '#ffffff',
-        ok:           '#9bdc7a',
-        warn:         '#e8c765',
-        error:        '#ff8a80',
-        info:         '#9a9a9a',
-        done:         '#7fd1ff'
-    {rdelim};
-
-    function write( type, text )
-    {ldelim}
-        var atBottom = consoleEl.scrollTop + consoleEl.clientHeight >= consoleEl.scrollHeight - 8;
-        var line = document.createElement( 'div' );
-        line.style.color = colours[type] || '#d8d8d8';
-        if ( type === 'phase' || type === 'done' )
-            line.style.fontWeight = 'bold';
-        line.appendChild( document.createTextNode( text ) );
-        consoleEl.appendChild( line );
-        lines++;
-        {* Only follow the tail while the operator is already at the bottom. *}
-        if ( atBottom )
-            consoleEl.scrollTop = consoleEl.scrollHeight;
-    {rdelim}
-
-    function finish( message )
-    {ldelim}
-        if ( source ) {ldelim} source.close(); source = null; {rdelim}
-        startBtn.disabled = false;
-        stopBtn.disabled  = true;
-        statusEl.innerHTML = '';
-        statusEl.appendChild( document.createTextNode( message ) );
-    {rdelim}
-
-    {* Run it in the page instead of posting the form, so every page appears as
-       it is written rather than after one long silent request. *}
-    startBtn.onclick = function ( event )
-    {ldelim}
-        if ( event && event.preventDefault ) event.preventDefault();
-        if ( source ) return false;
-
-        consoleEl.style.display = 'block';
-        consoleEl.innerHTML = '';
-        lines = 0;
-
-        var pages = parseInt( document.getElementById( 'staticcache-max-pages' ).value, 10 );
-        var depth = parseInt( document.getElementById( 'staticcache-max-depth' ).value, 10 );
-        if ( isNaN( pages ) || pages < 1 ) pages = 2500;
-        if ( isNaN( depth ) || depth < 0 ) depth = 12;
-
-        var url = streamUrl + '?SiteAccess=' + encodeURIComponent( saEl ? saEl.value : '' )
-                + '&MaxPages=' + pages + '&MaxDepth=' + depth;
-
-        startBtn.disabled = true;
-        stopBtn.disabled  = false;
-        statusEl.innerHTML = '';
-        statusEl.appendChild( document.createTextNode( '{'running…'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' ) );
-
-        source = new EventSource( url );
-
-        source.onmessage = function ( messageEvent )
-        {ldelim}
-            var payload;
-            try {ldelim} payload = JSON.parse( messageEvent.data ); {rdelim}
-            catch ( e ) {ldelim} return; {rdelim}
-            write( payload.type, payload.message );
-            if ( payload.type === 'done' )
-                finish( '{'finished'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' );
-        {rdelim};
-
-        source.addEventListener( 'end', function () {ldelim} finish( '{'finished'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' ); {rdelim} );
-
-        source.onerror = function ()
-        {ldelim}
-            {* EventSource reconnects on its own, which would start the run
-               again from the beginning; closing here keeps one run to a press. *}
-            if ( lines === 0 )
-                write( 'error', '{'Could not open the stream. Check that you have the setup/managecache policy.'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' );
-            else
-                write( 'warn', '{'Stream closed.'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' );
-            finish( '{'stopped'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' );
-        {rdelim};
-
-        return false;
-    {rdelim};
-
-    {* Closing the stream is all the browser can do: the run is already under
-       way on the server and the pages it has written stay written. *}
-    stopBtn.onclick = function () {ldelim}
-        write( 'warn', '{'Stopped by operator. Pages written so far are kept.'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' );
-        finish( '{'stopped'|i18n( 'design/admin/setup/cache' )|wash( javascript )}' );
-        return false;
-    {rdelim};
-{rdelim})();
-</script>
+{ezscript( array( 'exp_adminui_setup_cache.js' ) )}
 
 {/if}
 

@@ -44,8 +44,5 @@
 
     </div>
 </div>
-<script>
-    const listBoxMultiple = document.getElementsByClassName('listbox')[0];
-    listBoxMultiple.setAttribute('size', listBoxMultiple.children.length < 30 ? listBoxMultiple.children.length : 30);
-</script>
+{ezscript( array( 'exp_adminui_package_class.js' ) )}
 {undef $class_list_by_group $class_list}

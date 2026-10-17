@@ -16,38 +16,9 @@
             {def $field_settings = ezini( $snippet_editor_config_section, $field_settings_name, 'exp_adminui.ini' )}
         {/if}
 
-        <div class="snippet-editor aui-rows-{min( 50, max( 1, $attribute.contentclass_attribute.data_int1|int ) )}" id="{$attribute_base}_data_text_{$attribute.id}"></div>
+        <div class="snippet-editor aui-rows-{min( 50, max( 1, $attribute.contentclass_attribute.data_int1|int ) )}" id="{$attribute_base}_data_text_{$attribute.id}" data-expui-ace="1" data-expui-ace-mode="{cond( and( is_set( $field_settings ), is_set( $field_settings.mode ) ), $field_settings.mode, 'html' )|wash}" data-expui-ace-theme="{cond( and( is_set( $field_settings ), is_set( $field_settings.theme ) ), $field_settings.theme, 'chrome' )|wash}" data-expui-ace-print-margin="{cond( and( is_set( $field_settings ), is_set( $field_settings.show_print_margin ) ), $field_settings.show_print_margin, 'false' )|wash}" data-expui-ace-active-line="{cond( and( is_set( $field_settings ), is_set( $field_settings.highlight_active_line ) ), $field_settings.highlight_active_line, 'true' )|wash}"></div>
 
-        <script type="text/javascript">
-            $(document).ready(function(){ldelim}
-                var editor_mode = "{cond( and( is_set( $field_settings ), is_set( $field_settings.mode ) ), $field_settings.mode, 'html' )}";
-                var editor_theme = "{cond( and( is_set( $field_settings ), is_set( $field_settings.theme ) ), $field_settings.theme, 'chrome' )}";
-                var show_print_margin = {cond( and( is_set( $field_settings ), is_set( $field_settings.show_print_margin ) ), $field_settings.show_print_margin, 'false' )};
-                var highlight_active_line = {cond( and( is_set( $field_settings ), is_set( $field_settings.highlight_active_line ) ), $field_settings.highlight_active_line, 'true' )};
-
-                var editor_{$attribute.id} = ace.edit("{$attribute_base}_data_text_{$attribute.id}");
-                editor_{$attribute.id}.setTheme("ace/theme/" + editor_theme);
-                editor_{$attribute.id}.session.setMode("ace/mode/" + editor_mode);
-
-                editor_{$attribute.id}.setOptions({ldelim}
-                    enableBasicAutocompletion: true
-                {rdelim});
-
-                editor_{$attribute.id}.commands.on("afterExec", function(e){ldelim}
-                    if (e.command.name == "insertstring"&&/^[\<.]$/.test(e.args)){ldelim}
-                        editor_{$attribute.id}.execCommand("startAutocomplete");
-                    {rdelim}
-                {rdelim});
-                editor_{$attribute.id}.setShowPrintMargin(show_print_margin);
-                editor_{$attribute.id}.setHighlightActiveLine(highlight_active_line);
-
-                var textarea_{$attribute.id} = $('textarea[name="{$attribute_base}_data_text_{$attribute.id}"]').hide();
-                editor_{$attribute.id}.getSession().setValue(textarea_{$attribute.id}.val());
-                editor_{$attribute.id}.getSession().on('change', function(){ldelim}
-                    textarea_{$attribute.id}.val(editor_{$attribute.id}.getSession().getValue().trim());
-                {rdelim});
-            {rdelim});
-        </script>
+        {ezscript( array( 'exp_adminui_snippet_editor.js' ) )}
     {/if}
 {/if}
 {/default}

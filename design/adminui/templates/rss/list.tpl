@@ -25,7 +25,7 @@
         {section show=$rssexport_list}
         <table class="list" cellspacing="0">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.rssexportslist, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/rss/list' )}"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="DeleteIDArray[]" data-expui-form="rssexportslist" title="{'Invert selection.'|i18n( 'design/admin/rss/list' )}"></i></th>
                 {include uri='design:parts/sortheader.tpl' key='id'          label='ID'|i18n( 'design/admin/rss/list' )       sort=$rssexport_sort suffix=$rssexport_sort.suffix cell_class='tight'}
                 {include uri='design:parts/sortheader.tpl' key='title'       label='Name'|i18n( 'design/admin/rss/list' )     sort=$rssexport_sort suffix=$rssexport_sort.suffix}
                 {include uri='design:parts/sortheader.tpl' key='access_url'  label='URI'|i18n( 'design/admin/rss/list' )      sort=$rssexport_sort suffix=$rssexport_sort.suffix}
@@ -102,7 +102,7 @@
         {section show=$rssimport_list}
         <table class="list" cellspacing="0">
             <tr>
-                <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.rssimportslist, 'DeleteIDArrayImport[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/rss/list' )}"></i></th>
+                <th class="tight"><i class="fa fa-check-square-o" data-expui-toggle-checkboxes="DeleteIDArrayImport[]" data-expui-form="rssimportslist" title="{'Invert selection.'|i18n( 'design/admin/rss/list' )}"></i></th>
                 {include uri='design:parts/sortheader.tpl' key='id'          label='ID'|i18n( 'design/admin/rss/list' )         sort=$rssimport_sort suffix=$rssimport_sort.suffix sort_name='importsort' dir_name='importdir' cell_class='tight'}
                 {include uri='design:parts/sortheader.tpl' key='name'        label='Name'|i18n( 'design/admin/rss/list' )       sort=$rssimport_sort suffix=$rssimport_sort.suffix sort_name='importsort' dir_name='importdir'}
                 {include uri='design:parts/sortheader.tpl' key='url'         label='Source URL'|i18n( 'design/admin/rss/list' ) sort=$rssimport_sort suffix=$rssimport_sort.suffix sort_name='importsort' dir_name='importdir'}
@@ -166,50 +166,4 @@
    whole cell and lets the keyboard reach them. Sorting itself is done by the
    database, because the list is shown a page at a time - reordering the rows
    on screen would sort twenty five of four thousand. *}
-{literal}
-<script type="text/javascript">
-( function () {
-    var headings = document.getElementsByTagName( 'th' ), i;
-
-    for ( i = 0; i < headings.length; i++ )
-    {
-        if ( headings[i].className.indexOf( 'sortable' ) === -1 )
-            continue;
-
-        ( function ( heading ) {
-            var links = heading.getElementsByTagName( 'a' );
-            if ( !links.length )
-                return;
-
-            var href = links[0].href;
-
-            heading.onclick = function ( event ) {
-                // The link itself is left to the browser, so a middle click or
-                // a modifier still opens a new tab the way it should.
-                var target = ( event && event.target ) || window.event.srcElement;
-                while ( target && target !== heading )
-                {
-                    if ( target.tagName && target.tagName.toLowerCase() === 'a' )
-                        return true;
-                    target = target.parentNode;
-                }
-                if ( event && ( event.metaKey || event.ctrlKey || event.shiftKey || event.button > 0 ) )
-                    return true;
-
-                window.location.href = href;
-                return false;
-            };
-
-            heading.setAttribute( 'tabindex', '0' );
-            heading.onkeydown = function ( event ) {
-                var key = ( event || window.event ).keyCode;
-                if ( key !== 13 && key !== 32 )
-                    return true;
-                window.location.href = href;
-                return false;
-            };
-        } )( headings[i] );
-    }
-} )();
-</script>
-{/literal}
+{ezscript( array( 'exp_adminui_rss_list.js' ) )}

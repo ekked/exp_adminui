@@ -11,7 +11,7 @@
 
         <table class="list" cellspacing="0">
         <tr>
-            <th class="tight"><i class="fa fa-check-square-o" title="{'Toggle all.'|i18n( 'design/standard/package' )}" onclick="ezjs_toggleCheckboxes( this.closest( 'form' ), 'PackageExtensionNames[]' ); return false;"></i></th>
+            <th class="tight"><i class="fa fa-check-square-o" title="{'Toggle all.'|i18n( 'design/standard/package' )}" data-expui-toggle-checkboxes="PackageExtensionNames[]"></i></th>
             <th>{'Name'|i18n( 'design/standard/package' )}</th>
             <th>{'Version'|i18n( 'design/standard/package' )}</th>
             <th>{'Modified'|i18n( 'design/standard/package' )}</th>
@@ -50,30 +50,7 @@
 
         </form>
 
-{literal}
-<script type="text/javascript">
-jQuery(function() {
-    function toggleExtensionCard( name ) {
-        var row = jQuery( '#extension-card-' + name );
-        var wasVisible = row.is(':visible');
-        jQuery( '.extension-card-row' ).hide();
-        if ( !wasVisible ) {
-            row.show();
-        }
-    }
-
-    jQuery( '.extension-name-link, .extension-info-link' ).on( 'click', function( e ) {
-        e.preventDefault();
-        toggleExtensionCard( jQuery(this).data('name') );
-    });
-
-    jQuery( '.extension-card-close' ).on( 'click', function( e ) {
-        e.preventDefault();
-        jQuery(this).closest( '.extension-card-row' ).hide();
-    });
-});
-</script>
-{/literal}
+{ezscript( array( 'exp_adminui_package_extension.js' ) )}
 
     </div>
 </div>

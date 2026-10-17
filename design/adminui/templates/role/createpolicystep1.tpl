@@ -35,7 +35,14 @@
                 <div class="block">
                     <div class="form-inline">
                         <label for="ezrole-createpolizy-module">{'Module'|i18n( 'design/admin/role/createpolicystep1' )}:</label>
-                        <select class="form-control" id="ezrole-createpolizy-module" name=CurrentModule>
+                        {def $exp_module_functions = hash() $exp_functions = array()}
+                        {foreach $module_list as $module}
+                            {set $exp_functions = array()}
+                            {foreach $module.available_functions as $fn => $lim}{set $exp_functions = $exp_functions|append( $fn )}{/foreach}
+                            {set $exp_module_functions = $exp_module_functions|merge( hash( $module.name, $exp_functions ) )}
+                        {/foreach}
+                        <select class="form-control" id="ezrole-createpolizy-module" name=CurrentModule data-expui-functions="{json_encode( $exp_module_functions )|wash}" data-expui-every="{'Every function'|i18n( 'design/admin/role/createpolicystep1' )|wash}">
+                        {undef $exp_module_functions $exp_functions}
                             <option value="*">{'Every module'|i18n( 'design/admin/role/createpolicystep1' )}</option>
                             {section var=Modules loop=$modules }
                                 <option value="{$Modules.item}">{$Modules.item}</option>
@@ -75,37 +82,4 @@
     </div>
 </form>
 
-<script type="text/javascript">
-jQuery(function( $ )
-{ldelim}
-    var moduleList = {ldelim}{rdelim}, everyFunction = "{'Every function'|i18n( 'design/admin/role/createpolicystep1' )}";
-    {foreach $module_list as $module}
-        moduleList['{$module.name}'] = [{foreach $module.available_functions as $fn => $lim}'{$fn}'{delimiter}, {/delimiter}{/foreach}];
-    {/foreach}
-{literal}
-    $('#ezrole-createpolizy-module').on('change', function(e)
-    {
-        if ( moduleList[ this.value ] && moduleList[ this.value ].length )
-        {
-        	setFunctionOptions( moduleList[ this.value ] );
-        	$('#createpolicyform input.button-module').removeClass('button').addClass('button-disabled').prop('disabled', true);
-        	$('#createpolicyform input.button-function').removeClass('button-disabled').addClass('button').prop('disabled', false);
-        }
-        else
-        {
-        	setFunctionOptions( [everyFunction], true );
-        	$('#createpolicyform input.button-function').removeClass('button').addClass('button-disabled').prop('disabled', true);
-        	$('#createpolicyform input.button-module').removeClass('button-disabled').addClass('button').prop('disabled', false)
-        }
-    });
-    function setFunctionOptions( list, disable )
-    {
-        $('#ezrole-createpolizy-function').empty().append( jQuery.map( list, function( item, i )
-        {
-            return '<option value="' + item + '">' + item + '</option>';
-        } ).join() ).prop( 'disabled', disable === true ).val( disable === true ? '*' : list[0] );
-
-    }
-});
-{/literal}
-</script>
+{ezscript( array( 'exp_adminui_role_createpolicystep1.js' ) )}

@@ -9,25 +9,9 @@
 
     {* Exponential Admin UI: the reference collapsed the object information column with YUI 3 (ezcollapsiblemenu);
        Exponential 6 has no YUI, so this toggles the same class and stores the same preference with jQuery. *}
-    <script type="text/javascript">
-    {literal}
-    jQuery( function ( $ ) {
-        $( '#objectinfo-showhide' ).on( 'click', function ( e ) {
-            e.preventDefault();
-            // the link's onclick has already toggled .closed
-            var menu = $( '.rightmenu' ), collapsed = menu.hasClass( 'closed' );
-            menu.css( 'margin-right', collapsed ? '-222px' : '0' );
-            // remembered per user, as Exponential's own edit page does it (Exponential UI preferences)
-            if ( window.Exp && window.Exp.prefs && window.Exp.prefs.set )
-                window.Exp.prefs.set( 'admin_edit_menu_collapsed', collapsed ? 1 : 0 ).catch( function () {} );
-            else if ( $.ez && $.ez.setPreference )
-                $.ez.setPreference( 'admin_edit_menu_collapsed', collapsed ? 1 : 0 );
-        } );
-    } );
-    {/literal}
-    </script>
+    {ezscript( array( 'exp_adminui_content_edit.js' ) )}
     <div class="rightmenu aui-edit-menu{if $edit_menu_collapsed} closed{/if}">
-        <a id="objectinfo-showhide" onclick="jQuery('.rightmenu').toggleClass('closed');" class="show-hide-control" title="{'Show / Hide rightmenu'|i18n( 'design/admin/pagelayout/rightmenu' )}" href="#"></a>
+        <a id="objectinfo-showhide" class="show-hide-control" title="{'Show / Hide rightmenu'|i18n( 'design/admin/pagelayout/rightmenu' )}" href="#"></a>
         <div id="rightmenu-design">
 
            {include uri='design:content/edit_menu.tpl'}
@@ -73,7 +57,7 @@
             <div class="btn-group">
                 <input class="btn btn-default" type="submit" name="StoreButton" value="{'Store draft'|i18n( 'design/admin/content/edit' )}" title="{'Store the contents of the draft that is being edited and continue editing. Use this button to periodically save your work while editing.'|i18n( 'design/admin/content/edit' )}" />
                 <input class="btn btn-default" type="submit" name="StoreExitButton" value="{'Store draft and exit'|i18n( 'design/admin/content/edit' )}" title="{'Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.'|i18n( 'design/admin/content/edit' )}" />
-                <input class="btn btn-default" type="submit" name="DiscardButton" value="{'Discard draft'|i18n( 'design/admin/content/edit' )}" onclick="return confirmDiscard( '{'Are you sure you want to discard the draft?'|i18n( 'design/admin/content/edit' )|wash(javascript)|wash}' );" title="{'Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).'|i18n( 'design/admin/content/edit' ) }" />
+                <input class="btn btn-default" type="submit" name="DiscardButton" value="{'Discard draft'|i18n( 'design/admin/content/edit' )}" data-expui-discard-confirm="{'Are you sure you want to discard the draft?'|i18n( 'design/admin/content/edit' )|wash}" title="{'Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).'|i18n( 'design/admin/content/edit' ) }" />
             </div>
             <input class="btn btn-primary" type="submit" name="PublishButton" value="{'Send for publishing'|i18n( 'design/admin/content/edit' )}" title="{'Publish the contents of the draft that is being edited. The draft will become the published version of the object.'|i18n( 'design/admin/content/edit' )}" />
             {* DESIGN: Control bar END *}
@@ -129,7 +113,7 @@
                     <div class="btn-group">
                         <input class="btn btn-default" type="submit" name="StoreButton" value="{'Store draft'|i18n( 'design/admin/content/edit' )}" title="{'Store the contents of the draft that is being edited and continue editing. Use this button to periodically save your work while editing.'|i18n( 'design/admin/content/edit' )}" />
                         <input class="btn btn-default" type="submit" name="StoreExitButton" value="{'Store draft and exit'|i18n( 'design/admin/content/edit' )}" title="{'Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.'|i18n( 'design/admin/content/edit' )}" />
-                        <input class="btn btn-default" type="submit" name="DiscardButton" value="{'Discard draft'|i18n( 'design/admin/content/edit' )}" onclick="return confirmDiscard( '{'Are you sure you want to discard the draft?'|i18n( 'design/admin/content/edit' )|wash(javascript)|wash}' );" title="{'Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).'|i18n( 'design/admin/content/edit' ) }" />
+                        <input class="btn btn-default" type="submit" name="DiscardButton" value="{'Discard draft'|i18n( 'design/admin/content/edit' )}" data-expui-discard-confirm="{'Are you sure you want to discard the draft?'|i18n( 'design/admin/content/edit' )|wash}" title="{'Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).'|i18n( 'design/admin/content/edit' ) }" />
                     </div>
                     <input class="btn btn-primary" type="submit" name="PublishButton" value="{'Send for publishing'|i18n( 'design/admin/content/edit' )}" title="{'Publish the contents of the draft that is being edited. The draft will become the published version of the object.'|i18n( 'design/admin/content/edit' )}" />
                     <input type="hidden" name="DiscardConfirm" value="1" />
@@ -160,26 +144,3 @@
 
 
 
-{literal}
-<script type="text/javascript">
-function confirmDiscard( question )
-{
-    // Disable/bypass the reload-based (plain HTML) confirmation interface.
-    document.editform.DiscardConfirm.value = "0";
-
-    // Ask user if she really wants do it, return this to the handler.
-    return confirm( question );
-
-}
-
-$(document).ready(function(){
-    $('#editform').on('keypress keydown keyup', ':input:not(textarea)', function(e){
-        if(e.keyCode == 13) {
-            e.preventDefault();
-        }
-    });
-
-});
-
-</script>
-{/literal}
