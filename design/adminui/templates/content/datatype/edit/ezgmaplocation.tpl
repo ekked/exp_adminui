@@ -162,14 +162,14 @@
             window.attachEvent('onload', function(){ldelim} eZGmapLocation_MapControl( {$attribute.id}, "{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" ) {rdelim} );
         </script>
         <div class="input-group form-group">
-            <input type="text" class="form-control" id="ezgml-address-{$attribute.id}" name="{$attribute_base}_data_gmaplocation_address_{$attribute.id}" value="{$attribute.content.address|wash}"/>
+            <input type="text" class="form-control" id="ezgml-address-{$attribute.id}" name="{$attribute_base}_data_gmaplocation_address_{$attribute.id}" value="{$attribute.content.address|html_entity_decode|wash}"/>
             <div class="input-group-btn">
                 <button class="btn btn-default" type="button" id="ezgml-address-button-{$attribute.id}"><i class="fa fa-search"></i> {'Find address'|i18n('extension/ezgmaplocation/datatype')}</button>
                 <input class="btn btn-default" type="button" id="ezgml-restore-button-{$attribute.id}" value="{'Restore'|i18n('extension/ezgmaplocation/datatype')}" onclick="javascript:void( null ); return false" disabled="disabled"  title="{'Restores location and address values to what it was on page load.'|i18n('extension/ezgmaplocation/datatype')}" />
             </div>
         </div>
 
-        <input id="ezgml_hidden_address_{$attribute.id}" type="hidden" name="ezgml_hidden_address_{$attribute.id}" value="{$attribute.content.address|wash}" disabled="disabled" />
+        <input id="ezgml_hidden_address_{$attribute.id}" type="hidden" name="ezgml_hidden_address_{$attribute.id}" value="{$attribute.content.address|html_entity_decode|wash}" disabled="disabled" />
         <input id="ezgml_hidden_latitude_{$attribute.id}" type="hidden" name="ezgml_hidden_latitude_{$attribute.id}" value="{$latitude}" disabled="disabled" />
         <input id="ezgml_hidden_longitude_{$attribute.id}" type="hidden" name="ezgml_hidden_longitude_{$attribute.id}" value="{$longitude}" disabled="disabled" />
     </div>
