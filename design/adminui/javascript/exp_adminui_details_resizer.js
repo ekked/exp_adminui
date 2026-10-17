@@ -59,8 +59,11 @@
 
         function currentWidth()
         {
-            // the width pagelayout.tpl set from the preference, else the stylesheet's default
-            return parseInt( root.style.getPropertyValue( '--exp-adminui-details-width' ), 10 ) || DEFAULT;
+            // the width set here before, else the one pagelayout.tpl set from the preference (an aui-dw-* class on
+            // <html>), else the stylesheet's default
+            return parseInt( root.style.getPropertyValue( '--exp-adminui-details-width' ), 10 )
+                || parseInt( window.getComputedStyle( root ).getPropertyValue( '--exp-adminui-details-width' ), 10 )
+                || DEFAULT;
         }
 
         function describe( width )

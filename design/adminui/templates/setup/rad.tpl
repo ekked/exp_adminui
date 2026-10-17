@@ -5,96 +5,6 @@
    which is the part that is otherwise only discoverable by reading the kernel.
    A point with no tool is still worth knowing about. *}
 
-{literal}
-<style type="text/css">
-.exp-rad {
-    --rad-ink: #1c1c1e; --rad-muted: #6a6a72; --rad-line: #e2e2e6;
-    --rad-accent: #2d6cdf; --rad-ok: #1f8a4c;
-    color: var(--rad-ink);
-}
-.exp-rad h2 { font-size: 1.05rem; margin: 0 0 .15rem 0; }
-.exp-rad .rad-meta { color: var(--rad-muted); font-size: .92em; }
-.exp-rad code { font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace; overflow-wrap: anywhere; }
-
-.rad-summary {
-    display: flex; flex-wrap: wrap; gap: 1.6rem; align-items: baseline;
-    padding: 0 0 1.2rem 0;
-}
-.rad-summary b { font-size: 1.5rem; }
-
-.rad-group { margin: 0 0 1.8rem 0; }
-.rad-group > .rad-meta { display: block; padding-bottom: .7rem; }
-
-.rad-point {
-    border: 1px solid var(--rad-line); border-radius: 8px; background: #fff;
-    padding: .85rem 1rem; margin: 0 0 .6rem 0;
-}
-.rad-point.is-ready { border-left: 4px solid var(--rad-ok); }
-.rad-point-head {
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem;
-    white-space: normal;
-}
-.rad-point-head h3 { margin: 0; font-size: 1rem; }
-.rad-point-what { padding: .2rem 0 .5rem 0; white-space: normal; }
-.rad-facts { display: flex; flex-direction: column; gap: .25rem; }
-.rad-fact { display: flex; flex-wrap: wrap; gap: .5rem; white-space: normal; }
-.rad-fact b {
-    flex: 0 0 6.5rem; font-weight: 600; color: var(--rad-muted);
-    font-size: .85em; text-transform: uppercase; letter-spacing: .03em;
-}
-.rad-fact span { flex: 1 1 14rem; min-width: 0; }
-.rad-tag {
-    display: inline-block; padding: .05rem .45rem; border-radius: 4px;
-    border: 1px solid var(--rad-line); font-size: .8em; background: #fafafb;
-    color: var(--rad-muted); white-space: nowrap;
-}
-.rad-tag.is-ready { border-color: var(--rad-ok); color: var(--rad-ok); }
-.rad-open { font-weight: 600; text-decoration: none; }
-.rad-legend { border: 1px solid var(--rad-line); border-radius: 8px; padding: .9rem 1rem; background: #fcfcfd; }
-.rad-legend dt { font-weight: 600; padding-top: .5rem; }
-.rad-legend dd { margin: 0; color: var(--rad-muted); white-space: normal; }
-
-/* The filter sits on its own line with room under it. The admin toolbar floats
-   its contents, so without clearing it the first group heading comes up beside
-   the filter instead of below it. */
-.rad-find { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; padding: 0 0 .9rem 0; }
-.rad-find input[type=text] {
-    flex: 1 1 22rem; min-width: 0; border: 1px solid var(--rad-line); border-radius: 6px;
-    padding: .5rem .6rem; font: inherit; box-sizing: border-box; background: #fff;
-}
-.rad-find input[type=text]:focus { border-color: var(--rad-accent); outline: none; }
-.rad-find-clear {
-    border: 1px solid var(--rad-line); background: #f4f4f5; border-radius: 6px;
-    padding: .3rem .6rem; font: inherit; line-height: 1; cursor: pointer; color: inherit;
-}
-.rad-find-clear:hover { border-color: #9a9aa0; }
-.rad-find-count { flex: 0 0 auto; }
-.rad-point.is-hidden, .rad-group.is-hidden { display: none; }
-.rad-find-none { padding: .6rem 0 1.2rem 0; }
-.rad-hit { background: #fff3b0; border-radius: 2px; }
-
-.rad-survey-groups { list-style: none; margin: .6rem 0 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .3rem .5rem; }
-.rad-survey-groups li { margin: 0; padding: 0; }
-.rad-survey-groups a { display: inline-block; padding: .15rem .5rem; border: 1px solid #d0d0d4; border-radius: 3px; text-decoration: none; }
-.rad-survey-groups li.is-inside a { border-style: dashed; }
-.rad-survey-note { padding: 0 0 1.2rem 0; }
-.rad-survey-link {
-    display: flex; gap: .9rem; align-items: center; text-decoration: none; color: inherit;
-    border: 1px solid var(--rad-line); border-left: 4px solid var(--rad-accent);
-    border-radius: 8px; padding: .8rem 1rem; background: #fcfcfd;
-}
-.rad-survey-link:hover { border-color: #9a9aa0; border-left-color: var(--rad-accent); }
-.rad-survey-link > span { min-width: 0; }
-.rad-survey-count { flex: 0 0 auto; font-size: 1.6rem; font-weight: 700; color: var(--rad-accent); line-height: 1; }
-.rad-survey-link b { display: block; }
-.rad-survey-link .rad-meta { display: block; white-space: normal; }
-
-.rad-filter { display: block; padding: 0 0 .4rem 0; }
-.rad-filter:after { content: ""; display: block; clear: both; }
-.rad-filter p.table-preferences { margin: 0; }
-.rad-groups { clear: both; padding-top: 1.2rem; }
-</style>
-{/literal}
 
 <div class="exp-rad">
 
@@ -145,7 +55,7 @@
    cards rather than fetching anything - which means it also works on a filtered
    list and needs no address of its own. With javascript off the box never
    appears and the links below still do the job. *}
-<div class="rad-find" id="radFind" style="display:none">
+<div class="rad-find" id="radFind" hidden>
     <input type="text" id="radFindInput" autocomplete="off"
            placeholder="{'Type to narrow: a name, a setting, a class, a file'|i18n( 'design/admin/setup/rad' )}" />
     <button type="button" class="rad-find-clear" id="radFindClear" title="{'Clear'|i18n( 'design/admin/setup/rad' )}">&times;</button>
@@ -211,7 +121,7 @@
 </dl>
 </div>
 
-<p class="rad-meta rad-find-none" id="radFindNone" style="display:none">{'Nothing here matches that. The survey beside this list is larger and searchable too.'|i18n( 'design/admin/setup/rad' )}</p>
+<p class="rad-meta rad-find-none" id="radFindNone" hidden>{'Nothing here matches that. The survey beside this list is larger and searchable too.'|i18n( 'design/admin/setup/rad' )}</p>
 
 {* DESIGN: Content END *}</div>
 
@@ -252,7 +162,7 @@
 
     // Only shown once it is known to work, so a browser that got this far is
     // the only one offered a box that does something.
-    bar.style.display = '';
+    bar.hidden = false;
 
     function show( node, on )
     {
@@ -305,7 +215,7 @@
                           ? ''
                           : shown + ' of ' + cards.length;
 
-        if ( none ) none.style.display = ( words.length && shown === 0 ) ? '' : 'none';
+        if ( none ) none.hidden = !( words.length && shown === 0 );
     }
 
     input.onkeyup = run;

@@ -115,49 +115,47 @@
    a change to a PHP file seems not to take, or a cache seems not to work.
    The figures are this server process's; another pool, engine or a
    command-line script has its own. Emptying them is on Setup > Caches. *}
-<table id="php-caches" class="list" style="scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);" cellspacing="0">
+<table id="php-caches" class="list aui-anchor" cellspacing="0">
 <tr>
     <th colspan="2"><label>{'OPcache and APCu'|i18n( 'design/admin/setup/info' )}</label></th>
 </tr>
 <tr>
 {* Side by side while both fit, APCu below OPcache on narrow screens. *}
-<td colspan="2" style="padding: 0;">
-<div style="display: flex; flex-wrap: wrap;">
+<td colspan="2" class="aui-flush">
+<div class="aui-si-cols">
 {foreach hash( 'opcache', 'OPcache', 'apcu', 'APCu' ) as $key => $title}
 {def $cache=$php_caches[$key]}
-<div style="flex: 1 1 24em; min-width: 0; padding: 0.6em 1em;">
-    <div style="margin-bottom: 0.5em;">
-        <strong style="font-size: 1.1em;">{$title|wash}</strong>
+<div class="aui-si-col">
+    <div class="aui-si-head">
+        <strong class="aui-si-title">{$title|wash}</strong>
         <small>&nbsp;{if eq( $key, 'opcache' )}{'compiled PHP scripts'|i18n( 'design/admin/setup/info' )}{else}{'data in shared memory'|i18n( 'design/admin/setup/info' )}{/if}</small>
         &nbsp;
         {if $cache|not}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #e0e0e0; color: #555; font-size: 0.85em;">{'not installed'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge">{'not installed'|i18n( 'design/admin/setup/info' )}</span>
         {elseif $cache.enabled}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #d8f0d8; color: #1e6b1e; font-size: 0.85em;">{'enabled'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge is-ok">{'enabled'|i18n( 'design/admin/setup/info' )}</span>
             {if $cache.version}<small>&nbsp;{$cache.version|wash}</small>{/if}
         {else}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #fbe3c8; color: #8a4b00; font-size: 0.85em;">{'off'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge is-warn">{'off'|i18n( 'design/admin/setup/info' )}</span>
             <br /><small>{$cache.why_off|wash}</small>
         {/if}
     </div>
 
     {if and( $cache, $cache.bars )}
-    <table cellspacing="0" style="width: 100%; margin-bottom: 0.4em;">
+    <table cellspacing="0" class="aui-si-bars">
     {foreach $cache.bars as $bar}
     <tr>
-        <td style="width: 7.5em; padding: 2px 0; white-space: nowrap;"><small>{$bar.label|i18n( 'design/admin/setup/info' )}</small></td>
-        <td style="padding: 2px 0.6em 2px 0;">
+        <td class="aui-si-bar-label"><small>{$bar.label|i18n( 'design/admin/setup/info' )}</small></td>
+        <td class="aui-si-bar-meter">
             {* Green while there is room; amber from 75 %, red from 90 % --
                for the hit rate the other way round, a high rate is good. *}
             {def $level=cond( eq( $bar.label, 'Hit rate' ),
-                              cond( ge( $bar.percent, 90 ), '#4a9d4a', ge( $bar.percent, 60 ), '#d99a26', '#c9483b' ),
-                              cond( ge( $bar.percent, 90 ), '#c9483b', ge( $bar.percent, 75 ), '#d99a26', '#4a9d4a' ) )}
-            <div style="background: #e6e6e6; border-radius: 3px; height: 9px; overflow: hidden;">
-                <div style="width: {$bar.percent}%; background: {$level}; height: 9px;"></div>
-            </div>
+                              cond( ge( $bar.percent, 90 ), 'is-ok', ge( $bar.percent, 60 ), 'is-warn', 'is-bad' ),
+                              cond( ge( $bar.percent, 90 ), 'is-bad', ge( $bar.percent, 75 ), 'is-warn', 'is-ok' ) )}
+            <div class="a4-meter {$level}" role="img" aria-label="{$bar.percent|wash} %"><span class="a4-pct-{min( 100, max( 0, $bar.percent|int ) )}"></span></div>
             {undef $level}
         </td>
-        <td style="width: 45%; padding: 2px 0; white-space: nowrap;"><small>{$bar.text|wash}</small></td>
+        <td class="aui-si-bar-text"><small>{$bar.text|wash}</small></td>
     </tr>
     {/foreach}
     </table>
@@ -168,7 +166,7 @@
     {/if}
 
     {if and( $cache, $cache.settings )}
-    <div style="margin-top: 0.3em; color: #666;"><small>{foreach $cache.settings as $name => $value}<code>{$name|wash}</code> {$value|wash}{delimiter} &middot; {/delimiter}{/foreach}</small></div>
+    <div class="aui-mt-3 a4-muted"><small>{foreach $cache.settings as $name => $value}<code>{$name|wash}</code> {$value|wash}{delimiter} &middot; {/delimiter}{/foreach}</small></div>
     {/if}
 </div>
 {undef $cache}
@@ -436,39 +434,37 @@
     <th><label>{'HTTP cache (role-aware)'|i18n( 'design/admin/setup/info' )}</label></th>
 </tr>
 <tr>
-<td style="padding: 0.6em 1em;">
-    <div style="margin-bottom: 0.5em;">
-        <strong style="font-size: 1.1em;">{'Whole pages, per permission context'|i18n( 'design/admin/setup/info' )}</strong>
+<td class="aui-si-cell">
+    <div class="aui-si-head">
+        <strong class="aui-si-title">{'Whole pages, per permission context'|i18n( 'design/admin/setup/info' )}</strong>
         &nbsp;
         {if $http_cache.enabled|not}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #e0e0e0; color: #555; font-size: 0.85em;">{'disabled'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge">{'disabled'|i18n( 'design/admin/setup/info' )}</span>
             <br /><small>{'Switch it on with Enabled=enabled in settings/httpcache.ini (an override); every page is rendered until then.'|i18n( 'design/admin/setup/info' )}</small>
         {elseif $http_cache.started|not}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #fbe3c8; color: #8a4b00; font-size: 0.85em;">{'enabled, nothing stored yet'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge is-warn">{'enabled, nothing stored yet'|i18n( 'design/admin/setup/info' )}</span>
             <br /><small>{'The first page requested on a cached siteaccess starts it.'|i18n( 'design/admin/setup/info' )}</small>
         {else}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #d8f0d8; color: #1e6b1e; font-size: 0.85em;">{'enabled'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge is-ok">{'enabled'|i18n( 'design/admin/setup/info' )}</span>
         {/if}
     </div>
 
     {if $http_cache.message}
-    <div style="margin: 0.4em 0; padding: 0.4em 0.7em; border-radius: 4px; background: #eef6ee; color: #1e6b1e;"><small>{$http_cache.message|wash}</small></div>
+    <div class="aui-si-message" role="status"><small>{$http_cache.message|wash}</small></div>
     {/if}
 
     {if $http_cache.started}
     {if $http_cache.bars}
-    <table cellspacing="0" style="width: 100%; margin-bottom: 0.4em;">
+    <table cellspacing="0" class="aui-si-bars">
     {foreach $http_cache.bars as $bar}
     <tr>
-        <td style="width: 7.5em; padding: 2px 0; white-space: nowrap;"><small>{$bar.label|i18n( 'design/admin/setup/info' )}</small></td>
-        <td style="padding: 2px 0.6em 2px 0;">
-            {def $level=cond( ge( $bar.percent, 90 ), '#4a9d4a', ge( $bar.percent, 60 ), '#d99a26', '#c9483b' )}
-            <div style="background: #e6e6e6; border-radius: 3px; height: 9px; overflow: hidden;">
-                <div style="width: {$bar.percent}%; background: {$level}; height: 9px;"></div>
-            </div>
+        <td class="aui-si-bar-label"><small>{$bar.label|i18n( 'design/admin/setup/info' )}</small></td>
+        <td class="aui-si-bar-meter">
+            {def $level=cond( ge( $bar.percent, 90 ), 'is-ok', ge( $bar.percent, 60 ), 'is-warn', 'is-bad' )}
+            <div class="a4-meter {$level}" role="img" aria-label="{$bar.percent|wash} %"><span class="a4-pct-{min( 100, max( 0, $bar.percent|int ) )}"></span></div>
             {undef $level}
         </td>
-        <td style="width: 45%; padding: 2px 0; white-space: nowrap;"><small>{$bar.text|wash}</small></td>
+        <td class="aui-si-bar-text"><small>{$bar.text|wash}</small></td>
     </tr>
     {/foreach}
     </table>
@@ -479,25 +475,25 @@
     <div><small>{foreach $http_cache.figures as $name => $value}{$name|wash}: <strong>{$value|wash}</strong>{delimiter} &middot; {/delimiter}{/foreach}</small></div>
 
     {if $http_cache.reasons}
-    <div style="margin-top: 0.5em;"><small>{'Why requests were not served from the cache'|i18n( 'design/admin/setup/info' )}:</small></div>
-    <table cellspacing="0" style="width: 100%; max-width: 40em;">
+    <div class="aui-mt-5"><small>{'Why requests were not served from the cache'|i18n( 'design/admin/setup/info' )}:</small></div>
+    <table cellspacing="0" class="aui-si-bars aui-si-reasons">
     {foreach $http_cache.reasons as $r}
     <tr>
-        <td style="width: 14em; padding: 1px 0; white-space: nowrap;"><small><code>{$r.reason|wash}</code></small></td>
-        <td style="padding: 1px 0.6em 1px 0;">
-            <div style="background: #e6e6e6; border-radius: 3px; height: 7px; overflow: hidden;"><div style="width: {$r.percent}%; background: #8a9bb0; height: 7px;"></div></div>
+        <td class="aui-si-reason"><small><code>{$r.reason|wash}</code></small></td>
+        <td class="aui-si-bar-meter">
+            <div class="a4-meter is-info aui-si-meter-thin" role="img" aria-label="{$r.percent|wash} %"><span class="a4-pct-{min( 100, max( 0, $r.percent|int ) )}"></span></div>
         </td>
-        <td style="width: 6em; padding: 1px 0; text-align: right;"><small>{$r.count|wash}</small></td>
+        <td class="aui-si-count a4-num"><small>{$r.count|wash}</small></td>
     </tr>
     {/foreach}
     </table>
     {/if}
 
-    <div style="margin-top: 0.4em; color: #666;"><small>{foreach $http_cache.settings as $name => $value}<code>{$name|wash}</code> {$value|wash}{delimiter} &middot; {/delimiter}{/foreach}</small></div>
-    <div style="color: #666;"><small><code>{$http_cache.dir|wash}</code></small></div>
+    <div class="aui-mt-4 a4-muted"><small>{foreach $http_cache.settings as $name => $value}<code>{$name|wash}</code> {$value|wash}{delimiter} &middot; {/delimiter}{/foreach}</small></div>
+    <div class="a4-muted"><small><code>{$http_cache.dir|wash}</code></small></div>
 
     {if $can_flush_caches}
-    <form method="post" action={'/setup/info'|ezurl} style="margin-top: 0.7em;">
+    <form method="post" action={'/setup/info'|ezurl} class="aui-mt-7">
         <button type="submit" class="button" name="HttpCacheAction" value="purge" onclick="return confirm( '{'Purge every cached page?'|i18n( 'design/admin/setup/info' )|wash( javascript )|wash}' );">{'Purge all pages'|i18n( 'design/admin/setup/info' )}</button>
         <button type="submit" class="button" name="HttpCacheAction" value="gc">{'Remove dead entries'|i18n( 'design/admin/setup/info' )}</button>
         {if $http_cache.stats}<button type="submit" class="button" name="HttpCacheAction" value="reset">{'Reset counters'|i18n( 'design/admin/setup/info' )}</button>{/if}
@@ -515,62 +511,62 @@
     <th><label>{'Database queries'|i18n( 'design/admin/setup/info' )}</label></th>
 </tr>
 <tr>
-<td style="padding: 0.6em 1em;">
-    <div style="margin-bottom: 0.5em;">
-        <strong style="font-size: 1.1em;">{'SQL statements per request'|i18n( 'design/admin/setup/info' )}</strong>
+<td class="aui-si-cell">
+    <div class="aui-si-head">
+        <strong class="aui-si-title">{'SQL statements per request'|i18n( 'design/admin/setup/info' )}</strong>
         <small>&nbsp;<code>{$sql_profile.engine|wash}</code></small>
         &nbsp;
         {if $sql_profile.mongo}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #e0e0e0; color: #555; font-size: 0.85em;">{'MongoDB: not an SQL engine'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge">{'MongoDB: not an SQL engine'|i18n( 'design/admin/setup/info' )}</span>
             <br /><small>{'The query cache is for the SQL engines. The MongoDB driver keeps its own statement profile (var/tmp/mongo_profile.on).'|i18n( 'design/admin/setup/info' )}</small>
         {elseif $sql_profile.on}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #d8f0d8; color: #1e6b1e; font-size: 0.85em;">{'profile on'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge is-ok">{'profile on'|i18n( 'design/admin/setup/info' )}</span>
         {else}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #e0e0e0; color: #555; font-size: 0.85em;">{'profile off'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge">{'profile off'|i18n( 'design/admin/setup/info' )}</span>
         {/if}
     </div>
 
     {if $sql_profile.message}
-    <div style="margin: 0.4em 0; padding: 0.4em 0.7em; border-radius: 4px; background: #eef6ee; color: #1e6b1e;"><small>{$sql_profile.message|wash}</small></div>
+    <div class="aui-si-message" role="status"><small>{$sql_profile.message|wash}</small></div>
     {/if}
 
     {if and( $sql_profile.mongo|not, $query_cache )}
-    <div style="margin: 0.3em 0 0.8em 0; padding: 0.5em 0.8em; border: 1px solid #e3e3e3; border-radius: 4px;">
+    <div class="aui-si-box">
         <strong>{'Query cache'|i18n( 'design/admin/setup/info' )}</strong>
         &nbsp;
         {if $query_cache.enabled}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #d8f0d8; color: #1e6b1e; font-size: 0.85em;">{$query_cache.mode|wash}</span>
+            <span class="a4-badge is-ok">{$query_cache.mode|wash}</span>
         {else}
-            <span style="padding: 1px 7px; border-radius: 9px; background: #e0e0e0; color: #555; font-size: 0.85em;">{'off'|i18n( 'design/admin/setup/info' )}</span>
+            <span class="a4-badge">{'off'|i18n( 'design/admin/setup/info' )}</span>
         {/if}
         <small>&nbsp;{'settings/querycache.ini'|i18n( 'design/admin/setup/info' )}: MaxAge={$query_cache.max_age}&nbsp;s, MaxRows={$query_cache.max_rows}{if $query_cache.exclude}, ExcludeTables={$query_cache.exclude|implode( ', ' )|wash}{/if}</small>
-        <div style="margin-top: 0.3em;"><small>
+        <div class="aui-mt-3"><small>
             {if $query_cache.mode|eq( 'shared' )}
                 {if $query_cache.apcu}
                     {'%entries results held in APCu (%size) by this server'|i18n( 'design/admin/setup/info',, hash( '%entries', concat( '<strong>', $query_cache.entries, '</strong>' ), '%size', concat( $query_cache.memory_kb, '&nbsp;KB' ) ) )}
                 {else}
-                    <span style="color: #a33;">{'APCu is not available to this server: "shared" works as "request" here.'|i18n( 'design/admin/setup/info' )}</span>
+                    <span class="a4-bad-text">{'APCu is not available to this server: "shared" works as "request" here.'|i18n( 'design/admin/setup/info' )}</span>
                 {/if}
                 &middot;
             {/if}
             {'generation %generation'|i18n( 'design/admin/setup/info',, hash( '%generation', concat( '<strong>', $query_cache.generation, '</strong>' ) ) )}{if $query_cache.cleared}, {'last cleared %date'|i18n( 'design/admin/setup/info',, hash( '%date', $query_cache.cleared|l10n( shortdatetime ) ) )}{/if}
             &middot; {'%tables tables written since'|i18n( 'design/admin/setup/info',, hash( '%tables', concat( '<strong>', $query_cache.tables_tracked, '</strong>' ) ) )}
-            {if $query_cache.state_exists|not}<span style="color: #666;">({'no state file yet'|i18n( 'design/admin/setup/info' )})</span>{/if}
+            {if $query_cache.state_exists|not}<span class="a4-muted">({'no state file yet'|i18n( 'design/admin/setup/info' )})</span>{/if}
         </small></div>
         {if $query_cache.counters}
-        <div style="margin-top: 0.2em;"><small>
+        <div class="aui-mt-2"><small>
             {'This server since %date: %requests requests, %hits hits, %misses misses'|i18n( 'design/admin/setup/info',, hash( '%date', cond( $query_cache.counters.since, $query_cache.counters.since|l10n( shortdatetime ), '-' ), '%requests', concat( '<strong>', $query_cache.counters.requests, '</strong>' ), '%hits', concat( '<strong>', $query_cache.counters.hits, '</strong>' ), '%misses', concat( '<strong>', $query_cache.counters.misses, '</strong>' ) ) )}{if $query_cache.counters.hit_rate|ne( '' )} ({'%rate hit rate'|i18n( 'design/admin/setup/info',, hash( '%rate', concat( '<strong>', $query_cache.counters.hit_rate, '&nbsp;%</strong>' ) ) )}){/if},
             {'%uncacheable not cacheable, %writes writes'|i18n( 'design/admin/setup/info',, hash( '%uncacheable', $query_cache.counters.uncacheable, '%writes', $query_cache.counters.writes ) )}
         </small></div>
         {/if}
         {if $query_cache.recent_writes}
-        <div style="margin-top: 0.2em; color: #555;"><small>
+        <div class="aui-mt-2 a4-muted"><small>
             {'Last written'|i18n( 'design/admin/setup/info' )}:
             {foreach $query_cache.recent_writes as $w}<code>{$w.table|wash}</code> {$w.ago}&nbsp;s{delimiter}, {/delimiter}{/foreach}
         </small></div>
         {/if}
         {if $can_flush_caches}
-        <form method="post" action={'/setup/info'|ezurl} style="margin-top: 0.5em;">
+        <form method="post" action={'/setup/info'|ezurl} class="aui-mt-5">
             <button type="submit" class="button" name="QueryCacheAction" value="clear">{'Clear the query cache'|i18n( 'design/admin/setup/info' )}</button>
             {if $query_cache.counters}<button type="submit" class="button" name="QueryCacheAction" value="reset">{'Reset the counters'|i18n( 'design/admin/setup/info' )}</button>{/if}
         </form>
@@ -585,27 +581,27 @@
         &middot; {'a per-request memo would save %memo_ms, a shared query cache about %shared_ms'|i18n( 'design/admin/setup/info',, hash( '%memo_ms', concat( '<strong>', $sql_profile.summary.memo_ms, '&nbsp;ms</strong>' ), '%shared_ms', concat( '<strong>', $sql_profile.summary.shared_ms, '&nbsp;ms</strong>' ) ) )}
     </small></div>
 
-    <table class="list" cellspacing="0" style="margin-top: 0.4em;">
+    <table class="list aui-mt-4" cellspacing="0">
     <tr>
         <th><small>{'Time'|i18n( 'design/admin/setup/info' )}</small></th>
         <th><small>{'Request'|i18n( 'design/admin/setup/info' )}</small></th>
-        <th style="text-align: right;"><small>{'Statements'|i18n( 'design/admin/setup/info' )}</small></th>
-        <th style="text-align: right;"><small>{'Distinct'|i18n( 'design/admin/setup/info' )}</small></th>
-        <th style="text-align: right;"><small>{'Repeats'|i18n( 'design/admin/setup/info' )}</small></th>
-        <th style="text-align: right;"><small>{'In the database'|i18n( 'design/admin/setup/info' )}</small></th>
-        <th style="text-align: right;"><small>{'Memo saves'|i18n( 'design/admin/setup/info' )}</small></th>
-        <th style="text-align: right;"><small>{'Shared cache saves'|i18n( 'design/admin/setup/info' )}</small></th>
+        <th class="a4-num"><small>{'Statements'|i18n( 'design/admin/setup/info' )}</small></th>
+        <th class="a4-num"><small>{'Distinct'|i18n( 'design/admin/setup/info' )}</small></th>
+        <th class="a4-num"><small>{'Repeats'|i18n( 'design/admin/setup/info' )}</small></th>
+        <th class="a4-num"><small>{'In the database'|i18n( 'design/admin/setup/info' )}</small></th>
+        <th class="a4-num"><small>{'Memo saves'|i18n( 'design/admin/setup/info' )}</small></th>
+        <th class="a4-num"><small>{'Shared cache saves'|i18n( 'design/admin/setup/info' )}</small></th>
     </tr>
     {foreach $sql_profile.rows as $row sequence array( 'bglight', 'bgdark' ) as $style}
     <tr class="{$style}">
         <td><small>{$row.time|wash}</small></td>
-        <td style="max-width: 22em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><small><code>{$row.uri|wash}</code></small></td>
-        <td style="text-align: right;"><small>{$row.statements}</small></td>
-        <td style="text-align: right;"><small>{$row.distinct}</small></td>
-        <td style="text-align: right;"><small>{$row.repeats}</small></td>
-        <td style="text-align: right;"><small>{$row.db_ms}&nbsp;ms</small></td>
-        <td style="text-align: right;"><small>{$row.memo_ms}&nbsp;ms</small></td>
-        <td style="text-align: right;"><small>{$row.shared_ms}&nbsp;ms</small></td>
+        <td class="aui-si-uri"><small><code>{$row.uri|wash}</code></small></td>
+        <td class="a4-num"><small>{$row.statements}</small></td>
+        <td class="a4-num"><small>{$row.distinct}</small></td>
+        <td class="a4-num"><small>{$row.repeats}</small></td>
+        <td class="a4-num"><small>{$row.db_ms}&nbsp;ms</small></td>
+        <td class="a4-num"><small>{$row.memo_ms}&nbsp;ms</small></td>
+        <td class="a4-num"><small>{$row.shared_ms}&nbsp;ms</small></td>
     </tr>
     {/foreach}
     </table>
@@ -615,10 +611,10 @@
     <div><small>{'Switch the profile on to see how many statements each request runs, how many are exact repeats, and what a query cache would save.'|i18n( 'design/admin/setup/info' )}</small></div>
     {/if}
 
-    <div style="margin-top: 0.4em; color: #666;"><small>{'The profile counts the statements that reached the database: with the query cache on, a cached answer is not in it. "Memo saves" is what the request mode would save, "shared cache saves" what the shared mode would (about 15 µs per answer). Counters are per server, since each server has its own APCu. The log is var/tmp/sql_profile.log; see doc/bc/6.0/sql-query-cache.md.'|i18n( 'design/admin/setup/info' )}</small></div>
+    <div class="aui-mt-4 a4-muted"><small>{'The profile counts the statements that reached the database: with the query cache on, a cached answer is not in it. "Memo saves" is what the request mode would save, "shared cache saves" what the shared mode would (about 15 µs per answer). Counters are per server, since each server has its own APCu. The log is var/tmp/sql_profile.log; see doc/bc/6.0/sql-query-cache.md.'|i18n( 'design/admin/setup/info' )}</small></div>
 
     {if $can_flush_caches}
-    <form method="post" action={'/setup/info'|ezurl} style="margin-top: 0.7em;">
+    <form method="post" action={'/setup/info'|ezurl} class="aui-mt-7">
         {if $sql_profile.on}
             <button type="submit" class="button" name="SQLProfileAction" value="off">{'Switch the SQL profile off'|i18n( 'design/admin/setup/info' )}</button>
         {else}

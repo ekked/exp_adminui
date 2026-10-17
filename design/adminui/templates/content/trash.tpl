@@ -1,25 +1,3 @@
-<style type="text/css">
-{literal}
-table.list td { max-width: 500px; word-wrap: break-word; }
-table.list td.width-280 { max-width: 280px; }
-.mt-20 { margin-top: 20px; }
-.content-trash .trash-summary { margin: 0 0 .6em 0; }
-.content-trash .trash-filter { display: flex; flex-wrap: wrap; gap: .4em 1em; align-items: flex-end; margin: 0 0 .8em 0; }
-.content-trash .trash-filter label { display: block; font-weight: bold; font-size: .9em; }
-.content-trash .trash-filter select, .content-trash .trash-filter input.trash-date { max-width: 14em; }
-.content-trash .trash-meta { font-size: .85em; opacity: .75; margin-top: .2em; }
-.content-trash .trash-state { font-size: .85em; margin-top: .2em; }
-.content-trash .trash-state-exists { color: #2d6a2d; }
-.content-trash .trash-state-trash, .content-trash .trash-state-moved, .content-trash .trash-state-gone { color: #8a4b00; }
-.content-trash .trash-path-trash, .content-trash .trash-path-gone { font-style: italic; }
-.content-trash details.trash-details { font-size: .85em; margin-top: .2em; }
-.content-trash details.trash-details summary { cursor: pointer; }
-.content-trash td.trash-name { min-width: 14em; }
-.content-trash details.trash-details dl { display: grid; grid-template-columns: auto 1fr; gap: .1em .6em; margin: .3em 0 0 0; }
-.content-trash details.trash-details dt { font-weight: bold; margin: 0; }
-.content-trash details.trash-details dd { margin: 0; }
-{/literal}
-</style>
 {let item_type = ezpreference( 'admin_list_limit' )
      number_of_items = min( $item_type, 3)|choose( 10, 10, 25, 50 )
      trash_sort_field = first_set(  $view_parameters.sort_field, 'trashed' )
@@ -158,7 +136,7 @@ table.list td.width-280 { max-width: 280px; }
 
 {* The list scrolls sideways inside its own box when its seven columns do not fit (200% zoom), so the page itself never
    runs past the main area. *}
-<div class="content-navigation-childlist admin-dt" style="overflow-x: auto;">
+<div class="content-navigation-childlist admin-dt aui-scroll-x">
     <table class="list" cellspacing="0">
     <tr>
          <th class="tight"><i class="fa fa-check-square-o" onclick="ezjs_toggleCheckboxes( document.trashform, 'DeleteIDArray[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/content/trash' )}"></i></th>

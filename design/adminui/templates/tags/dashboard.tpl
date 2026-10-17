@@ -22,7 +22,7 @@
             <div class="controlbar">
                 <div class="button-left">
                     <div class="block">
-                        <form name="tagadd" id="tagadd" style="float:left;" enctype="multipart/form-data" method="post" action={'tags/add/0'|ezurl}>
+                        <form name="tagadd" id="tagadd" class="aui-float-start" enctype="multipart/form-data" method="post" action={'tags/add/0'|ezurl}>
                             <input class="btn btn-primary" type="submit" name="SubmitButton" value="{"Add child tag"|i18n( "extension/eztags/tags/view" )}" />
                         </form>
                     </div>

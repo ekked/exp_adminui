@@ -31,7 +31,7 @@
     <td>{$node.object.modified|l10n(shortdatetime)}</td>
     <td><a href={$node.object.owner.main_node.url_alias|ezurl}>{$node.object.owner.name|wash}</a></td>
     <td><a href={$node.object.current.creator.main_node.url_alias|ezurl}>{$node.object.current.creator.name|wash}</a></td>
-    <td class="contributors" style="white-space: normal; overflow-wrap: anywhere; line-height: 1.7;">
+    <td class="contributors aui-contributors">
         {if $tab_contributors|count|gt(0)}{$tab_contributors|implode(', ')|wash}{else}-{/if}
     </td>
 </tr>

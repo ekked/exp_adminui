@@ -211,7 +211,7 @@ full view of an subscription - with all related data
                                         {if or( $subscription.status|eq(2), $subscription.status|eq(3), $subscription.status|eq(8) )}
                                             <input class="button-disabled" type="button" name="SubscriptionApproveButton" value="{'Approve subscription'|i18n( 'cjw_newsletter/subscription_view' )}" title="" />
                                         {else}
-                                        <form name="ApproveForm" method="post" action=""  style="display:inline">
+                                        <form name="ApproveForm" method="post" action="" class="aui-inline">
                                             <input class="button" type="submit" name="SubscriptionApproveButton" value="{'Approve subscription'|i18n( 'cjw_newsletter/subscription_view' )}" title="" />
                                         </form>
                                         {/if}
@@ -219,7 +219,7 @@ full view of an subscription - with all related data
                                         {if or( $subscription.status|eq(3), $subscription.status|eq(4), $subscription.status|eq(8) )}
                                             <input class="button-disabled" type="button" name="SubscriptionRemoveButton" value="{'Remove subscription'|i18n( 'cjw_newsletter/subscription_view' )}" title="" />
                                         {else}
-                                        <form name="RemoveForm" method="post" action=""  style="display:inline">
+                                        <form name="RemoveForm" method="post" action="" class="aui-inline">
                                             <input class="button" type="submit" name="SubscriptionRemoveButton" value="{'Remove subscription'|i18n( 'cjw_newsletter/subscription_view' )}" title="" />
                                         </form>
                                         {/if}

@@ -193,7 +193,7 @@
         {section show = and( is_set( $class_content.default_placement.node_id ), ne( 0, $class_content.default_placement.node_id ), ne( '', $class_content.object_class ) )}
             {def $defaultNode = fetch( content, node, hash( node_id, $class_content.default_placement.node_id ))}
             {if and( is_set( $defaultNode ), $defaultNode.can_create )}
-                <div id='create_new_object_{$attribute.id}' style="display:none;">
+                <div id='create_new_object_{$attribute.id}' hidden>
                      <p>{'Create new object with name'|i18n( 'design/standard/content/datatype' )}:</p>
                      <input name="attribute_{$attribute.id}_new_object_name" id="attribute_{$attribute.id}_new_object_name"/>
                 </div>

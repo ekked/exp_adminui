@@ -82,7 +82,7 @@
                 </span>
                 <span class="pull-right translation small">
                     {def $locale = fetch( 'content', 'locale', hash( 'locale_code', $language_code ) )}
-                        <p class="right translation">{$locale.intl_language_name}&nbsp;<img src="{$language_code|flag_icon}" width="18" height="12" alt="{$language_code|wash}" style="vertical-align: middle;" /></p>
+                        <p class="right translation">{$locale.intl_language_name}&nbsp;<img src="{$language_code|flag_icon}" width="18" height="12" alt="{$language_code|wash}" class="a4-flag" /></p>
                     {undef $locale}
                 </span>
             </div>

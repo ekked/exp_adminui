@@ -9,7 +9,7 @@
     {if eq( $user_avatar, '' )}{set $user_avatar = 'a0.jpg'|ezimage( 'no' )}{/if}
 
     <a href="#" class="user-dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="{'User menu (%name)'|i18n( 'design/admin/pagelayout',, hash( '%name', $user_content.name ) )|wash}">
-        <span class="user-avatar" style="background-image:url({$user_avatar})" aria-hidden="true"></span>
+        <img class="user-avatar aui-avatar" src="{$user_avatar}" alt="" aria-hidden="true" />
         <span class="sr-only">{'User menu (%name)'|i18n( 'design/admin/pagelayout',, hash( '%name', $user_content.name ) )|wash}</span>
     </a>
 
@@ -17,8 +17,7 @@
     <ul class="dropdown-menu user-dropdown">
 
         <li>
-            <div class="user-avatar" style="background-image:url({$user_avatar})">
-            </div>
+            <img class="user-avatar aui-avatar" src="{$user_avatar}" alt="" />
             <h4 class="user-name"><bdi>{$user_content.name|wash}</bdi></h4>
             <p class="user-role"><bdi>{$current_user.login|wash}</bdi></p>
         </li>

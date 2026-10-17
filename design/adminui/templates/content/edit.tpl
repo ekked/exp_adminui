@@ -26,7 +26,7 @@
     } );
     {/literal}
     </script>
-    <div class="rightmenu{if $edit_menu_collapsed} closed" style="margin-right:-222px;{/if}">
+    <div class="rightmenu aui-edit-menu{if $edit_menu_collapsed} closed{/if}">
         <a id="objectinfo-showhide" onclick="jQuery('.rightmenu').toggleClass('closed');" class="show-hide-control" title="{'Show / Hide rightmenu'|i18n( 'design/admin/pagelayout/rightmenu' )}" href="#"></a>
         <div id="rightmenu-design">
 
@@ -36,7 +36,7 @@
     </div>
 
 
-    <div id="maincontent"{if $edit_menu_collapsed} style="margin-right:18px"{/if} class="clearfix node-edit-container">
+    <div id="maincontent" class="clearfix node-edit-container{if $edit_menu_collapsed} aui-edit-menu-closed{/if}">
         <div class="path-edit-container"></div>
         <div id="controlbar-top" class="node-controlbar">
             <span class="pull-left translation small">
@@ -55,14 +55,14 @@
                     {let from_language_object=$object.languages[$from_language]}
 
                     {'Translating content from %from_lang to %to_lang'|i18n( 'design/admin/content/edit',, hash(
-                        '%from_lang', concat( $from_language_object.name, '&nbsp;<img src="', $from_language_object.locale|flag_icon, '" width="18" height="12" style="vertical-align: middle;" alt="', $from_language_object.locale, '" />' ),
-                        '%to_lang', concat( $translation_list[$language_index].locale.intl_language_name, '&nbsp;<img src="', $translation_list[$language_index].language_code|flag_icon, '" width="18" height="12" style="vertical-align: middle;" alt="', $translation_list[$language_index].language_code, '" />' ) ) )}
+                        '%from_lang', concat( $from_language_object.name, '&nbsp;<img src="', $from_language_object.locale|flag_icon, '" width="18" height="12" class="a4-flag" alt="', $from_language_object.locale, '" />' ),
+                        '%to_lang', concat( $translation_list[$language_index].locale.intl_language_name, '&nbsp;<img src="', $translation_list[$language_index].language_code|flag_icon, '" width="18" height="12" class="a4-flag" alt="', $translation_list[$language_index].language_code, '" />' ) ) )}
 
                     {/let}
 
                 {else}
 
-                    <img src="{$translation_list[$language_index].language_code|flag_icon}" width="18" height="12" style="vertical-align: middle;" alt="{$translation_list[$language_index].language_code}" />&nbsp;<span class="tt">{$translation_list[$language_index].locale.intl_language_name}</span>
+                    <img src="{$translation_list[$language_index].language_code|flag_icon}" width="18" height="12" class="a4-flag" alt="{$translation_list[$language_index].language_code}" />&nbsp;<span class="tt">{$translation_list[$language_index].locale.intl_language_name}</span>
 
                 {/if}
 

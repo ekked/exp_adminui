@@ -7,7 +7,7 @@
 
     {* Enter in the name field presses the first submit button of the form, which
        would otherwise be the order button of a policy. This one only keeps the name. *}
-    <input type="submit" name="ChangeRoleName" value="{'Save'|i18n( 'design/admin/role/edit' )}" tabindex="-1" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px;" />
+    <input type="submit" name="ChangeRoleName" value="{'Save'|i18n( 'design/admin/role/edit' )}" tabindex="-1" aria-hidden="true" class="a4-sr-only" />
 
     <div class="context-block">
 

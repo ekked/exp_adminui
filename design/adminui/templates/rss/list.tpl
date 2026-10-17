@@ -1,32 +1,5 @@
 {* The list is fetched a page at a time; these are the controls that move
    through it. Everything else on this page is as it was. *}
-{literal}
-<style type="text/css">
-.rss-pagination {
-    display: flex; flex-wrap: wrap; align-items: center;
-    justify-content: space-between; gap: .75rem; padding: .6rem 0;
-}
-.rss-pagination-count { color: #666; }
-.rss-pagination-pages { margin: 0; }
-.rss-pagination-pages p { margin: 0; }
-.rss-pagination-pages a,
-.rss-pagination-pages .current,
-.rss-pagination-pages .disabled {
-    display: inline-block; padding: .15rem .45rem; margin: 0 .1rem;
-    border: 1px solid #d5d5da; border-radius: 4px; text-decoration: none;
-}
-.rss-pagination-pages .current { background: #4a4a52; border-color: #4a4a52; color: #fff; font-weight: 700; }
-.rss-pagination-pages .disabled { color: #b0b0b6; border-color: #e6e6ea; }
-.rss-pagination-of { margin: .35rem 0 0 0 !important; color: #666; font-size: .9em; }
-/* The sortable heading rules live in content.css, so that this page and the
-   locations tab of an item cannot drift apart. */
-table.list td.rss-id { text-align: right; color: #666; white-space: nowrap; }
-table.list td.rss-uri code {
-    font-family: Menlo, Consolas, monospace; font-size: .92em;
-    background: #f4f4f5; border: 1px solid #e6e6ea; border-radius: 3px; padding: 0 .3rem;
-}
-</style>
-{/literal}
 
 {* Export window. *}
 <form name="rssexportslist" method="post" action={'rss/list'|ezurl}>

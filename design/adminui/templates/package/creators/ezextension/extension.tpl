@@ -26,7 +26,7 @@
             <td>{if $ext.mtime_formatted}{$ext.mtime_formatted|wash}{else}—{/if}</td>
             <td><a href="#" class="extension-info-link" data-name="{$extension|wash}">{'Details'|i18n( 'design/standard/package' )}</a></td>
         </tr>
-        <tr class="extension-card-row" id="extension-card-{$extension|wash}" style="display:none;">
+        <tr class="extension-card-row" id="extension-card-{$extension|wash}" hidden>
             <td colspan="5" class="extension-card-cell">
                 <div class="extension-card">
                     <h3>{$ext.name|wash}</h3>

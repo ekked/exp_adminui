@@ -227,7 +227,7 @@
                 <td width="60%">{'Regenerate static content cache'|i18n( 'design/admin/setup/cache' )}:</td>
                 <td width="40%"><input class="button" id="staticcache-start" type="submit" name="RegenerateStaticCacheButton" value="{'Create new'|i18n( 'design/admin/setup/cache' )}" title="{'Fetches every url of the chosen site that the site itself links to and stores the page, so the web server can answer the next visitor from a file instead of starting the CMS. This can take some time on a large site. If you encounter time-out problems, use the &quot;bin/php/makestaticcache.php&quot; shell script.'|i18n( 'design/admin/setup/cache' )}" />
                 <input class="button" id="staticcache-stop" type="button" disabled="disabled" value="{'Stop'|i18n( 'design/admin/setup/cache' )}" title="{'Stops listening and leaves the pages written so far in place.'|i18n( 'design/admin/setup/cache' )}" />
-                <span id="staticcache-status" style="margin-left:1em;"></span></td>
+                <span id="staticcache-status" class="aui-ms-4"></span></td>
             </tr>
 
         </table>
@@ -240,9 +240,7 @@
 
 {* A fixed height, scrolling region: a full site prints hundreds of lines and
    should not push the rest of the interface off the screen. *}
-<pre id="staticcache-console" style="background:#1b1b1b;color:#d8d8d8;padding:.8em;
-     height:20em;overflow:auto;font:12px/1.5 monospace;border:1px solid #444;
-     margin:1em 0 0 0;white-space:pre-wrap;word-break:break-word;display:none;"></pre>
+<pre id="staticcache-console" class="aui-cache-console" hidden></pre>
 
 <script type="text/javascript">
 (function () {ldelim}
@@ -364,7 +362,7 @@
        this installation but memory of the server process answering this page,
        and emptying them costs every other site that process serves as well. *}
 
-    <div class="panel" id="php-caches" style="scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);">
+    <div class="panel aui-anchor" id="php-caches">
 
         {* DESIGN: Header START *}
 

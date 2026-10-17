@@ -120,7 +120,7 @@
     {* Info popin trigger. *}
     <td><a href="#" class="extension-info-link" data-name="{$Extensions.item|wash}">{'Details'|i18n( 'design/admin/setup/extensions' )}</a></td>
 </tr>
-<tr class="{$Extensions.sequence} extension-card-row" id="extension-card-{$Extensions.item|wash}" style="display:none;">
+<tr class="{$Extensions.sequence} extension-card-row" id="extension-card-{$Extensions.item|wash}" hidden>
     <td colspan="8" class="extension-card-cell">
         <div class="extension-card">
             <h3>{$ext.name|wash} <span class="extension-folder">({$Extensions.item|wash})</span></h3>

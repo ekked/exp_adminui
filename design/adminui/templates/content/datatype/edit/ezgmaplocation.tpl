@@ -176,7 +176,7 @@
 </div>
 <div class="row">
     <div class="col-sm-8">
-        <div id="ezgml-map-{$attribute.id}" style="width: 100%; height: 280px;"></div>
+        <div id="ezgml-map-{$attribute.id}" class="aui-gmap"></div>
     </div>
 
     <div class="col-sm-4">

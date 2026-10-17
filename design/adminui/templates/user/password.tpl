@@ -21,35 +21,6 @@
 {/if}
 {if and( $message, $changed|not, $summary|count|eq( 0 ), $oldPasswordNotValid|not, $newPasswordNotMatch|not, $newPasswordTooShort|not, is_unset( $password_changed ) )}{set $changed = true()}{/if}
 
-{literal}
-<style type="text/css">
-.adminui-pw [hidden] { display: none !important; }
-.adminui-pw .adminui-pw-username { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); border: 0; opacity: 0; }
-.adminui-pw .adminui-pw-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.adminui-pw .adminui-pw-label-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; }
-.adminui-pw .btn-link { padding: 0; }
-.adminui-pw .adminui-pw-meter { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 8px 0 0; font-size: 13px; color: #777; }
-.adminui-pw .adminui-pw-meter-bar { display: inline-grid; grid-template-columns: repeat(5, 1fr); gap: 4px; width: 12rem; max-width: 100%; }
-.adminui-pw .adminui-pw-meter-bar span { height: 6px; border-radius: 3px; background: #ddd; }
-.adminui-pw .adminui-pw-meter[data-score="0"] .adminui-pw-meter-bar span:nth-child(-n+1) { background: #b91c1c; }
-.adminui-pw .adminui-pw-meter[data-score="1"] .adminui-pw-meter-bar span:nth-child(-n+2) { background: #c2410c; }
-.adminui-pw .adminui-pw-meter[data-score="2"] .adminui-pw-meter-bar span:nth-child(-n+3) { background: #a16207; }
-.adminui-pw .adminui-pw-meter[data-score="3"] .adminui-pw-meter-bar span:nth-child(-n+4) { background: #4d7c0f; }
-.adminui-pw .adminui-pw-meter[data-score="4"] .adminui-pw-meter-bar span { background: #166534; }
-.adminui-pw .adminui-pw-meter:not([data-score]) .adminui-pw-meter-label { visibility: hidden; }
-.adminui-pw .adminui-pw-rules-title { margin: 10px 0 4px; font-size: 13px; color: #777; }
-.adminui-pw .adminui-pw-rules { list-style: none; margin: 0; padding: 0; font-size: 13px; }
-.adminui-pw .adminui-pw-rules li { margin: 2px 0; }
-.adminui-pw .adminui-pw-rules li .fa { width: 1.2em; color: #999; }
-.adminui-pw .adminui-pw-rules li[data-state="met"] { color: #166534; }
-.adminui-pw .adminui-pw-rules li[data-state="met"] .fa { color: #166534; }
-.adminui-pw .adminui-pw-rules li[data-state="met"] .fa:before { content: "\f058"; }
-.adminui-pw .adminui-pw-rules li[data-failed="true"]:not([data-state="met"]) { color: #a94442; font-weight: 600; }
-.adminui-pw .adminui-pw-match { margin: 6px 0 0; font-size: 13px; }
-.adminui-pw .adminui-pw-match[data-state="match"] { color: #166534; }
-.adminui-pw .adminui-pw-match[data-state="nomatch"] { color: #777; }
-</style>
-{/literal}
 
 <div class="adminui-pw">
 

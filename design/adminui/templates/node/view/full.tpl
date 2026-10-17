@@ -20,7 +20,7 @@
                         <input name="ContentObjectLanguageCode" value="" type="hidden" />
 
                         <button class="btn btn-default dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <img src="{$node.object.current_language|flag_icon}" width="18" height="12" alt="{$node.object.current_language|wash}" style="vertical-align: middle;" /> <span class="tt">{$node.object.current_language_object.locale_object.intl_language_name}</span>
+                            <img src="{$node.object.current_language|flag_icon}" width="18" height="12" alt="{$node.object.current_language|wash}" class="a4-flag" /> <span class="tt">{$node.object.current_language_object.locale_object.intl_language_name}</span>
                             <span class="caret"></span>
                         </button>
 
@@ -30,7 +30,7 @@
                                     {if $language.locale|eq($node.object.current_language)|not}
                                         <li {if $node.object.can_edit_languages|contains($language)} class="with-edit" {/if}>
                                             <a href={concat( $node.url, '/(language)/', $language.locale )|ezurl} title="{'View translation.'|i18n( 'design/admin/node/view/full' )}">
-                                                <img src="{$language.locale|flag_icon}" width="18" height="12" alt="{$language.locale|wash}" style="vertical-align: middle;" /> {$language.name|wash}
+                                                <img src="{$language.locale|flag_icon}" width="18" height="12" alt="{$language.locale|wash}" class="a4-flag" /> {$language.name|wash}
                                             </a>
 
                                             {if $node.object.can_edit_languages|contains($language)}
@@ -106,7 +106,7 @@
                     {/if}
                 {/if}
             {/if}
-            {* span class="pull-right translation small">{$node.object.current_language_object.locale_object.intl_language_name}&nbsp;<img src="{$node.object.current_language|flag_icon}" width="18" height="12" alt="{$language_code|wash}" style="vertical-align: middle;" /></span> *}
+            {* span class="pull-right translation small">{$node.object.current_language_object.locale_object.intl_language_name}&nbsp;<img src="{$node.object.current_language|flag_icon}" width="18" height="12" alt="{$language_code|wash}" class="a4-flag" /></span> *}
 
             <a href={concat( '/class/view/', $node.object.contentclass_id )|ezurl} onclick="ezpopmenu_showTopLevel( event, 'ClassMenu', ez_createAArray( new Array( '%classID%', {$node.object.contentclass_id}, '%objectID%', {$node.contentobject_id}, '%nodeID%', {$node.node_id}, '%currentURL%', '{$node.url|wash( javascript )|wash}', '%languages%', {$js_class_languages} ) ), '{$node.class_name|wash(javascript)|wash}', {$disabled_sub_menu}, {$disable_another_language} ); return false;" class="title-edit">{$node.class_identifier|class_icon( normal, $node.class_name )}</a>
 

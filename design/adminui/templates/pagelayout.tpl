@@ -4,13 +4,15 @@
    stylesheet (stylesheets/style.css, copied unchanged) draws it the same way. See doc/twig-to-tpl.md. *}
 {* the width of the content view's details panel, as the user left it (preference exp_adminui_details_width, saved
    by javascript/exp_adminui_details_resizer.js): set here, so the page opens at that width. Only whole numbers in
-   the handle's range are used; anything else leaves the stylesheet's default. *}
+   the handle's range are used; anything else leaves the stylesheet's default. The width is a class on <html>,
+   aui-dw-160 ... aui-dw-640 in steps of 4px (stylesheets/adminui-pages.css), which sets --exp-adminui-details-width;
+   no CSS in the template. *}
 {def $adminui_details_width = ezpreference( 'exp_adminui_details_width' )|int}
 {if or( $adminui_details_width|lt( 160 ), $adminui_details_width|gt( 640 ) )}
     {set $adminui_details_width = 0}
 {/if}
 <!DOCTYPE html>
-<html lang="{$site.http_equiv.Content-language|wash}"{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )} dir="rtl"{/if}{if $adminui_details_width} style="--exp-adminui-details-width: {$adminui_details_width}px"{/if}>
+<html lang="{$site.http_equiv.Content-language|wash}"{if eq( first_set( $site.text_direction, 'ltr' ), 'rtl' )} dir="rtl"{/if}{if $adminui_details_width} class="aui-dw-{mul( div( $adminui_details_width, 4 )|round, 4 )}"{/if}>
 <head>
 {def $ui_context_edit   = eq( $ui_context, 'edit' )
      $content_edit      = and( $ui_context_edit, eq( $ui_component, 'content' ) )
@@ -94,8 +96,8 @@
         {include uri='design:popupmenu/popup_menu.tpl'}
     </div>
 
-    <div id="overlay-mask" style="display:none;"></div>
-    <img src={'loader.gif'|ezimage} id="ajaxuploader-loader" style="display:none;" alt="{'Loading...'|i18n( 'design/adminui/pagelayout' )}" />
+    <div id="overlay-mask"></div>
+    <img src={'loader.gif'|ezimage} id="ajaxuploader-loader" alt="{'Loading...'|i18n( 'design/adminui/pagelayout' )}" />
 
     <div id="size-warning">
         <div class="size-warning-text">

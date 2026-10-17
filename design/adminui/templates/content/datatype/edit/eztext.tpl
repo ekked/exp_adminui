@@ -16,7 +16,7 @@
             {def $field_settings = ezini( $snippet_editor_config_section, $field_settings_name, 'exp_adminui.ini' )}
         {/if}
 
-        <div class="snippet-editor" id="{$attribute_base}_data_text_{$attribute.id}" style="height: {$attribute.contentclass_attribute.data_int1|mul(2)}em;"></div>
+        <div class="snippet-editor aui-rows-{min( 50, max( 1, $attribute.contentclass_attribute.data_int1|int ) )}" id="{$attribute_base}_data_text_{$attribute.id}"></div>
 
         <script type="text/javascript">
             $(document).ready(function(){ldelim}

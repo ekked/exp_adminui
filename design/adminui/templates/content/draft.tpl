@@ -66,7 +66,7 @@
                     <td>{$Drafts.item.contentobject.content_class.identifier|class_icon( small, $Drafts.item.contentobject.content_class.name|wash )}&nbsp;<a href={concat( '/content/versionview/', $Drafts.item.contentobject.id, '/', $Drafts.item.version, '/', $Drafts.item.initial_language.locale, '/' )|ezurl} dir="auto">{$Drafts.item.version_name|wash}</a></td>
                     <td>{$Drafts.item.contentobject.content_class.name|wash}</td>
                     <td>{let section_object=fetch( section, object, hash( section_id, $Drafts.item.contentobject.section_id ) )}{section show=$section_object}{$section_object.name|wash}{section-else}<i>{'Unknown'|i18n( 'design/admin/content/draft' )}</i>{/section}{/let}</td>
-                    <td><img src="{$Drafts.item.initial_language.locale|flag_icon}" width="18" height="12" alt="{$Drafts.item.initial_language.locale|wash}" style="vertical-align: middle;" />&nbsp;{$Drafts.item.initial_language.name|wash}</td>
+                    <td><img src="{$Drafts.item.initial_language.locale|flag_icon}" width="18" height="12" alt="{$Drafts.item.initial_language.locale|wash}" class="a4-flag" />&nbsp;{$Drafts.item.initial_language.name|wash}</td>
                     <td>{$Drafts.item.modified|l10n( shortdatetime )}</td>
                     <td><a href={concat( '/content/edit/', $Drafts.item.contentobject.id, '/', $Drafts.item.version, '/' )|ezurl} title="{'Edit < %draft_name >.'|i18n( 'design/admin/content/draft',, hash( '%draft_name', $Drafts.item.name ) )|wash}" ><i class="fa fa-pencil"></i></a></a></td>
                 </tr>

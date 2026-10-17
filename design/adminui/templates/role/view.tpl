@@ -1,6 +1,6 @@
 <form name="role" method="post" action={concat( $module.functions.view.uri, '/', $role.id, $policy_uri_suffix, $assignment_uri_suffix )|ezurl}>
 {* Enter in the name filter of the assignments filters: the first button of a form is the one Enter presses, and it must not be Edit. *}
-{if or( $assignment_total|gt( $assignment_limit ), $assignment_filter )}<input type="submit" name="AssignmentFilterButton" value="{'Filter'|i18n( 'design/admin/role/view' )}" tabindex="-1" aria-hidden="true" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;" />{/if}
+{if or( $assignment_total|gt( $assignment_limit ), $assignment_filter )}<input type="submit" name="AssignmentFilterButton" value="{'Filter'|i18n( 'design/admin/role/view' )}" tabindex="-1" aria-hidden="true" class="a4-sr-only" />{/if}
 
     <div class="context-block">
 
