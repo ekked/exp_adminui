@@ -48,7 +48,7 @@
 
 {if ezini_hasvariable( $ini_section, 'Links', 'menu.ini' )}
     {def $im_url_list   = ezini( $ini_section, 'Links', 'menu.ini' )
-         $name_list  = ezini( $ini_section, 'LinkNames', 'menu.ini' )
+         $name_list  = hash()
          $menu_name  = ''
          $check      = array()
          $has_access = true()
@@ -59,6 +59,11 @@
          $check_view = ezini( 'MenuAccessSettings', 'CheckViewAccess', 'menu.ini' )|ne( 'disabled' )
          $hide_no_access = ezini( 'MenuAccessSettings', 'NoAccessLinks', 'menu.ini' )|ne( 'disabled' )
          $items = array()}
+
+    {* LinkNames[] is optional: a link without one takes its name from $i18n_hash or its key *}
+    {if ezini_hasvariable( $ini_section, 'LinkNames', 'menu.ini' )}
+        {set $name_list = ezini( $ini_section, 'LinkNames', 'menu.ini' )}
+    {/if}
 
     {if ezini_hasvariable( $ini_section, 'Name', 'menu.ini' )}
         {set $menu_name = ezini( $ini_section, 'Name', 'menu.ini' )}
