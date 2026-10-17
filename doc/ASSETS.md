@@ -5319,7 +5319,7 @@ tags/dashboard.tpl are ported by hand without YUI, the others are served by admi
 | `javascript/plugins/inlinepopups/skins/tinyngadminui/img/vertical.gif` | legacy design | copy | 84 | `4f289463906ae349d653a77139ca224ba9517585a5455b4bccc3c7df5e44a729` |
 | `javascript/plugins/inlinepopups/skins/tinyngadminui/window.css` | legacy design | copy | 5319 | `d602f45892449a24b4d1cad9664d3a68cdd5aa7783b7ca4079298b0347159184` |
 | `javascript/plugins/inlinepopups/template.htm` | ezoe inlinepopups plugin (Exponential, GPL-2.0) | copy | 12878 | `078232edb5273221a098dff4a53d2b1b42b9835f28135802d1a16e53594ad9d6` |
-| `javascript/popupmenu/ezpopupmenu.js` | legacy design | copy | 24133 | `264961d1a4b145fbe89be9d02c2ef1d8063c3b487edf6cf44ef327f2a3d31449` |
+| `javascript/popupmenu/ezpopupmenu.js` | legacy design | changed | 24133 | `264961d1a4b145fbe89be9d02c2ef1d8063c3b487edf6cf44ef327f2a3d31449` |
 | `stylesheets/content.css` | legacy design | copy | 4291 | `16820f6faacb3df7f6e13497d4661f3986f9034a142943261ae4cb6a6c0be276` |
 | `stylesheets/core.css` | legacy design | copy | 11790 | `88a5b0bf3d962644e2e5918647b91b9f76e057fcb496fba1086c84f3d0c61200` |
 | `stylesheets/ezajax_autocomplete.css` | legacy design | copy | 46 | `191843efbeac973cbdedd66213c963f3cea4e5685c597756aa9d7f6be94ad7f2` |
