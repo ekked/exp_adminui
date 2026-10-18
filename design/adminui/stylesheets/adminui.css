@@ -339,3 +339,10 @@ table th a:hover { color: #fff; text-decoration: underline; }
    3.3:1 on the frame's dark grey; #b3b3b3 is 5.4:1 (WCAG 1.4.3) */
 .loginpage #footer, .loginpage #footer p { color: #b3b3b3; }
 .loginpage #footer a { text-decoration: underline; }   /* told apart from the text by more than its color (WCAG 1.4.1) */
+/* The sign-in button: style.css fills it with #F97B62, on which its white label was 2.6:1. It takes the Admin UI's
+   filled accent instead (--a4-accent-strong, white on it above 5.5:1; hovered and pressed --a4-accent-press), as
+   every other filled button here. The frame has one look, so there is no dark value to set. */
+.loginpage form .btn.btn-primary { background: var(--a4-accent-strong); color: var(--a4-on-accent, #fff); }
+.loginpage form .btn.btn-primary:hover, .loginpage form .btn.btn-primary:focus,
+.loginpage form .btn.btn-primary:active { background: var(--a4-accent-press); color: var(--a4-on-accent, #fff); }
+.loginpage form .btn.btn-primary:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
