@@ -613,3 +613,21 @@ table.list td.rss-uri code {
     .exp-processes .exp-card-actions, .exp-processes .exp-card-actions .exp-btn { width: 100%; }
     .exp-processes .exp-confirm-actions .exp-btn { width: 100%; }
 }
+
+/* ---- The context Help control (adminui/parts/help_button.tpl) ------------------------------------------------- */
+
+/* At the end of the header, beside the search box and a view's own top menu, at the header's height (70px, 50px on
+   a narrow screen, style.css); the label is left out where the header is narrow, the icon and its aria-label stay. */
+.aui-help { float: right; height: 100%; display: flex; align-items: center; padding-inline-end: var(--a4-space-5); }
+[dir="rtl"] .aui-help { float: left; }
+.aui-help-btn {
+    display: inline-flex; align-items: center; gap: var(--a4-space-2); min-height: 32px; padding: 0 var(--a4-space-3);
+    border-radius: var(--a4-radius); color: var(--a4-muted); font-size: var(--a4-text-m); text-decoration: none;
+}
+.aui-help-btn .fa { font-size: 1.3em; }
+.aui-help-btn:hover, .aui-help-btn:focus { color: var(--a4-accent-text); background: var(--a4-accent-soft); text-decoration: none; }
+.aui-help-btn:focus-visible { outline: 3px solid var(--a4-ring); outline-offset: 2px; }
+@media screen and (max-width: 900px) {
+    .aui-help { padding-inline-end: var(--a4-space-3); }
+    .aui-help-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}

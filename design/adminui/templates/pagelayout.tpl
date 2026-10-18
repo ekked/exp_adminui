@@ -42,6 +42,7 @@
             {* the "top" part of the legacy menu plugin: the search box and a view's own top menu *}
             {include uri='design:adminui/parts/search_box.tpl'}
             {if is_set( $persistent_vars.top_menu )}{$persistent_vars.top_menu}{/if}
+            {include uri='design:adminui/parts/help_button.tpl'}
         </header>
 
         {if $show_side_menu}

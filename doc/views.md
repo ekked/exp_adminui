@@ -14,6 +14,7 @@ list of templates with their origin is [templates.md](templates.md). Status per 
 | Stylesheets | `page_head_style.tpl` | ported from `page_head_style.html.twig` |
 | Scripts | `page_head_script.tpl` | ported from `page_head_script.html.twig` |
 | Header search | `adminui/parts/search_box.tpl`, `adminui/page_search.tpl` | ported |
+| Header Help control | `adminui/parts/help_button.tpl` | new: the help page of the module and view on screen (kernel help system, `fetch( 'exphelp', 'context' )`), shown only with the exphelp module and the exphelp/read policy |
 | Side bar menu | `adminui/menu/aside.tpl`, `menu/plugins/legacy/aside.tpl` | ported from the menu plugins |
 | Side bar Cache dropdown | `setup/clear_cache.tpl` | Admin UI template, merged |
 | Side bar Bookmarks dropdown | `toolbar/full/admin_bookmarks.tpl` | Admin UI template, merged (bookmark folders) |

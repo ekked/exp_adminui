@@ -17,6 +17,7 @@ only adminui has it). Generated from the files; see merging.md for how "merged" 
 | `adminui/page_leftmenu.tpl` | new |  |
 | `adminui/page_search.tpl` | new |  |
 | `adminui/page_toppath.tpl` | new |  |
+| `adminui/parts/help_button.tpl` | new |  |
 | `adminui/parts/search_box.tpl` | new |  |
 | `block/edit/edit.tpl` | copy |  |
 | `children.tpl` | merged | `design/admin4` |
