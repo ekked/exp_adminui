@@ -13,6 +13,9 @@
  *  HB-04 - the link has an accessible name that contains its visible label, and its icon is hidden from assistive
  *          technology
  *  HB-05 - the aui-help classes are in adminui-pages.css, with a focus ring
+ *  HB-06 - no inline style or script in the part
+ *  HB-07 - the Help menu is a <details> disclosure, asked for only when exphelp.ini has [ContextHelp] MenuLinks (a
+ *          kernel with fetch exphelp/context_menu), with the search, the help for this page and the Help center
  */
 
 $failures = 0;
@@ -47,6 +50,13 @@ hbCheck( strpos( $css, '.aui-help {' ) !== false && strpos( $css, '.aui-help-btn
          && strpos( $css, '.aui-help-btn:focus-visible { outline:' ) !== false,
          'HB-05 the classes are in adminui-pages.css, with a focus ring' );
 hbCheck( !preg_match( '#style=|<style|<script|\son[a-z]+=#i', $part ), 'HB-06 no inline style or script in the part' );
+
+hbCheck( (bool)preg_match( '#\{if ezini_hasvariable\( \'ContextHelp\', \'MenuLinks\', \'exphelp\.ini\' \)\}\s*\{set \$adminui_help_menu = fetch\( \'exphelp\', \'context_menu\'#', $part )
+         && strpos( $part, '<details class="aui-help-menu">' ) !== false && strpos( $part, '<summary class="aui-help-btn"' ) !== false
+         && strpos( $part, "action={'/exphelp/search'|ezurl} method=\"get\" role=\"search\"" ) !== false
+         && strpos( $part, "href={'/exphelp/dashboard'|ezurl}" ) !== false
+         && strpos( $css, '.aui-help-panel {' ) !== false,
+         'HB-07 the Help menu: a disclosure, only with the context_menu kernel, search + page help + Help center' );
 
 echo $failures ? "FAIL: $failures\n" : "PASS: all\n";
 exit( $failures ? 1 : 0 );

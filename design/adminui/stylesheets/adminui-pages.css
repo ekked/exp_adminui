@@ -627,6 +627,28 @@ table.list td.rss-uri code {
 .aui-help-btn .fa { font-size: 1.3em; }
 .aui-help-btn:hover, .aui-help-btn:focus { color: var(--a4-accent-text); background: var(--a4-accent-soft); text-decoration: none; }
 .aui-help-btn:focus-visible { outline: 3px solid var(--a4-ring); outline-offset: 2px; }
+/* The Help menu (a <details> disclosure; the browser opens and closes it without a script): the summary looks like
+   the link, the panel hangs under the header at its end edge, above the page */
+.aui-help { position: relative; }
+.aui-help-menu > summary { list-style: none; cursor: pointer; }
+.aui-help-menu > summary::-webkit-details-marker { display: none; }
+.aui-help-menu[open] > summary { color: var(--a4-accent-text); background: var(--a4-accent-soft); }
+.aui-help-panel {
+    position: absolute; top: 100%; inset-inline-end: var(--a4-space-3); z-index: 20; width: 20rem; max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 90px); overflow-y: auto; padding: var(--a4-space-3); background: var(--a4-surface);
+    border: 1px solid var(--a4-line); border-radius: var(--a4-radius); box-shadow: var(--a4-shadow-m); color: var(--a4-ink);
+    font-size: var(--a4-text-m); text-align: start;
+}
+.aui-help-search { display: flex; gap: var(--a4-space-2); margin: 0 0 var(--a4-space-3); }
+.aui-help-search input { flex: 1 1 auto; min-width: 0; }
+.aui-help-front, .aui-help-center { display: block; padding: var(--a4-space-2); border-radius: var(--a4-radius); color: var(--a4-ink); }
+.aui-help-front span { display: block; color: var(--a4-muted); }
+.aui-help-heading { margin: var(--a4-space-3) 0 var(--a4-space-1); padding-inline: var(--a4-space-2); color: var(--a4-muted); font-size: var(--a4-text-s); font-weight: 600; text-transform: uppercase; }
+.aui-help-list { margin: 0; padding: 0; list-style: none; }
+.aui-help-list a { display: block; padding: var(--a4-space-1) var(--a4-space-2); border-radius: var(--a4-radius); color: var(--a4-accent-text); }
+.aui-help-center { margin-top: var(--a4-space-3); border-top: 1px solid var(--a4-line); border-radius: 0; color: var(--a4-accent-text); font-weight: 600; }
+.aui-help-panel a:hover, .aui-help-panel a:focus { background: var(--a4-accent-soft); text-decoration: none; }
+.aui-help-panel a:focus-visible { outline: 3px solid var(--a4-ring); outline-offset: -2px; }
 @media screen and (max-width: 900px) {
     .aui-help { padding-inline-end: var(--a4-space-3); }
     .aui-help-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
