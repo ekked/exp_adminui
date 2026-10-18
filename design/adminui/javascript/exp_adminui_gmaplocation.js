@@ -156,6 +156,9 @@
 
     function setUp()
     {
+        // the map API did not load (no API key, blocked, offline): the coordinates are entered by hand
+        if ( typeof google === 'undefined' || !google.maps )
+            return;
         var maps = document.querySelectorAll( '[data-expui-gml]' );
         for ( var i = 0; i < maps.length; i++ )
         {
