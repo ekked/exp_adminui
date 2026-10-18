@@ -127,7 +127,7 @@
                 <input class="btn btn-default" type="submit" name="NewDraftButton" value="{'New draft'|i18n( 'design/admin/content/edit_draft' )}" title="{'Create a new draft. The contents of the new draft will be copied from the published version.'|i18n( 'design/admin/content/edit_draft' )}" />
                 <input class="btn btn-default" type="submit" name="CancelDraftButton" value="{'Cancel'|i18n( 'design/admin/content/edit_draft' )}" title="{'Cancel the edit operation.'|i18n( 'design/admin/content/edit_draft' )}" />
             </div>
-            <input type="hidden" name="DoNotEditAfterNewDraft" value="1" />
+            {* "New draft" opens the editor of the new draft (no DoNotEditAfterNewDraft, which led back to this page) *}
         </div>
         {* DESIGN: Control bar END *}
 
