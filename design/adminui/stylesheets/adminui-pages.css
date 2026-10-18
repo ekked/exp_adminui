@@ -631,3 +631,7 @@ table.list td.rss-uri code {
     .aui-help { padding-inline-end: var(--a4-space-3); }
     .aui-help-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
+
+/* The Help center link above the copyright line of the footer (adminui/page_footer.tpl) */
+#footer .aui-footer-help { margin-bottom: var(--a4-space-1); }
+#footer .aui-footer-help .fa { margin-inline-end: var(--a4-space-1); }

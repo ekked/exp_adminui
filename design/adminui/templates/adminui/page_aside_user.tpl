@@ -2,6 +2,12 @@
    user's image attribute (design:page_aside_user.tpl, the legacy helper), else images/a0.jpg. *}
 {def $user_content = $current_user.contentobject
      $user_avatar  = ''}
+{* the Help center (the kernel's help system) for users with exphelp/read while the help is switched on; nothing on a
+   kernel without it *}
+{def $adminui_help_center = false()}
+{if ezini_hasvariable( 'HelpSettings', 'Enabled', 'exphelp.ini' )}
+    {set $adminui_help_center = and( ezini( 'HelpSettings', 'Enabled', 'exphelp.ini' )|eq( 'true' ), fetch( 'user', 'has_access_to', hash( 'module', 'exphelp', 'function', 'read' ) ) )}
+{/if}
 {if $user_content}
 <div class="aside-footer">
     {set-block variable=$user_avatar}{include uri='design:page_aside_user.tpl' content=$user_content}{/set-block}
@@ -36,10 +42,16 @@
             <li>
                 <a href={'/user/password'|ezurl}>{'Change password'|i18n( 'design/adminui/user' )}</a>
             </li>
+            {if $adminui_help_center}
+                <li><a href={'/exphelp/dashboard'|ezurl}>{'Help center'|i18n( 'design/admin/pagelayout' )}</a></li>
+            {/if}
         {else}
             <li><span class="disabled">{'View profile'|i18n( 'design/adminui/user' )}</span></li>
             <li><span class="disabled">{'Change information'|i18n( 'design/adminui/user' )}</span></li>
             <li><span class="disabled">{'Change password'|i18n( 'design/adminui/user' )}</span></li>
+            {if $adminui_help_center}
+                <li><span class="disabled">{'Help center'|i18n( 'design/admin/pagelayout' )}</span></li>
+            {/if}
         {/if}
 
         <li class="divider"></li>
