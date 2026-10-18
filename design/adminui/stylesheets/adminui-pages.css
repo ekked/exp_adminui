@@ -646,7 +646,7 @@ table.list td.rss-uri code {
 .aui-help-heading { margin: var(--a4-space-3) 0 var(--a4-space-1); padding-inline: var(--a4-space-2); color: var(--a4-muted); font-size: var(--a4-text-s); font-weight: 600; text-transform: uppercase; }
 .aui-help-list { margin: 0; padding: 0; list-style: none; }
 .aui-help-list a { display: block; padding: var(--a4-space-1) var(--a4-space-2); border-radius: var(--a4-radius); color: var(--a4-accent-text); }
-.aui-help-center { margin-top: var(--a4-space-3); border-top: 1px solid var(--a4-line); border-radius: 0; color: var(--a4-accent-text); font-weight: 600; }
+.aui-help-center { margin-bottom: var(--a4-space-3); border-bottom: 1px solid var(--a4-line); border-radius: 0; color: var(--a4-accent-text); font-weight: 600; }
 .aui-help-panel a:hover, .aui-help-panel a:focus { background: var(--a4-accent-soft); text-decoration: none; }
 .aui-help-panel a:focus-visible { outline: 3px solid var(--a4-ring); outline-offset: -2px; }
 @media screen and (max-width: 900px) {

@@ -6,8 +6,8 @@
 
    With a kernel that has the Help menu (exphelp.ini [ContextHelp] MenuLinks[], fetch exphelp/context_menu), the
    control is a menu as in admin4's header: a <details> disclosure (no script needed: the browser opens and closes
-   it, Esc and the keyboard included) with a search of the help, the help for this page, the related topics, the
-   quick links and the Help center. Without it, a plain link to the help of the page. *}
+   it, Esc and the keyboard included) with a search of the help, the Help center right below it, the help for this
+   page, the related topics and the quick links. Without it, a plain link to the help of the page. *}
 {if ezini( 'ModuleSettings', 'ModuleList', 'module.ini' )|contains( 'exphelp' )}
 {def $adminui_help_mp    = module_params()
      $adminui_help_ctx   = fetch( 'exphelp', 'context', hash( 'module', first_set( $adminui_help_mp.module_name, '' ),
@@ -45,6 +45,7 @@
                 <input type="search" id="aui-help-q" class="form-control" name="q" maxlength="200" autocomplete="off" placeholder="{'Search the help'|i18n( 'kernel/exphelp' )|wash}" />
                 <button type="submit" class="btn btn-default">{'Search'|i18n( 'kernel/exphelp' )|wash}</button>
             </form>
+            <a class="aui-help-center" href={'/exphelp/dashboard'|ezurl}>{'Open the Help center'|i18n( 'kernel/exphelp' )|wash}</a>
             <a class="aui-help-front" href={$adminui_help_ctx.url|ezurl} title="{$adminui_help_label|wash}">
                 <strong>{'Help for this page'|i18n( 'kernel/exphelp' )|wash}</strong>
                 {if $adminui_help_ctx.title}<span>{$adminui_help_ctx.title|wash}</span>{/if}
@@ -65,7 +66,6 @@
                 {/foreach}
             </ul>
             {/if}
-            <a class="aui-help-center" href={'/exphelp/dashboard'|ezurl}>{'Open the Help center'|i18n( 'kernel/exphelp' )|wash}</a>
         </div>
     </details>
     {undef $adminui_help_names}
