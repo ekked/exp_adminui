@@ -57,3 +57,27 @@
         } );
     } );
 }( window.jQuery ) );
+
+/* The header's Help menu (adminui/parts/help_button.tpl) is a native <details> disclosure, which browsers do not close
+   with Escape or a click elsewhere: Escape closes the open menu and puts the focus back on its button (the <summary>),
+   and a click outside it closes it. Delegated on the document, without jQuery. */
+( function () {
+    var SELECTOR = 'details.aui-help-menu[open]';
+    document.addEventListener( 'keydown', function ( e ) {
+        if ( e.key !== 'Escape' && e.key !== 'Esc' )
+            return;
+        var open = document.querySelector( SELECTOR );
+        if ( !open )
+            return;
+        open.removeAttribute( 'open' );
+        var summary = open.querySelector( 'summary' );
+        if ( summary )
+            summary.focus();
+        e.preventDefault();
+    } );
+    document.addEventListener( 'click', function ( e ) {
+        var open = document.querySelector( SELECTOR );
+        if ( open && !open.contains( e.target ) )
+            open.removeAttribute( 'open' );
+    } );
+}() );

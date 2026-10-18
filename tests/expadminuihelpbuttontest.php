@@ -16,6 +16,8 @@
  *  HB-06 - no inline style or script in the part
  *  HB-07 - the Help menu is a <details> disclosure, asked for only when exphelp.ini has [ContextHelp] MenuLinks (a
  *          kernel with fetch exphelp/context_menu), with the search, the help for this page and the Help center
+ *  HB-08 - Escape closes the open Help menu and gives the focus back to its summary (exp_adminui_aside_dropdown_keys.js,
+ *          loaded on every page by page_head_script.tpl)
  */
 
 $failures = 0;
@@ -57,6 +59,13 @@ hbCheck( (bool)preg_match( '#\{if ezini_hasvariable\( \'ContextHelp\', \'MenuLin
          && strpos( $part, "href={'/exphelp/dashboard'|ezurl}" ) !== false
          && strpos( $css, '.aui-help-panel {' ) !== false,
          'HB-07 the Help menu: a disclosure, only with the context_menu kernel, search + page help + Help center' );
+
+$keys = (string)@file_get_contents( $root . '/design/adminui/javascript/exp_adminui_aside_dropdown_keys.js' );
+$head = $strip( @file_get_contents( $root . '/design/adminui/templates/page_head_script.tpl' ) );
+hbCheck( strpos( $keys, "'details.aui-help-menu[open]'" ) !== false && strpos( $keys, "e.key !== 'Escape'" ) !== false
+         && strpos( $keys, "open.removeAttribute( 'open' )" ) !== false && strpos( $keys, 'summary.focus()' ) !== false
+         && strpos( $head, 'exp_adminui_aside_dropdown_keys.js' ) !== false,
+         'HB-08 Escape closes the Help menu and focuses its summary' );
 
 echo $failures ? "FAIL: $failures\n" : "PASS: all\n";
 exit( $failures ? 1 : 0 );
