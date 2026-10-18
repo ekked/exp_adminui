@@ -16,6 +16,11 @@
 {if and( ge( $hour, 5 ), lt( $hour, 12 ) )}{set $greeting = 'Good morning'|i18n( 'design/admin/dashboard' )}
 {elseif and( ge( $hour, 12 ), lt( $hour, 18 ) )}{set $greeting = 'Good afternoon'|i18n( 'design/admin/dashboard' )}{/if}
 
+{* The "Upload files" button opens the upload page at Media > Images where the user can upload there, else at Media
+   (ezmultiupload 6.1.8: ezmultiupload.ini [DashboardSettings] UploadTargetList[], fetch dashboard_target). *}
+{def $upload_node = $media_node}
+{if and( $extensions|contains( 'ezmultiupload' ), ezmodule( 'ezmultiupload/upload' ) )}{set $upload_node = fetch( 'ezmultiupload', 'dashboard_target', hash() )}{/if}
+
 {* What the user can open: every link below is shown only to a user who can follow it, checked the way
    the kernel checks the request (fetch user/can_open: the view's policies with their limitations, the
    siteaccess, the node). No role names. *}
@@ -23,7 +28,7 @@
         'content',  fetch( 'user', 'can_open', hash( 'uri', concat( 'content/view/full/', $root_node ) ) ),
         'media',    fetch( 'user', 'can_open', hash( 'uri', concat( 'content/view/full/', $media_node ) ) ),
         'users',    fetch( 'user', 'can_open', hash( 'uri', concat( 'content/view/full/', $users_node ) ) ),
-        'upload',   and( $extensions|contains( 'ezmultiupload' ), fetch( 'user', 'can_open', hash( 'uri', concat( 'ezmultiupload/upload/', $media_node ) ) ) ),
+        'upload',   and( $extensions|contains( 'ezmultiupload' ), fetch( 'user', 'can_open', hash( 'uri', concat( 'ezmultiupload/upload/', $upload_node ) ) ) ),
         'tags',     and( $extensions|contains( 'eztags' ), fetch( 'user', 'can_open', hash( 'uri', 'tags/dashboard' ) ) ),
         'layouts',  and( $extensions|contains( 'explayouts_ui' ), fetch( 'user', 'can_open', hash( 'uri', 'explayouts_ui/dashboard' ) ) ),
         'cache',    fetch( 'user', 'can_open', hash( 'uri', 'setup/cache' ) ),
@@ -72,7 +77,7 @@
             <a class="btn btn-default" href={concat( 'content/view/full/', $media_node )|ezurl}><i class="fa fa-picture-o" aria-hidden="true"></i> {'Media library'|i18n( 'design/admin/dashboard' )}</a>
             {/if}
             {if $can.upload}
-            <a class="btn btn-default" href={concat( 'ezmultiupload/upload/', $media_node )|ezurl}><i class="fa fa-upload" aria-hidden="true"></i> {'Upload files'|i18n( 'design/admin/dashboard' )}</a>
+            <a class="btn btn-default" href={concat( 'ezmultiupload/upload/', $upload_node )|ezurl}><i class="fa fa-upload" aria-hidden="true"></i> {'Upload files'|i18n( 'design/admin/dashboard' )}</a>
             {/if}
             {if $can.users}
             <a class="btn btn-default" href={concat( 'content/view/full/', $users_node )|ezurl}><i class="fa fa-users" aria-hidden="true"></i> {'Users'|i18n( 'design/admin/dashboard' )}</a>
