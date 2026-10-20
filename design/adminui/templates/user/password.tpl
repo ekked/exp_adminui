@@ -44,6 +44,9 @@
 {/foreach}
         </ul>
     </div>
+{elseif first_set( $demo_mode_locked, false() )}
+    {* demo mode (EXP_DEMO_MODE=1): an administrator's password cannot be changed; the text comes from the kernel *}
+    <div class="alert alert-warning" role="status"><p>{$demo_mode_text|wash}</p></div>
 {/if}
 
 <div class="panel">
