@@ -14,7 +14,7 @@ class exp_adminuiInfo
             'Author'    => '7x',
             'Copyright' => 'Copyright &copy; 2026 - ' . date( 'Y' ) . ' <a href="https://se7enx.com" target="blank">7x</a>; design ported from Netgen Admin UI, Copyright &copy; Netgen',
             'License'   => "GNU General Public License v2.0 (or any later version)",
-            'info_url'  => 'https://github.com/se7enxweb/exp_adminui',
+            'Info_url'  => 'https://github.com/se7enxweb/exp_adminui',
             'Includes the following third-party software' => array(
                 'Name'      => 'Netgen Admin UI (se7enxweb/admin-ui-bundle 2.9): stylesheets, fonts, images, scripts and legacy design templates',
                 'Version'   => '2.9.15',

@@ -6,5 +6,28 @@
         <copyright>Copyright (C) 2026 7x; design ported from Netgen Admin UI, Copyright (C) Netgen</copyright>
         <license>GNU General Public License v2.0 (or any later version)</license>
         <info_url>https://github.com/se7enxweb/exp_adminui</info_url>
+
+        <software>
+            <uses>
+                <name>Netgen Admin UI (se7enxweb/admin-ui-bundle): stylesheets, fonts, images, scripts and legacy design templates</name>
+                <license>GNU General Public License v2.0 (or any later version)</license>
+                <copyright>Copyright (C) Netgen and contributors</copyright>
+                <info_url>https://github.com/netgen/NetgenAdminUIBundle</info_url>
+                <version>2.9.15</version>
+            </uses>
+            <uses>
+                <name>Font Awesome 4.4, Bootstrap 3.3.5, jQuery UI 1.11.4 resizable, Ace editor, Roboto, Material Icons</name>
+                <license>SIL OFL 1.1 and MIT (Font Awesome), MIT (Bootstrap, jQuery UI), BSD (Ace), Apache 2.0 (Roboto, Material Icons)</license>
+                <copyright>See NOTICE</copyright>
+                <version>as shipped by Netgen Admin UI 2.9</version>
+            </uses>
+        </software>
     </metadata>
+
+    <dependencies>
+        <requires>
+            <extension name="ezjscore" />
+            <extension name="expui" />
+        </requires>
+    </dependencies>
 </software>
