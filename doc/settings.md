@@ -45,7 +45,7 @@ Defaults in `settings/exp_adminui.ini`. Override per siteaccess in
 | `design.ini.append.php` | `DesignExtensions[]=exp_adminui` |
 | `site.ini.append.php` | `TranslationExtensions[]=exp_adminui` |
 | `icon.ini.append.php` | The reference's icon set: repository `design/adminui/images/icons`, theme `kp` (with `StandardTheme=kp`), class, class group, MIME and flag icons |
-| `menu.ini.append.php` | `HiddenTabs[]` for the tabs the side bar draws itself; the reference's tab names (Media library, User accounts, Webshop). The Setup left menu is Exponential's (a superset of the reference's, in the same order); `[Leftmenu_newsletter]` and `[Leftmenu_newsletter_settings]`, the Administer and Settings lists of the newsletter left menu (`parts/newsletter/menu.tpl`, Settings only with `newsletter/admin`) |
+| `menu.ini.append.php` | `HiddenTabs[]` for the tabs the side bar draws itself; the reference's tab names (Media library, User accounts, Webshop) and their `Icon=` (`images`, `people`, `box-seam`, the icons an admin4 header draws for these tabs). The Setup left menu is Exponential's (a superset of the reference's, in the same order); `[Leftmenu_newsletter]` and `[Leftmenu_newsletter_settings]`, the Administer and Settings lists of the newsletter left menu (`parts/newsletter/menu.tpl`, Settings only with `newsletter/admin`) |
 | `ezoe.ini.append.php` | `SkinVariant=silver`, as in the reference |
 | `zone.ini.append.php` | ezflow zone thumbnails, as in the reference |
 

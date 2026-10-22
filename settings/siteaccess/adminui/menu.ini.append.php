@@ -9,13 +9,20 @@ HiddenTabs[]=explayouts_ui_dashboard
 HiddenTabs[]=eztags
 
 # The names the reference shows in the side bar (Exponential's menu.ini shortens them to Media, Users, Store)
+# Icon - (optional) the name of an icon admin4 draws before the tab's name: a name of design.ini
+#        [AdminDesignSettings] IconList[] (Bootstrap Icons); a name it does not know draws no icon.
+#        The adminui side bar draws its own Font Awesome icons; Icon names the tab's icon wherever an admin4
+#        header shows these tabs.
 [Topmenu_media]
+Icon=images
 Name=Media library
 
 [Topmenu_users]
+Icon=people
 Name=User accounts
 
 [Topmenu_shop]
+Icon=box-seam
 Name=Webshop
 
 # The newsletter (cjw_newsletter) left menu, parts/newsletter/menu.tpl: the link lists below its tree, drawn by
